@@ -1,0 +1,187 @@
+/* ========================================= */
+/* PETAqui - styles-cerca.css (Página de Búsqueda de Animales) */
+/* Paleta Natural: Slate Gray (#4A6572), Terracotta (#F4A261), White Smoke (#F7F7F7), Forest Green (#2A9D8F) */
+/* ========================================= */
+
+/* 1. Definición de Variables CSS de PETAqui y Sobrescritura de Bootstrap */
+:root {
+  /* Colores Principales de la Paleta */
+  --color-fondo-estructural: #4a6572; /* Gris Pizarra: Header, Footer, Texto sobre claro */
+  --color-fondo-claro: #f7f7f7; /* Humo Blanco: Fondo principal, Fondo de Tarjetas/Filtros */
+  --color-texto-claro: #ffffff; /* Blanco: Texto principal sobre Gris Pizarra */
+  --color-texto-oscuro: #4a6572; /* Gris Pizarra: Texto sobre Humo Blanco */
+
+  --color-primario-cta: #f4a261; /* Naranja Terracota: Botón Primario (CTA) */
+  --color-secundario-btn: #2a9d8f; /* Verde Bosque: Botón Secundario, Acento/Links */
+  --color-claro: white; /* Usado para texto de botones CTA */
+
+  /* Tipografías (Asegúrese de haber cargado las fuentes en cerca-animals.html) */
+  --font-heading: "Quicksand", sans-serif;
+  --font-subheading: "Halant", serif;
+  --font-body: "Sarala", sans-serif;
+
+  /* Sobrescritura de Variables de Bootstrap */
+  --bs-primary: var(--color-primario-cta);
+  --bs-secondary: var(--color-secundario-btn);
+  --bs-light: var(--color-fondo-claro);
+  --bs-dark: var(--color-fondo-estructural);
+
+  --bs-body-bg: var(
+    --color-fondo-claro
+  ); /* Fondo general de la página: Humo Blanco */
+  --bs-body-color: var(
+    --color-texto-oscuro
+  ); /* Color de texto por defecto: Gris Pizarra */
+  --bs-link-color: var(--color-secundario-btn);
+  --bs-border-color: #dddddd;
+}
+
+/* 2. Estilos Globales, Tipografía y Resets */
+body {
+  font-family: var(--font-body);
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+}
+
+/* Tipografía */
+h1 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-texto-oscuro);
+}
+h2,
+h3,
+h4,
+h5,
+h6,
+.card-title {
+  font-family: var(--font-subheading);
+  font-weight: 600;
+  color: var(--color-texto-oscuro);
+}
+
+/* Clases de texto por color */
+.text-general {
+  color: var(--color-texto-oscuro) !important;
+}
+.text-acento {
+  color: var(--color-secundario-btn) !important;
+}
+.text-claro {
+  color: var(--color-texto-claro) !important;
+}
+
+/* 3. Estilos de Navegación y Estructura */
+
+/* Header (Gris Pizarra y Texto Blanco) */
+.main-header {
+  background-color: var(--color-fondo-estructural);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.main-header .navbar-nav .nav-link {
+  color: var(--color-texto-claro) !important;
+  font-family: var(--font-subheading);
+  font-weight: 600;
+  transition: color 0.3s;
+}
+.main-header .navbar-nav .nav-link:hover,
+.main-header .navbar-nav .nav-link.active {
+  color: var(--color-primario-cta) !important;
+}
+.main-header .logo-img {
+  height: 70px;
+  width: auto;
+}
+
+/* Footer (Gris Pizarra y Texto Blanco) */
+.main-footer {
+  background-color: var(--color-fondo-estructural) !important;
+  color: var(--color-texto-claro) !important;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.main-footer a {
+  color: var(--color-secundario-btn) !important;
+  text-decoration: none;
+}
+.main-footer a:hover {
+  color: var(--color-primario-cta) !important;
+  text-decoration: underline;
+}
+
+/* 4. Estilos de Componentes Comunes y Específicos de Búsqueda */
+
+/* Estilos para el botón CTA Principal (Terracota) */
+.btn-cta-principal {
+  background-color: var(--color-primario-cta) !important;
+  border-color: var(--color-primario-cta) !important;
+  color: var(--color-claro) !important;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+.btn-cta-principal:hover {
+  background-color: #e49852 !important; /* Tono más oscuro de Terracota */
+  border-color: #e49852 !important;
+}
+
+/* Estilos para el botón Secundario (Verde Bosque) */
+.btn-secondary-custom {
+  background-color: var(--color-secundario-btn) !important;
+  border-color: var(--color-secundario-btn) !important;
+  color: var(--color-claro) !important;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.btn-secondary-custom:hover {
+  background-color: #268c80 !important; /* Tono más oscuro de Verde Bosque */
+  border-color: #268c80 !important;
+}
+
+/* Estilos de Tarjetas (Tarjetas de resultado de animales) */
+.card-custom {
+  background-color: var(--color-fondo-claro); /* Humo Blanco */
+  border: 1px solid #e0e0e0; /* Borde muy suave */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card-custom:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Contenedor de Filtros (Sidebar o Columna de Filtros) */
+.filter-sidebar {
+  background-color: var(--color-fondo-claro);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Inputs y Selects */
+.form-control,
+.form-select {
+  border: 1px solid #bbbbbb;
+  color: var(--color-texto-oscuro);
+  font-family: var(--font-body);
+}
+
+/* Labels de Filtro (para los títulos de las secciones de filtro) */
+.filter-label {
+  font-family: var(--font-subheading);
+  font-weight: 600;
+  color: var(--color-texto-oscuro);
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 5px;
+}

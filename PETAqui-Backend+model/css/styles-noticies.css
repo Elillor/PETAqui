@@ -1,0 +1,188 @@
+/* ========================================= */
+/* PETAqui - styles-cerca.css (Página de Búsqueda de Animales) */
+/* NUEVA PALETA: Azul Oscuro (#012D58), Azul Cielo (#3498DB), Amarillo Oro (#F0B300), Gris Claro (#F5F5F5) */
+/* ========================================= */
+
+/* 1. Definición de Variables CSS de PETAqui y Sobrescritura de Bootstrap */
+:root {
+    /* Colores Principales de la Nueva Paleta */
+    --color-fondo-estructural: #012D58;     /* Azul Oscuro: Header, Footer, Texto sobre claro */
+    --color-fondo-claro: #F5F5F5;           /* Gris Claro: Fondo principal, Fondo de Tarjetas/Filtros */
+    --color-texto-claro: #FFFFFF;           /* Blanco: Texto principal sobre Azul Oscuro */
+    --color-texto-oscuro: #012D58;          /* Azul Oscuro: Texto sobre Gris Claro */
+    
+    --color-primario-cta: #F0B300;          /* Amarillo Oro: Botón Primario (CTA) */
+    --color-secundario-btn: #3498DB;        /* Azul Cielo: Botón Secundario, Acento/Links */
+    --color-claro: white;                   /* Usado para texto de botones CTA */
+
+    /* Sobrescritura de Variables de Bootstrap */
+    --bs-primary: var(--color-primario-cta);
+    --bs-secondary: var(--color-secundario-btn);
+    --bs-light: var(--color-fondo-claro);
+    --bs-dark: var(--color-fondo-estructural);
+
+    --bs-body-bg: var(--color-fondo-claro);     
+    --bs-body-color: var(--color-texto-oscuro); 
+    --bs-link-color: var(--color-secundario-btn);
+}
+
+
+/* 2. Estilos Globales, Tipografía y ESTRUCTURA (Footer Fix) */
+
+/* REGLA DEFINITIVA PARA LA ALTURA (Anulación de conflictos de altura) */
+html, body {
+    height: 100% !important; 
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body); 
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    
+    /* Reglas para Sticky Footer */
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+main {
+    flex-grow: 1 !important;
+}
+
+/* Tipografía General */
+h1, h2 { font-family: var(--font-heading); font-weight: 700; color: var(--color-texto-oscuro); }
+h3, h4, h5, h6 { font-family: var(--font-subheading); font-weight: 600; color: var(--color-texto-oscuro); }
+
+.text-general { color: var(--color-texto-oscuro) !important; }
+.text-acento { color: var(--color-secundario-btn) !important; }
+.text-claro { color: var(--color-texto-claro) !important; }
+
+
+/* 3. Estilos de Navegación y Footer */
+.main-header {
+    background-color: var(--color-fondo-estructural); /* Azul Oscuro */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.main-header .navbar-nav .nav-link {
+    color: var(--color-texto-claro) !important; /* Blanco */
+}
+.main-header .navbar-nav .nav-link:hover,
+.main-header .navbar-nav .nav-link.active {
+    color: var(--color-primario-cta) !important; /* Amarillo Oro */
+}
+.main-header .logo-img {
+    height: 70px;
+}
+
+/* Footer (Usa el color estructural) */
+.main-footer {
+    background-color: var(--color-fondo-estructural) !important; /* Azul Oscuro */
+    color: var(--color-texto-claro) !important; 
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: auto !important;
+}
+.main-footer a {
+    color: var(--color-secundario-btn) !important; /* Azul Cielo */
+}
+.main-footer a:hover {
+    color: var(--color-primario-cta) !important; /* Amarillo Oro */
+}
+
+
+/* 4. Estilos Específicos de la Página de Búsqueda (Filtros y Resultados) */
+
+/* Botón Principal (Buscar, Aplicar Filtros - Amarillo Oro) */
+.btn-primary, .btn-primary-custom {
+    background-color: var(--color-primario-cta) !important; 
+    border-color: var(--color-primario-cta) !important; 
+    color: var(--color-texto-oscuro) !important; /* Texto Azul Oscuro sobre Oro */
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+.btn-primary:hover, .btn-primary-custom:hover {
+    background-color: #d8a000 !important; /* Tono más oscuro de Oro */
+    border-color: #d8a000 !important; 
+}
+
+/* Botón Secundario (Borrar Filtros - Azul Cielo) */
+.btn-secondary, .btn-secondary-custom {
+    background-color: var(--color-secundario-btn) !important; 
+    border-color: var(--color-secundario-btn) !important; 
+    color: var(--color-claro) !important; /* Texto Blanco sobre Azul Cielo */
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+.btn-secondary:hover, .btn-secondary-custom:hover {
+    background-color: #2c81ba !important; 
+    border-color: #2c81ba !important; 
+}
+
+
+/* Contenedor de Filtros (Sidebar o Columna de Filtros) */
+.filter-sidebar {
+    background-color: var(--color-fondo-claro); /* Gris Claro */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+.filter-group {
+    border-bottom: 1px solid #DDDDDD;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+.filter-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.form-label {
+    font-weight: 600;
+    color: var(--color-texto-oscuro); /* Azul Oscuro */
+}
+.form-check-input:checked {
+    background-color: var(--color-secundario-btn); /* Checkbox: Azul Cielo */
+    border-color: var(--color-secundario-btn);
+}
+
+
+/* Estilos de Tarjetas (Tarjetas de resultado de animales) */
+.card-custom {
+    background-color: var(--color-fondo-claro); /* Gris Claro */
+    border: 1px solid #e0e0e0; 
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card-custom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+.card-img-custom {
+    height: 200px; 
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.species-tag-custom {
+    background-color: var(--color-secundario-btn) !important; /* Azul Cielo */
+    color: var(--color-claro);
+    font-weight: 600;
+}
+
+/* Enlace/Botón "Més Info" en tarjeta */
+.btn-card-detail-custom {
+    /* Usa el estilo btn-primary (Amarillo Oro) */
+    font-family: var(--font-body);
+}
+
+/* Paginación */
+.page-link {
+    color: var(--color-texto-oscuro); /* Azul Oscuro */
+}
+.page-item.active .page-link {
+    background-color: var(--color-primario-cta); /* Página activa: Amarillo Oro */
+    border-color: var(--color-primario-cta);
+    color: var(--color-texto-oscuro);
+}

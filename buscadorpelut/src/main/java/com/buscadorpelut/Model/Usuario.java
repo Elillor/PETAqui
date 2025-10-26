@@ -12,47 +12,79 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
+/**
+ * Entidad JPA que representa a un usuario en la base de datos.
+ * 
+ * Mapea la tabla "usuari" y contiene todos los atributos persistentes del usuario,
+ * incluyendo credenciales y rol. Esta clase es parte del modelo de dominio y
+ * debe usarse únicamente en la capa de persistencia o servicio.
+ */
 @Entity
 @Table(name = "usuari")
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Identificador único autogenerado del usuario.
+     * Corresponde a la columna "codiUs" en la base de datos.
+     */
     @Id
     @Nonnull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codiUs")
     private long codiUs;
 
+    
     @Nonnull
     @Column(name = "nomUs")
-    private String nomUs;
+    private String nomUs; //Nombre del usuario. Campo obligatorio.
 
     @Nonnull
     @Column(name = "cognom1")
-    private String cognom1;
+    private String cognom1; //Primer apellido del usuario. Campo obligatorio.
 
     @Column(name = "cognom2")
-    private String cognom2;
+    private String cognom2; //Segundo apellido del usuario. Campo opcional.
 
     @Nonnull
     @Column(name = "clauPas")
-    private String clauPas;
+    private String clauPas; //Contraseña del usuario (encryptada en la base de datos). Campo obligatorio.
 
     @Nonnull
     @Column(name = "emailUs", unique = true)
-    private String emailUs;
+    private String emailUs; //Correo electrónico del usuario (unico y utilizado para el login). Campo obligatorio.
 
+    /**
+     * Rol del usuario que se usa un enum para garantizar valores válidos.
+     * Valor por defecto: ADOPTANT.
+     * 
+     * El enum se almacena como STRING en la base de datos ("adoptant", "admin").
+     */
     @Nonnull
     @Enumerated(EnumType.STRING)
     @Column(name = "rolUs")
-    private Rol rolUs = Rol.adoptant;
+    private Rol rolUs = Rol.ADOPTANT;
 
     //Constructors
+
+    /**
+     * Constructor por defecto requerido por JPA.
+     */
     public Usuario() {
     }
 
+    /**
+     * Constructor completo para crear una instancia de Usuario con todos sus atributos.
+     * 
+     * @param codiUs    ID del usuario.
+     * @param nomUs     Nombre del usuario.
+     * @param cognom1   Primer apellido.
+     * @param cognom2   Segundo apellido (puede ser null).
+     * @param clauPas   Contraseña encriptada.
+     * @param emailUs   Correo electrónico único.
+     * @param rolUs     Rol del usuario.
+     */
     public Usuario(Long codiUs, String nomUs, String cognom1, String cognom2, String clauPas, String emailUs, Rol rolUs) {
         this.codiUs = codiUs;
         this.nomUs = nomUs;

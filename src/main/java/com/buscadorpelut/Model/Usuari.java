@@ -2,7 +2,6 @@ package com.buscadorpelut.Model;
 
 import java.io.Serializable;
 
-import org.springframework.data.annotation.Id;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
@@ -12,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
+import jakarta.persistence.Id;
 
 
 
@@ -65,7 +65,7 @@ public class Usuari implements Serializable {
         this.rolUs = rolUs;
     }
 
-//Getters i setters    
+//Getters i setters
     /*De codiUs només fem get perquè és un valor autoincremental i no es modificarà
     mai des de el codi*/
     public Long getCodiUs() {
@@ -73,55 +73,55 @@ public class Usuari implements Serializable {
     }
 
     //Nom usuari
-    public String getnomUs() {
+    public String getNomUs() {
         return this.nomUs;
     }
 
-    public void setnomUs(String nom) {
+    public void setNomUs(String nom) {
         this.nomUs = nom;
     }
 
     //Cognoms Usuari
-    public String getcognom1() {
+    public String getCognom1() {
         return this.cognom1;
     }
 
-    public void setcognom1(String cognom1) {
+    public void setCognom1(String cognom1) {
         this.cognom1 = cognom1;
     }
 
-    public String getcognom2() {
+    public String getCognom2() {
         return this.cognom2;
     }
 
-    public void setcognom2(String cognom2) {
+    public void setCognom2(String cognom2) {
         this.cognom2 = cognom2;
     }
 
     //Clau de pas
-    public String getclauPas() {
+    public String getClauPas() {
         return this.clauPas;
     }
 
-    public void setclauPas(String clauPas) {
+    public void setClauPas(String clauPas) {
         this.clauPas = clauPas;
     }
 
     //Email usuari
-    public String getemailUs() {
+    public String getEmailUs() {
         return this.emailUs;
     }
 
-    public void setemailUs(String emailUs) {
+    public void setEmailUs(String emailUs) {
         this.emailUs = emailUs;
     }
 
     //Rol
-    public Rol getrol() {
+    public Rol getRol() {
         return this.rolUs;
     }
 
-    public void setrol(Rol rolUs) {
+    public void setRol(Rol rolUs) {
         this.rolUs = rolUs;
     }
 }

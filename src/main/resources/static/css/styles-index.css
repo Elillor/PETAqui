@@ -1,6 +1,6 @@
 /* ========================================= */
 /* PETAqui - styles-index.css (Página de Inicio) */
-/* NUEVA PALETA: Azul Oscuro (#012D58), Azul Cielo (#3498DB), Amarillo Oro (#F0B300), Gris Claro (#F5F5F5) */
+/* NUEVA PALETA: Azul Oscuro (#335c67), Gris Claro (#f9f9f9), Amarillo Oro (#F0B300), Azul Cielo (#e8c07d) */
 /* ========================================= */
 
 /* MÁXIMA PRIORIDAD PARA SOLUCIÓN FOOTER */
@@ -13,13 +13,13 @@ html, body {
 /* 1. Definición de Variables CSS de PETAqui y Sobrescritura de Bootstrap */
 :root {
     /* Colores Principales de la Nueva Paleta */
-    --color-fondo-estructural: #012D58;     /* Azul Oscuro: Header, Footer, Fondos oscuros */
-    --color-fondo-claro: #F5F5F5;           /* Gris Claro: Fondo principal, Fondos de Tarjetas */
+    --color-fondo-estructural: #335c67;     /* Azul Oscuro: Header, Footer, Fondos oscuros */
+    --color-fondo-claro: #f9f9f9;           /* Gris Claro: Fondo principal, Fondos de Tarjetas */
     --color-texto-claro: #FFFFFF;           /* Blanco: Texto principal sobre Azul Oscuro */
-    --color-texto-oscuro: #012D58;          /* Azul Oscuro: Texto sobre Gris Claro */
+    --color-texto-oscuro: #1a1a1a;          /* Texto sobre Negro (oscuro para alto contraste) */
     
     --color-primario-cta: #F0B300;          /* Amarillo Oro: Botón Primario (CTA), Acento */
-    --color-secundario-btn: #3498DB;        /* Azul Cielo: Botón Secundario, Acento/Links */
+    --color-secundario-btn: #e8c07d;        /* Amarillo claro: Botón Secundario, Acento/Links */
     --color-claro: white;                   /* Usado para texto de botones CTA */
     
     /* Tipografías (Mantenidas) */
@@ -39,13 +39,13 @@ html, body {
     --bs-border-color: #DDDDDD; 
 }
 
-/* 2. Estilos Globales, Tipografía y ESTRUCTURA */
+/* 2. Estilos Globales, Tipografía y ESTRUCTURA (Sticky Footer) */
 body {
     font-family: var(--font-body); 
     color: var(--bs-body-color);
     background-color: var(--bs-body-bg);
     
-    /* REGLAS CLAVE DE ESTRUCTURA (Reforzadas) */
+    /* REGLAS CLAVE DE ESTRUCTURA */
     min-height: 100vh !important;
     display: flex !important;
     flex-direction: column !important;
@@ -79,6 +79,20 @@ h3, h4, h5, h6, .card-title {
     background-color: var(--color-fondo-estructural); /* Azul Oscuro */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
+
+/* Reglas de separación de pestañas */
+.main-header .navbar-nav .nav-item {
+    margin-left: 1.25rem; 
+    margin-right: 1.25rem; 
+}
+.main-header .navbar-nav .nav-item:first-child {
+    margin-left: 0;
+}
+.main-header .navbar-nav .nav-item:last-child {
+    margin-right: 0;
+}
+
+
 .main-header .navbar-nav .nav-link {
     color: var(--color-texto-claro) !important; /* Blanco */
     font-family: var(--font-subheading);
@@ -101,7 +115,7 @@ footer.bg-contrast, .main-footer {
     padding-top: 20px;
     padding-bottom: 20px;
     
-    margin-top: auto !important; 
+    margin-top: auto !important; /* Empuja el footer hacia abajo */
 }
 .main-footer a {
     color: var(--color-secundario-btn) !important; /* Azul Cielo */
@@ -126,7 +140,7 @@ footer.bg-contrast, .main-footer {
     letter-spacing: 0.5px;
 }
 
-/* Sobrescribimos el botón principal con el nuevo color CTA (Amarillo Oro) */
+/* Botón principal (Amarillo Oro) */
 .btn-primary { 
     background-color: var(--color-primario-cta) !important; 
     border-color: var(--color-primario-cta) !important; 
@@ -137,7 +151,7 @@ footer.bg-contrast, .main-footer {
     border-color: #d8a000 !important; 
 }
 
-/* Sobrescribimos el botón secundario con el nuevo color (Azul Cielo) */
+/* Botón secundario (Azul Cielo) */
 .btn-secondary { 
     background-color: var(--color-secundario-btn) !important; 
     border-color: var(--color-secundario-btn) !important; 
@@ -147,7 +161,7 @@ footer.bg-contrast, .main-footer {
     border-color: #2c81ba !important; 
 }
 
-
+/* Estilos de Tarjetas de Animales (Corregido contraste) */
 .animal-card-custom {
     background-color: var(--color-fondo-claro); /* Gris Claro */
     border: 1px solid #E0E0E0;
@@ -161,13 +175,22 @@ footer.bg-contrast, .main-footer {
 }
 .card-img-custom {
     height: 200px; 
-    object-fit: cover;
+    object-fit: cover; 
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
+.card-title {
+    font-family: var(--font-subheading);
+    color: var(--color-texto-oscuro) !important; 
+    font-weight: 600;
+}
+/* 🌟 CORRECCIÓN CONTRASTE: Asegura un buen contraste de lectura */
+.card-text, .text-secondary { 
+    color: #555555 !important; 
+}
 .species-tag-custom {
-    background-color: var(--color-secundario-btn) !important; /* Azul Cielo */
-    color: var(--color-claro);
+    background-color: var(--color-secundario-btn) !important; 
+    color: var(--color-claro); 
     font-weight: 600;
 }
 .border-accent {

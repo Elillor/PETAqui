@@ -6,8 +6,8 @@
 /* 1. Definición de Variables CSS de PETAqui y Sobrescritura de Bootstrap */
 :root {
   /* Colores Principales de la Nueva Paleta */
-  --color-fondo-estructural: #21343a; /* Azul Oscuro: Header, Footer, Fondos oscuros */
-  --color-fondo-sub-header: #284f5a; /*Azul para espacio contiguo al header contraste*/
+  --color-fondo-estructural: #0f4aa1; /* Azul Oscuro: Header, Footer, Fondos oscuros */
+  --color-fondo-sub-header: #1783db; /*Azul para espacio contiguo al header contraste*/
   --color-fondo-claro: #f9f9f9; /* Gris Claro: Fondo principal, Fondos de Tarjetas */
   --color-texto-claro: #faf8fb; /* Blanco: Texto principal sobre Azul Oscuro */
   --color-texto-oscuro: #1a1a1a; /* Texto sobre Negro (oscuro para alto contraste) */

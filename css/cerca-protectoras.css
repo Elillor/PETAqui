@@ -1,0 +1,82 @@
+/* ========================================= */
+/* PETAqui - styles-cerca.css (Cerca Animal / Cerca Protectoras) */
+/* ========================================= */
+
+/* 1. Estilos de Barra de Búsqueda y Contenedores */
+
+/* Asegura que el contenedor de filtros sea visible en la página.
+   Si se usaran más estilos específicos aquí, se añadirían. */
+.container {
+    max-width: 1200px; /* Limita el ancho del contenido principal */
+}
+
+/* 2. Estilos de las Tarjetas (Cards) */
+
+/* Heredados de styles-index.css:
+   .animal-card-custom
+   .card-img-custom
+   .species-tag-custom
+   .btn-card-detail-custom
+*/
+
+/* Sobrescritura de texto para garantizar consistencia en la página de búsqueda */
+.animal-card-custom .card-title {
+    font-size: 1.25rem; /* Título ligeramente más grande para destacar */
+}
+
+.animal-card-custom .card-body {
+    padding: 1rem;
+}
+
+/* Ajustes para la imagen dentro de la tarjeta */
+.card-img-custom {
+    /* Esta regla asegura que la imagen de la tarjeta de animal/protectora tenga una altura fija */
+    height: 200px; 
+    object-fit: cover; 
+}
+
+/* Estilo para las tarjetas de Protectora (si tuvieran una clase específica, pero usamos la misma animal-card-custom) */
+/* Si se quisiera modificar la altura de la imagen de la protectora (150px)
+   sería mejor usar un selector más específico si no afecta a los animales */
+#protectoras-list .card-img-custom {
+    height: 150px; /* Altura más baja para los logos de protectoras (ejemplo del HTML) */
+    object-fit: contain; /* Para que el logo se vea completo */
+    background-color: white; /* Fondo blanco para los logos de las protectoras */
+}
+
+
+/* 3. Estilos de los Botones de Filtro Rápido */
+.btn-outline-secondary {
+    /* Definición del color de borde y texto para los botones no seleccionados */
+    color: var(--color-texto-oscuro) !important;
+    border-color: #DDDDDD !important; 
+    transition: all 0.2s;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary.active {
+    /* Estilo al pasar el ratón o al estar seleccionado (activo) */
+    background-color: var(--color-secundario-btn) !important;
+    border-color: var(--color-secundario-btn) !important;
+    color: var(--color-texto-oscuro) !important;
+}
+
+/* Para los botones ya activos (ej: el filtro "Totes") */
+.btn-secondary {
+    /* Sobrescritura para asegurar que los filtros activos usen el color primario/secundario */
+    background-color: var(--color-secundario-btn) !important;
+    border-color: var(--color-secundario-btn) !important;
+    color: var(--color-texto-oscuro) !important;
+}
+
+/* Paginación (si se implementa) */
+.pagination-custom .page-link {
+    color: var(--color-texto-oscuro);
+    border-color: #DDDDDD;
+}
+
+.pagination-custom .page-item.active .page-link {
+    background-color: var(--color-primario-cta);
+    border-color: var(--color-primario-cta);
+    color: var(--color-texto-oscuro) !important;
+}

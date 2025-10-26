@@ -4,195 +4,221 @@
 /* ========================================= */
 
 /* MÁXIMA PRIORIDAD PARA SOLUCIÓN FOOTER */
-html, body {
-    height: 100% !important; 
-    margin: 0;
-    padding: 0;
+html,
+body {
+  height: 100% !important;
+  margin: 0;
+  padding: 0;
 }
 
 /* 1. Definición de Variables CSS de PETAqui y Sobrescritura de Bootstrap */
 :root {
-    /* Colores Principales de la Nueva Paleta */
-    --color-fondo-estructural: #335c67;     /* Azul Oscuro: Header, Footer, Fondos oscuros */
-    --color-fondo-claro: #f9f9f9;           /* Gris Claro: Fondo principal, Fondos de Tarjetas */
-    --color-texto-claro: #FFFFFF;           /* Blanco: Texto principal sobre Azul Oscuro */
-    --color-texto-oscuro: #1a1a1a;          /* Texto sobre Negro (oscuro para alto contraste) */
-    
-    --color-primario-cta: #F0B300;          /* Amarillo Oro: Botón Primario (CTA), Acento */
-    --color-secundario-btn: #e8c07d;        /* Amarillo claro: Botón Secundario, Acento/Links */
-    --color-claro: white;                   /* Usado para texto de botones CTA */
-    
-    /* Tipografías (Mantenidas) */
-    --font-heading: 'Quicksand', sans-serif;
-    --font-subheading: 'Halant', serif;
-    --font-body: 'Sarala', sans-serif;
+  /* Colores Principales de la Nueva Paleta */
+  --color-fondo-estructural: #21343a; /* Azul Oscuro: Header, Footer, Fondos oscuros */
+  --color-fondo-sub-header: #284f5a; /*Azul para espacio contiguo al header contraste*/
+  --color-fondo-claro: #f9f9f9; /* Gris Claro: Fondo principal, Fondos de Tarjetas */
+  --color-texto-claro: #faf8fb; /* Blanco: Texto principal sobre Azul Oscuro */
+  --color-texto-oscuro: #1a1a1a; /* Texto sobre Negro (oscuro para alto contraste) */
 
-    /* Sobrescritura de Variables de Bootstrap (ACTUALIZADAS) */
-    --bs-primary: var(--color-primario-cta);
-    --bs-secondary: var(--color-secundario-btn);
-    --bs-light: var(--color-fondo-claro);
-    --bs-dark: var(--color-fondo-estructural);
-    
-    --bs-body-bg: var(--color-fondo-claro);     /* Fondo: Gris Claro */
-    --bs-body-color: var(--color-texto-oscuro); /* Texto: Azul Oscuro */
-    --bs-link-color: var(--color-secundario-btn); /* Links: Azul Cielo */
-    --bs-border-color: #DDDDDD; 
+  --color-primario-cta: #e5a60b; /* Amarillo Oro: Botón Primario (CTA), Acento */
+  --color-secundario-btn: #e8c07d; /* Amarillo claro: Botón Secundario, Acento/Links */
+  --color-secundario-subtitulo: #d4d4d4; /* color gris para subtitulo*/
+  --color-claro: white; /* Usado para texto de botones CTA */
+
+  /* Tipografías (Mantenidas) */
+  --font-heading: "Quicksand", sans-serif;
+  --font-subheading: "Halant", serif;
+  --font-body: "Sarala", sans-serif;
+
+  /* Sobrescritura de Variables de Bootstrap (ACTUALIZADAS) */
+  --bs-primary: var(--color-primario-cta);
+  --bs-secondary: var(--color-secundario-btn);
+  --bs-light: var(--color-fondo-claro);
+  --bs-dark: var(--color-fondo-estructural);
+  --bs-claro-subheader: var(var(--color-secundario-titulo));
+
+  --bs-body-bg: var(--color-fondo-claro); /* Fondo: Gris Claro */
+  --bs-body-color: var(--color-texto-oscuro); /* Texto: Azul Oscuro */
+  --bs-link-color: var(--color-secundario-btn); /* Links: Azul Cielo */
+  --bs-border-color: #dddddd;
 }
 
 /* 2. Estilos Globales, Tipografía y ESTRUCTURA (Sticky Footer) */
 body {
-    font-family: var(--font-body); 
-    color: var(--bs-body-color);
-    background-color: var(--bs-body-bg);
-    
-    /* REGLAS CLAVE DE ESTRUCTURA */
-    min-height: 100vh !important;
-    display: flex !important;
-    flex-direction: column !important;
+  font-family: var(--font-body);
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+
+  /* REGLAS CLAVE DE ESTRUCTURA */
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 main {
-    flex-grow: 1 !important; 
-    margin-bottom: 0 !important; 
+  flex-grow: 1 !important;
+  margin-bottom: 0 !important;
 }
 
 /* Tipografía */
-h1, h2 { 
-    font-family: var(--font-heading); 
-    font-weight: 700; 
-    color: var(--color-texto-oscuro); /* Azul Oscuro */
+h1,
+h2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-texto-claro); /* Color letra claro */
 }
-h3, h4, h5, h6, .card-title { 
-    font-family: var(--font-subheading); 
-    font-weight: 600; 
-    color: var(--color-texto-oscuro); /* Azul Oscuro */
+h3,
+h4,
+h5,
+h6,
+.card-title {
+  font-family: var(--font-subheading);
+  font-weight: 600;
+  color: var(--color-texto-oscuro); /* Azul Oscuro */
 }
 
 /* Clases de texto por color */
-.text-general { color: var(--color-texto-oscuro) !important; }
-.text-acento { color: var(--color-secundario-btn) !important; } /* Azul Cielo */
-.text-claro { color: var(--color-texto-claro) !important; } /* Blanco */
-
+.text-general {
+  color: var(--color-texto-oscuro) !important;
+}
+.text-acento {
+  color: var(--color-secundario-btn) !important;
+} /* Azul Cielo */
+.text-claro {
+  color: var(--color-texto-claro) !important;
+} /* Blanco */
 
 /* 3. Estilos de Navegación y Footer */
 .main-header {
-    background-color: var(--color-fondo-estructural); /* Azul Oscuro */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background-color: var(--color-fondo-estructural); /* Azul Oscuro */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Reglas de separación de pestañas */
 .main-header .navbar-nav .nav-item {
-    margin-left: 1.25rem; 
-    margin-right: 1.25rem; 
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
 }
 .main-header .navbar-nav .nav-item:first-child {
-    margin-left: 0;
+  margin-left: 0;
 }
 .main-header .navbar-nav .nav-item:last-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 
-
 .main-header .navbar-nav .nav-link {
-    color: var(--color-texto-claro) !important; /* Blanco */
-    font-family: var(--font-subheading);
-    font-weight: 600;
-    transition: color 0.3s;
+  color: var(--color-texto-claro) !important; /* Blanco */
+  font-family: var(--font-subheading);
+  font-weight: 600;
+  transition: color 0.3s;
 }
 .main-header .navbar-nav .nav-link:hover,
 .main-header .navbar-nav .nav-link.active {
-    color: var(--color-primario-cta) !important; /* Amarillo Oro */
+  color: var(--color-primario-cta) !important; /* Amarillo Oro */
 }
 .main-header .logo-img {
-    height: 70px; 
-    width: auto;
+  height: 70px;
+  width: auto;
 }
 
 /* Footer (Usa el color estructural) */
-footer.bg-contrast, .main-footer {
-    background-color: var(--color-fondo-estructural) !important; /* Azul Oscuro */
-    color: var(--color-texto-claro) !important; 
-    padding-top: 20px;
-    padding-bottom: 20px;
-    
-    margin-top: auto !important; /* Empuja el footer hacia abajo */
+footer.bg-contrast,
+.main-footer {
+  background-color: var(--color-fondo-estructural) !important; /* Azul Oscuro */
+  color: var(--color-texto-claro) !important;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  margin-top: auto !important; /* Empuja el footer hacia abajo */
 }
 .main-footer a {
-    color: var(--color-secundario-btn) !important; /* Azul Cielo */
-    text-decoration: none;
+  color: var(--color-texto-claro) !important; /* Color gris claro */
+  text-decoration: none;
 }
 .main-footer a:hover {
-    color: var(--color-primario-cta) !important; /* Amarillo Oro */
-    text-decoration: underline;
+  color: var(--color-primario-cta) !important; /* Amarillo Oro */
+  text-decoration: underline;
 }
 
 /* 4. Estilos de Componentes Comunes */
 .hero-section {
-    background-color: var(--color-fondo-estructural) !important; /* Azul Oscuro */
-    color: var(--color-texto-claro) !important;
+  background-color: var(
+    --color-fondo-sub-header
+  ) !important; /* Azul menos oscuro */
+  color: var(--color-secundario-subtitulo) !important;
 }
 
 /* Botones y Cards */
-.cta-login { font-family: var(--font-body); font-weight: 600; }
-.btn-primary, .btn-secondary {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    letter-spacing: 0.5px;
+.cta-login {
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+.btn-primary,
+.btn-secondary {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 /* Botón principal (Amarillo Oro) */
-.btn-primary { 
-    background-color: var(--color-primario-cta) !important; 
-    border-color: var(--color-primario-cta) !important; 
-    color: var(--color-texto-oscuro) !important; /* Usamos el color oscuro para texto sobre el oro */
+.btn-primary {
+  background-color: var(--color-primario-cta) !important;
+  border-color: var(--color-primario-cta) !important;
+  color: var(
+    --color-texto-oscuro
+  ) !important; /* Usamos el color oscuro para texto sobre el oro */
 }
 .btn-primary:hover {
-    background-color: #d8a000 !important; /* Tono más oscuro de Oro */
-    border-color: #d8a000 !important; 
+  background-color: #d8a000 !important; /* Tono más oscuro de Oro */
+  border-color: #d8a000 !important;
 }
 
-/* Botón secundario (Azul Cielo) */
-.btn-secondary { 
-    background-color: var(--color-secundario-btn) !important; 
-    border-color: var(--color-secundario-btn) !important; 
+/* Botón secundario (Dorado claro) */
+.btn-secondary {
+  background-color: var(--color-secundario-btn) !important;
+  border-color: var(--color-secundario-btn) !important;
+  color: #3c341a;
 }
 .btn-secondary:hover {
-    background-color: #2c81ba !important; /* Tono más oscuro de Azul Cielo */
-    border-color: #2c81ba !important; 
+  background-color: var(
+    --color-primario-cta
+  ) !important; /* Tono más oscuro de dorado */
+  border-color: var(--color-primario-cta) !important;
 }
 
 /* Estilos de Tarjetas de Animales (Corregido contraste) */
 .animal-card-custom {
-    background-color: var(--color-fondo-claro); /* Gris Claro */
-    border: 1px solid #E0E0E0;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
-    transition: transform 0.3s;
+  background-color: var(--color-fondo-claro); /* Gris Claro */
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s;
 }
 .animal-card-custom:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 .card-img-custom {
-    height: 200px; 
-    object-fit: cover; 
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 .card-title {
-    font-family: var(--font-subheading);
-    color: var(--color-texto-oscuro) !important; 
-    font-weight: 600;
+  font-family: var(--font-subheading);
+  color: var(--color-texto-oscuro) !important;
+  font-weight: 600;
 }
 /* 🌟 CORRECCIÓN CONTRASTE: Asegura un buen contraste de lectura */
-.card-text, .text-secondary { 
-    color: #555555 !important; 
+.card-text,
+.text-secondary {
+  color: #555555 !important;
 }
 .species-tag-custom {
-    background-color: var(--color-secundario-btn) !important; 
-    color: var(--color-claro); 
-    font-weight: 600;
+  background-color: var(--color-secundario-btn) !important;
+  color: var(--color-texto-oscuro);
+  font-weight: 600;
 }
 .border-accent {
-    border-color: var(--color-secundario-btn) !important; /* Azul Cielo */
+  border-color: var(--color-secundario-btn) !important; /* Azul Cielo */
 }

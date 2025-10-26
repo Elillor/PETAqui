@@ -5,14 +5,16 @@
 
 /* 1. Definición de Variables CSS de PETAqui y Sobrescritura de Bootstrap */
 :root {
-  /* Colores Principales de la Paleta */
-  --color-fondo-estructural: #335c67; /* Azul Oscuro: Header, Footer, Fondos oscuros */
+  /* Colores Principales de la Nueva Paleta */
+  --color-fondo-estructural: #21343a; /* Azul Oscuro: Header, Footer, Fondos oscuros */
+  --color-fondo-sub-header: #284f5a; /*Azul para espacio contiguo al header contraste*/
   --color-fondo-claro: #f9f9f9; /* Gris Claro: Fondo principal, Fondos de Tarjetas */
-  --color-texto-claro: #ffffff; /* Blanco: Texto principal sobre Azul Oscuro */
-  --color-texto-oscuro: #1a1a1a; /* Azul Oscuro: Texto sobre Gris Claro */
+  --color-texto-claro: #faf8fb; /* Blanco: Texto principal sobre Azul Oscuro */
+  --color-texto-oscuro: #1a1a1a; /* Texto sobre Negro (oscuro para alto contraste) */
 
-  --color-primario-cta: #f0b300; /* Amarillo Oro: Botón Primario (CTA), Acento */
-  --color-secundario-btn: #e8c07d; /* Azul Cielo: Botón Secundario, Acento/Links */
+  --color-primario-cta: #e5a60b; /* Amarillo Oro: Botón Primario (CTA), Acento */
+  --color-secundario-btn: #e8c07d; /* Amarillo claro: Botón Secundario, Acento/Links */
+  --color-secundario-subtitulo: #d4d4d4; /* color gris para subtitulo*/
   --color-claro: white; /* Usado para texto de botones CTA */
 
   /* Tipografías (Asegúrese de haber cargado las fuentes en noticies.html) */
@@ -60,7 +62,7 @@ h6,
 .card-title {
   font-family: var(--font-subheading);
   font-weight: 600;
-  color: var(--color-texto-oscuro);
+  color: var(--color-texto-oscuro) !important;
 }
 
 /* Clases de texto por color */
@@ -68,7 +70,7 @@ h6,
   color: var(--color-texto-oscuro) !important;
 }
 .text-acento {
-  color: var(--color-secundario-btn) !important;
+  color: var(--color-fondo-sub-header) !important;
 }
 .text-claro {
   color: var(--color-texto-claro) !important;
@@ -80,6 +82,13 @@ h6,
 .main-header {
   background-color: var(--color-fondo-estructural);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/*Color separador título - noticias*/
+.border-accent {
+  border-color: var(
+    --color-primario-cta
+  ) !important; /* groc daurat amb més contrast */
 }
 
 /* Reglas de separación de pestañas (Ajustado a 1.25rem) */
@@ -119,7 +128,7 @@ h6,
   padding-bottom: 20px;
 }
 .main-footer a {
-  color: var(--color-secundario-btn) !important;
+  color: var(--color-texto-claro) !important;
   text-decoration: none;
 }
 .main-footer a:hover {

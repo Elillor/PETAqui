@@ -15,14 +15,15 @@ body {
 :root {
   /* Colores Principales de la Nueva Paleta */
   --color-fondo-estructural: #0f4aa1; /* Azul Oscuro: Header, Footer, Fondos oscuros */
-  --color-fondo-sub-header: #1783db; /*Azul para espacio contiguo al header contraste*/
+  --color-fondo-sub-header: #1a75bf; /*Azul para espacio contiguo al header contraste*/
   --color-fondo-claro: #f9f9f9; /* Gris Claro: Fondo principal, Fondos de Tarjetas */
   --color-texto-claro: #faf8fb; /* Blanco: Texto principal sobre Azul Oscuro */
   --color-texto-oscuro: #1a1a1a; /* Texto sobre Negro (oscuro para alto contraste) */
 
   --color-primario-cta: #e5a60b; /* Amarillo Oro: Botón Primario (CTA), Acento */
   --color-secundario-btn: #e8c07d; /* Amarillo claro: Botón Secundario, Acento/Links */
-  --color-secundario-subtitulo: #d4d4d4; /* color gris para subtitulo*/
+  --color-secundario-inici: #ffb639; /*Color para contraste en el navbar, opción Inici*/
+  --color-secundario-subtitulo: #79a0ca; /* color oscuro para subtitulo para contraste con el fondo*/
   --color-claro: white; /* Usado para texto de botones CTA */
 
   /* Tipografías (Mantenidas) */
@@ -114,7 +115,7 @@ h6,
 }
 .main-header .navbar-nav .nav-link:hover,
 .main-header .navbar-nav .nav-link.active {
-  color: var(--color-primario-cta) !important; /* Amarillo Oro */
+  color: var(--color-secundario-inici) !important; /* Amarillo Oro */
 }
 .main-header .logo-img {
   height: 70px;
@@ -145,7 +146,8 @@ footer.bg-contrast,
   background-color: var(
     --color-fondo-sub-header
   ) !important; /* Azul menos oscuro */
-  color: var(--color-secundario-subtitulo) !important;
+  color: var(--color-texto-claro) !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Botones y Cards */

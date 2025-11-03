@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cerca Animal - PETAqui</title>
 
+    <meta
+      name="description"
+      content="Troba l'animal perfecte per adoptar a PETAqui. Filtra per espècie, localització i edat."
+    />
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -19,13 +24,26 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="css/styles-index.css" /> 
+    <link rel="stylesheet" href="css/styles-index.css" />
+    <link rel="stylesheet" href="css/cerca-animal.css" />
   </head>
   <body class="d-flex flex-column min-vh-100">
     <header class="main-header navbar navbar-expand-lg">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">
-          <img src="img/logoP.png" alt="Logo PETAqui" class="logo-img" />
+        <a class="navbar-brand">
+          <img
+            src="img/logoP_70.png"
+            alt="Logo PETAqui - pàgina de cerca d'animals"
+            class="logo-img"
+            srcset="
+              img/logoP_70.png   70w,
+              img/logoP_140.png 140w,
+              img/logoP_280.png 280w
+            "
+            sizes="(max-width: 768px) 70px,
+                  (max-width: 1200px) 140px,
+                  280px"
+          />
         </a>
 
         <button
@@ -49,17 +67,22 @@
               <a class="nav-link" href="index.html">Inici</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="cerca-animal.html"
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="cerca-animal.html"
                 >Cerca Animal</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="--------">Cerca Protectoras</a>
+              <a class="nav-link" href="cerca-protectoras.html"
+                >Cerca Protectoras</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="noticies.html">Notícies</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="login-or-profile-btn">
               <a href="login.html" class="btn btn-primary ms-lg-3 cta-login"
                 >Login</a
               >
@@ -73,7 +96,7 @@
       <h1 class="text-general text-center mb-5">Cerca el teu nou company</h1>
 
       <section class="row">
-        <div class="col-lg-3 mb-4">
+        <div class="col-12 col-md-4 col-lg-3 mb-4">
           <div class="card p-3 shadow-sm">
             <h5 class="card-title text-acento mb-3">Filtres de Cerca</h5>
             <form>
@@ -91,7 +114,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Codi Postal"
+                  placeholder="Codi Postal o Ciutat"
                 />
               </div>
               <button type="submit" class="btn btn-secondary w-100 mt-2">
@@ -101,32 +124,95 @@
           </div>
         </div>
 
-        <div class="col-lg-9">
+        <div class="col-12 col-md-8 col-lg-9">
           <h4 class="text-general mb-4">Resultats (12 animals)</h4>
 
-          <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div
+            id="animal-results"
+            class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
+          >
             <div class="col">
               <article class="card h-100 animal-card-custom shadow">
                 <img
-                  src="path/to/animal1.jpg"
+                  src="img/placeholder-dog.jpg"
                   class="card-img-top card-img-custom"
-                  alt="Animal 1"
+                  alt="Enzo, un gos mestís"
                 />
-                <div class="card-body">
-                  <h5 class="card-title text-secondary">Nom Animal</h5>
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title text-general">Enzo</h5>
                   <span class="badge species-tag-custom mb-2">Gos</span>
-                  <p class="card-text small text-secondary">
-                    📍 Ciutat | 🐾 Edat
+                  <p class="card-text small text-secondary mb-3">
+                    📍 Barcelona | 🐾 2 anys
                   </p>
                   <a
-                    href="#"
-                    class="btn btn-primary btn-sm w-100 btn-card-detail-custom"
+                    href="detall-animal.html?id=enzo"
+                    class="btn btn-primary btn-sm w-100 mt-auto btn-card-detail-custom"
+                    >Més Info</a
+                  >
+                </div>
+              </article>
+            </div>
+
+            <div class="col">
+              <article class="card h-100 animal-card-custom shadow">
+                <img
+                  src="img/placeholder-cat.jpg"
+                  class="card-img-top card-img-custom"
+                  alt="Kira, una gata taronja"
+                />
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title text-general">Kira</h5>
+                  <span class="badge species-tag-custom mb-2">Gat</span>
+                  <p class="card-text small text-secondary mb-3">
+                    📍 Tarragona | 🐾 6 mesos
+                  </p>
+                  <a
+                    href="detall-animal.html?id=kira"
+                    class="btn btn-primary btn-sm w-100 mt-auto btn-card-detail-custom"
+                    >Més Info</a
+                  >
+                </div>
+              </article>
+            </div>
+
+            <div class="col">
+              <article class="card h-100 animal-card-custom shadow">
+                <img
+                  src="img/placeholder-exotic.jpg"
+                  class="card-img-top card-img-custom"
+                  alt="Leo, un conill nan"
+                />
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title text-general">Leo</h5>
+                  <span class="badge species-tag-custom mb-2">Exòtic</span>
+                  <p class="card-text small text-secondary mb-3">
+                    📍 Lleida | 🐾 1 any
+                  </p>
+                  <a
+                    href="detall-animal.html?id=leo"
+                    class="btn btn-primary btn-sm w-100 mt-auto btn-card-detail-custom"
                     >Més Info</a
                   >
                 </div>
               </article>
             </div>
           </div>
+          <nav
+            aria-label="Paginació de resultats"
+            class="mt-5 d-flex justify-content-center"
+          >
+            <ul class="pagination pagination-custom">
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Anterior</a>
+              </li>
+              <li class="page-item active" aria-current="page">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Següent</a></li>
+            </ul>
+          </nav>
 
           <div class="pb-5"></div>
         </div>
@@ -141,12 +227,11 @@
           <a href="politica-privacitat.html" class="text-acento"
             >Protecció de Dades</a
           >
-          
+
           <span class="d-inline-block mx-2 text-claro">|</span>
           <a href="politica-cookies.html" class="text-acento"
             >Política de Cookies</a
           >
-          
         </p>
       </div>
     </footer>
@@ -156,5 +241,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdhrwFL0K5d2r4lM"
       crossorigin="anonymous"
     ></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cerca-animal.js"></script>
   </body>
 </html>

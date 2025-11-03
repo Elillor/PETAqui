@@ -1,20 +1,25 @@
 /* ========================================= */
-/* PETAqui - cerca-animal.css (Usado para Cerca Animal y Protectoras) */
+/* PETAqui - cerca-animal.css */
+/* Estilos específicos de la página de búsqueda de animales */
 /* ========================================= */
 
-/* 1. Estilos de Barra de Búsqueda y Contenedores */
+/* 1. Estilos de Contenedor General */
 
-/* Limita el ancho del contenedor principal */
+/* Asegura un ancho máximo para el contenido principal, haciéndolo consistente */
 .container {
     max-width: 1200px; 
 }
 
-/* 2. Estilos de las Tarjetas (Cards) */
 
-/* El estilo base de la tarjeta (.animal-card-custom, .card-img-custom, etc.)
-   se hereda de styles-index.css */
+/* 2. Estilos de Tarjeta (Animal Card) */
 
-/* Sobrescritura de texto para garantizar consistencia en la página de búsqueda */
+/* Sobrescribe la altura de la imagen en la tarjeta para mantener la uniformidad visual. */
+.card-img-custom {
+    height: 200px; 
+    object-fit: cover; 
+}
+
+/* Ajustes de tamaño y padding para la tarjeta de animal */
 .animal-card-custom .card-title {
     font-size: 1.25rem; /* Título ligeramente más grande para destacar */
 }
@@ -23,53 +28,58 @@
     padding: 1rem;
 }
 
-/* Ajustes para la imagen dentro de la tarjeta de animal */
-.card-img-custom {
-    /* Esta regla asegura que la imagen de la tarjeta tenga una altura fija */
-    height: 200px; 
-    object-fit: cover; /* Recorta y centra la imagen */
+/* Estilo para la etiqueta de Especie (Badge) */
+.species-tag-custom {
+    /* El color de fondo y texto deben provenir de las variables de tu paleta */
+    background-color: var(--color-fondo-sub-header); 
+    color: var(--color-texto-claro); 
+    font-size: 0.8rem;
+    padding: 0.3em 0.6em;
+    border-radius: 5px;
+    font-weight: 700;
 }
 
-/* Ajuste específico para la imagen de Protectoras si se usa en la misma hoja de estilos */
-#protectoras-list .card-img-custom {
-    height: 150px; /* Altura más baja para los logos de protectoras */
-    object-fit: contain; /* Para que el logo se vea completo */
-    background-color: white; /* Fondo blanco para los logos */
-}
-
-
-/* 3. Estilos de los Botones de Filtro Rápido */
-.btn-outline-secondary {
-    /* Estilo de los botones no seleccionados (Outline) */
+/* Estilo para el botón 'Més Info' de la tarjeta */
+.btn-card-detail-custom {
+    /* Usa el color primario para la CTA (Call to Action) en la tarjeta */
+    background-color: var(--color-primario-cta) !important;
+    border-color: var(--color-primario-cta) !important;
     color: var(--color-texto-oscuro) !important;
-    border-color: #DDDDDD !important; 
-    transition: all 0.2s;
+    font-weight: 700;
 }
 
-.btn-outline-secondary:hover,
-.btn-outline-secondary.active {
-    /* Estilo al pasar el ratón o al estar seleccionado (activo) */
-    background-color: var(--color-secundario-btn) !important;
-    border-color: var(--color-secundario-btn) !important;
-    color: var(--color-texto-oscuro) !important;
+/* Efecto hover consistente para el botón */
+.btn-card-detail-custom:hover {
+    background-color: var(--color-primario-cta-hover) !important; /* Si tienes una variable de hover */
+    border-color: var(--color-primario-cta-hover) !important;
+    opacity: 0.9;
 }
 
-/* Para los botones ya activos (ej: el filtro "Totes") */
-.btn-secondary {
-    /* Asegura que los filtros activos usen el color secundario */
-    background-color: var(--color-secundario-btn) !important;
-    border-color: var(--color-secundario-btn) !important;
-    color: var(--color-texto-oscuro) !important;
+
+/* 3. Estilos de Filtros (Card de la barra lateral) */
+/* El contenido de la tarjeta de filtros no necesita muchos estilos específicos si usa clases de Bootstrap. */
+
+/* Ajuste del título del formulario */
+.card .card-title.text-acento {
+    font-weight: 700;
 }
 
-/* Paginación (si se implementa) */
+/* 4. Estilos de Paginación */
+/* Aseguramos que la paginación use los colores corporativos */
 .pagination-custom .page-link {
     color: var(--color-texto-oscuro);
-    border-color: #DDDDDD;
+    border: 1px solid #ccc;
+    transition: background-color 0.2s, border-color 0.2s;
 }
 
 .pagination-custom .page-item.active .page-link {
+    /* El elemento activo usa el color de acento/CTA */
     background-color: var(--color-primario-cta);
     border-color: var(--color-primario-cta);
-    color: var(--color-texto-oscuro) !important;
+    color: var(--color-texto-oscuro); /* Texto oscuro para buen contraste sobre amarillo */
+}
+
+.pagination-custom .page-link:hover {
+    background-color: var(--color-fondo-claro); /* Fondo claro al pasar el ratón */
+    color: var(--color-texto-oscuro);
 }

@@ -1,0 +1,47 @@
+/* ========================================= */
+/* PETAqui - styles-cookies.css */
+/* Estilos específicos para las páginas de Política de Cookies y Privacidad. */
+/* ========================================= */
+
+/* Contenedor principal del texto legal */
+.policy-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: var(--color-fondo-claro);
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* Estilo para los títulos de sección (h2) */
+.policy-container h2 {
+    margin-top: 35px;
+    border-bottom: 2px solid var(--color-primario-cta); /* Línea de acento Amarillo Oro */
+    padding-bottom: 8px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+/* Estilo para subtítulos (h3) */
+.policy-container h3 {
+    margin-top: 25px;
+    color: var(--color-secundario-btn); /* Color de acento Azul Cielo */
+    font-family: var(--font-subheading);
+    font-weight: 600;
+}
+
+/* Estilo para listas */
+.policy-container ul, .policy-container ol {
+    padding-left: 25px;
+    margin-bottom: 20px;
+}
+
+/* Estilo para la tabla de cookies (Bootstrap personalizado) */
+.table {
+    --bs-table-bg: var(--color-fondo-claro);
+    --bs-table-color: var(--color-texto-oscuro);
+}
+.table thead {
+    background-color: var(--color-fondo-estructural) !important;
+    color: var(--color-texto-claro) !important;
+}

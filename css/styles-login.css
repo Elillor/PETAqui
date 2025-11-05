@@ -1,0 +1,82 @@
+/* ========================================= */
+/* PETAqui - styles-login.css */
+/* Estilos específicos para la página de Login/Registro con pestañas */
+/* ========================================= */
+
+.login-container {
+    background-color: var(--color-fondo-claro); /* Gris Claro */
+    padding: 35px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px; /* Limitar el ancho */
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Controles de Pestañas (Botones Iniciar Sesión / Registrarse) */
+.tab-controls {
+    display: flex;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #ccc;
+}
+
+.tab-controls button {
+    flex-grow: 1;
+    padding: 12px 0;
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-bottom: 4px solid transparent;
+    margin-bottom: -2px; /* Compensar el borde inferior del contenedor */
+}
+
+.tab-controls button.active {
+    color: var(--color-secundario-btn); /* Azul Cielo */
+    border-bottom-color: var(--color-secundario-btn); /* Borde de acento */
+}
+
+.tab-controls button:hover:not(.active) {
+    color: var(--color-texto-oscuro);
+}
+
+/* Contenido del Formulario */
+.form-content {
+    position: relative;
+    min-height: 250px; /* Asegurar que el contenedor no colapse */
+}
+
+/* Ocultar/Mostrar Formularios */
+.form-content form {
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    /* Efecto de transición simple */
+    opacity: 0;
+    transition: opacity 0.5s ease; 
+}
+
+.form-content form.active {
+    display: block;
+    opacity: 1;
+    position: static; /* Para que ocupe espacio y no se solape */
+}
+
+/* Estilos de inputs generales */
+.form-control-lg {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Sobrescribe el estilo de los enlaces pequeños (p. ej. "¿Has olvidado la contraseña?") */
+.text-acento {
+    color: var(--color-secundario-btn) !important;
+}

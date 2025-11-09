@@ -23,7 +23,7 @@ body {
   --color-primario-cta: #e5a60b; /* Amarillo Oro: Botón Primario (CTA), Acento */
   --color-secundario-btn: #e8c07d; /* Amarillo claro: Botón Secundario, Acento/Links */
   --color-secundario-inici: #ffb639; /*Color para contraste en el navbar, opción Inici*/
-  --color-secundario-subtitulo: #79a0ca; /* color oscuro para subtitulo para contraste con el fondo*/
+  --color-secundario-subtitulo: #79a0ca; /* color oscuro para subtitulo para contraste con el fondo*/  
   --color-claro: white; /* Usado para texto de botones CTA */
 
   /* Tipografías (Mantenidas) */

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ca">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
     <title>Login / Registre - PETAqui</title>
 
     <link
@@ -10,17 +10,17 @@
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
-    />
+    >
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" >
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin >
     <link
       href="https://fonts.googleapis.com/css2?family=Halant:wght@400;600&family=Quicksand:wght@700&family=Sarala&display=swap"
       rel="stylesheet"
-    />
+    >
 
-    <link rel="stylesheet" href="css/styles-index.css" />
-    <link rel="stylesheet" href="css/styles-login.css" />
+    <link rel="stylesheet" href="css/styles-index.css" >
+    <link rel="stylesheet" href="css/styles-login.css" >
   </head>
   <body class="d-flex flex-column min-vh-100">
     <header class="main-header navbar navbar-expand-lg">
@@ -38,7 +38,7 @@
             sizes="(max-width: 768px) 70px,
                   (max-width: 1200px) 140px,
                   280px"
-          />
+          >
         </a>
 
         <button
@@ -85,7 +85,7 @@
 
     <main class="flex-grow-1 w-100 d-flex justify-content-center">
       <div class="login-container">
-        <h1 class="h3 mb-4 text-general">Benvingut a PETAqui</h1>
+        <h1 class="h3 mb-4 text-general text-center">Benvingut a PETAqui</h1>
 
         <div class="tab-controls">
           <button id="loginBtn" class="active">Iniciar Sessió</button>
@@ -94,20 +94,22 @@
 
         <div class="form-content">
           <form id="loginForm" class="active">
-            <input
+            <label for="login-email" class="lbl-form-register">Correu electrònic: </label>
+              <input
               type="email"
               class="form-control form-control-lg"
               placeholder="Correu electrònic"
               id="login-email"
               required
-            />
+            >
+            <label for="login-password" class="lbl-form-register">Contrasenya: </label>
             <input
               type="password"
               class="form-control form-control-lg"
               placeholder="Contrasenya"
               id="login-password"
               required
-            />
+            >
             <a href="#" class="small text-acento text-start d-block mb-2"
               >Has oblidat la contrasenya?</a
             >
@@ -117,40 +119,37 @@
           </form>
 
           <form id="registerForm">
+            <label for="registerName" class="lbl-form-register">Nom: </label>
             <input
               type="text"
               class="form-control form-control-lg"
               placeholder="Nom"
               id="registerName"
               required
-            />
+            >
+            <label for="registerSurname1" class="lbl-form-register">Primer cognom: </label>
             <input
               type="text"
               class="form-control form-control-lg"
               placeholder="Cognom 1"
               id="registerSurname1"
               required
-            />
+            >
+            <label for="registerSurname2" class="lbl-form-register">Segon cognom: </label>
             <input
               type="text"
               class="form-control form-control-lg"
               placeholder="Cognom 2"
               id="registerSurname2"
-            />
-            <input
-              type="text"
-              class="form-control form-control-lg"
-              placeholder="Nom d'usuari"
-              id="registerUsername"
-              required
-            />
-            <input
+            >
+            <label for="registerEmail" class="lbl-form-register">Correu electrònic: </label><input
               type="email"
               class="form-control form-control-lg"
               placeholder="Correu electrònic"
-              id="registerEmail"
+              id="registerUsername"
               required
-            />
+            >
+            <label for="registerPassword" class="lbl-form-register">Contrasenya: </label>
             <input
               type="password"
               class="form-control form-control-lg"
@@ -158,15 +157,16 @@
               id="registerPassword"
               required
               minlength="8"
-            />
+            >
+            <label for="registerConfirmPassword" class="lbl-form-register">Confirma la contrasenya: </label>
             <input
               type="password"
               class="form-control form-control-lg"
-              placeholder="Confirmar contrasenya"
+              placeholder="Confirmar la contrasenya"
               id="registerConfirmPassword"
               required
               minlength="8"
-            />
+            >
             <div class="form-check text-start">
               <input
                 class="form-check-input"
@@ -174,7 +174,7 @@
                 value=""
                 id="acceptTerms"
                 required
-              />
+              >
               <label class="form-check-label small" for="acceptTerms">
                 Accepto els
                 <a href="#" class="text-acento">Termes i Condicions</a>

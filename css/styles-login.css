@@ -3,6 +3,7 @@
 /* Estilos específicos para la página de Login/Registro con pestañas */
 /* ========================================= */
 
+
 .login-container {
     background-color: var(--color-fondo-claro); /* Gris Claro */
     padding: 35px;
@@ -12,6 +13,11 @@
     max-width: 450px; /* Limitar el ancho */
     margin-top: 50px;
     margin-bottom: 50px;
+}
+
+/*Estilo título formulario */
+.login-container h1{
+    text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.08);    
 }
 
 /* Controles de Pestañas (Botones Iniciar Sesión / Registrarse) */
@@ -36,8 +42,8 @@
 }
 
 .tab-controls button.active {
-    color: var(--color-secundario-btn); /* Azul Cielo */
-    border-bottom-color: var(--color-secundario-btn); /* Borde de acento */
+    color: var(--color-fondo-estructural); /* Azul Cielo */
+    border-bottom-color: var(--color-fondo-estructural); /* Borde de acento */    
 }
 
 .tab-controls button:hover:not(.active) {
@@ -76,7 +82,13 @@
     border: 1px solid #ddd;
 }
 
+/*Estilo labels form */
+.lbl-form-register{
+    color: var(--color-texto-oscuro);
+    font-weight: 600;
+}
+
 /* Sobrescribe el estilo de los enlaces pequeños (p. ej. "¿Has olvidado la contraseña?") */
 .text-acento {
-    color: var(--color-secundario-btn) !important;
+    color: var(--color-fondo-sub-header) !important;
 }

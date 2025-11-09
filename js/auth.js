@@ -47,22 +47,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Función de Logout (Salir) - Cierra sesión y redirige a la página de inicio (index.html)
     window.simulateLogout = function() {
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('dadesPerfil');
         window.location.href = 'index.html'; 
     };
     
     // Función para Cambiar Usuario - Cierra sesión y redirige a la página de Login (login.html)
     window.simulateChangeUser = function() {
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('dadesPerfil');
         window.location.href = 'login.html'; 
     };
 
     // Función de simulación de Login (para usar en login.html)
     // NOTA: Esta función no se usa directamente para el login HTTP, pero se mantiene si se usa en otro lugar.
-    window.simulateLogin = function(username, name, surname1, surname2, email, password) {
+    /*window.simulateLogin = function(username, name, surname1, surname2, email, password) {
         const userData = { username, name, surname1, surname2, email, password };
         localStorage.setItem('currentUser', JSON.stringify(userData));
         window.location.href = 'perfil.html'; 
-    };
+    };*/
 
     // Función para actualizar el botón en el header
     function updateHeaderLoginButton() {
@@ -72,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // USUARIO LOGEADO: Mostrar un Dropdown (funciona con CLIC nativo de Bootstrap)
             const userData = JSON.parse(currentUser);
             // Si el backend proporciona un 'username' se usa, si no, se puede usar el 'name'
-            const username = userData.username || userData.name || 'Usuari'; 
+            const displayName = userData.nomUs || userData.emailUs?.split("@")[0] || 'Usuari'; 
 
             loginOrProfileBtnContainer.innerHTML = `
                 <div class="dropdown">
@@ -82,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill me-2" viewBox="0 0 16 16">
                             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
                         </svg>
-                        ${username}
+                        ${displayName}
                     </button>
                     
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">

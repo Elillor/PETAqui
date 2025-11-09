@@ -1,0 +1,69 @@
+/* ========================================= */
+/* PETAqui - detall-animal.css */
+/* Estilos específicos de la página de detalles de un animal */
+/* ========================================= */
+
+/* 1. Estilos para la Tarjeta Principal de la Imagen */
+.animal-card-custom {
+    /* Basado en el estilo de las tarjetas de cerca-animal.css para coherencia */
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background-color: var(--color-fondo-claro);
+    overflow: hidden; /* Asegura que la imagen respete el radio superior */
+}
+
+/* Imagen Principal del Animal */
+#animal-image {
+    width: 100%;
+    /* Altura fija o mínima para evitar saltos de layout */
+    min-height: 350px; 
+    object-fit: cover;
+    display: block;
+}
+
+/* 2. Estilos para el Botón de Adopción (CTA) */
+/* El botón de la página de detalles es grande y destacado */
+#adoption-cta {
+    /* Usa las variables definidas en styles-index.css */
+    background-color: var(--color-primario-cta) !important; 
+    border-color: var(--color-primario-cta) !important;
+    color: var(--color-texto-oscuro) !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#adoption-cta:hover {
+    background-color: var(--color-secundario-btn) !important;
+    border-color: var(--color-secundario-btn) !important;
+    opacity: 0.95;
+}
+
+/* 3. Estilos de Listas de Detalles */
+/* Aseguramos que las listas de detalles (rápidos, carácter, médico) sean limpias */
+#quick-details-list, #character-list, #medical-list {
+    background-color: transparent;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.list-group-item {
+    padding: 10px 0;
+    border-color: #eee;
+    font-size: 1.05rem;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+/* Destacar el nombre del animal y los encabezados */
+#animal-name {
+    font-family: var(--font-heading); /* Si está definida en styles-index.css */
+    font-weight: 700;
+}
+
+.text-acento {
+    color: var(--color-primario-cta) !important; /* Amarillo Oro */
+}

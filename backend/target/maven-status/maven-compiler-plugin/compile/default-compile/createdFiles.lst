@@ -1,0 +1,16 @@
+com\buscadorpelut\Controller\UsuarioController.class
+com\buscadorpelut\Model\Animal.class
+com\buscadorpelut\Controller\AnimalController.class
+com\buscadorpelut\Repository\AnimalRepository.class
+com\buscadorpelut\Auth\RegisterRequest.class
+com\buscadorpelut\Service\AnimalService.class
+com\buscadorpelut\Model\Usuario.class
+com\buscadorpelut\Config\SecurityConfig.class
+com\buscadorpelut\Service\UsuarioService.class
+com\buscadorpelut\Repository\UsuarioRepository.class
+com\buscadorpelut\Auth\RegisterRequest$RegisterRequestBuilder.class
+com\buscadorpelut\Model\Rol.class
+com\buscadorpelut\Auth\LoginRequest.class
+com\buscadorpelut\DTO\UsuarioDTO.class
+com\buscadorpelut\Auth\AuthController.class
+com\buscadorpelut\BuscadorpelutApplication.class

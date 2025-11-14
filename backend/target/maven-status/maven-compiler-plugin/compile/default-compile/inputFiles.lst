@@ -1,0 +1,15 @@
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Auth\AuthController.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Auth\LoginRequest.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Auth\RegisterRequest.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\BuscadorpelutApplication.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Config\SecurityConfig.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Controller\AnimalController.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Controller\UsuarioController.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\DTO\UsuarioDTO.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Model\Animal.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Model\Rol.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Model\Usuario.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Repository\AnimalRepository.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Repository\UsuarioRepository.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Service\AnimalService.java
+C:\xampp\htdocs\PETAqui\backend\src\main\java\com\buscadorpelut\Service\UsuarioService.java

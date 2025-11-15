@@ -38,18 +38,27 @@ public class AnimalController {
     private AnimalService animalService;
 
     /**
-     * Mètode per retornar tots els animals registrats al sistema.
+     * Mètode per retornar tots els animals registrats al sistema en situació d'adopció.
      * 
-     * @return {@link ResponseEntity} amb una llista d'objectes {@link Animal} i codi HTTP 200 (OK).
+     * @return {@link ResponseEntity} amb una llista d'animals {@link Animal} no adoptats i codi HTTP 200 (OK).
      * 
      * @see AnimalService#getAllAnimals()
      */
     @GetMapping
     public ResponseEntity<List<Animal>>getAllAnimals(){
-        List<Animal> animals = animalService.getAllAnimals();
+        List<Animal> animals = animalService.getAllAnimalsNoAdoptats();
         return ResponseEntity.ok(animals);
     }
 
+    /**
+     * Retorna els detalls d'un animal identificat pel seu ID numèric.
+     * 
+     * @param numId l'identificador únic de l'animal el qual es mostraran els detalls.
+     * @return {@link ResponseEntity} amb l'objecte {@link Animal} si es troba (codi 200 OK),
+     *         o codi HTTP 404 (Not Found) si no existeix cap animal amb aquest ID.
+     * 
+     * @see AnimalService#getAnimalsById(Long)
+     */
     @GetMapping("{numId}")
     public ResponseEntity<Animal>getAnimalsByNumId(@PathVariable Long numId){
         return animalService.getAnimalsById(numId)
@@ -58,10 +67,10 @@ public class AnimalController {
     }
 
     /**
-     * Mètode per retornar una llista d'animals filtrats per espècie.
+     * Mètode per retornar una llista d'animals filtrats per espècie i que no estan adoptats.
      * 
      * <p>Si el paràmetre {@code especie} és "Exòtic", es retornen tots els animals
-     * que no pertanyen a les espècies "Gos" ni "Gat".
+     * que no pertanyen a les espècies "Gos" ni "Gat" en situació d'adopció.
      * 
      * <p>Exemples d'ús:
      * <ul>
@@ -70,7 +79,7 @@ public class AnimalController {
      * </ul>
      * 
      * @param especie el nom de l'espècie a filtrar (ex: "Gos", "Gat", "Exòtic").
-     * @return {@link ResponseEntity} amb una llista d'objectes {@link Animal} i codi HTTP 200 (OK).
+     * @return {@link ResponseEntity} amb una llista d'animals {@link Animal} en situació d'adopció i codi HTTP 200 (OK).
      *         Pot retornar una llista buida si no hi ha animals d'aquella espècie.
      * 
      * @see AnimalService#getAnimalsByEspecie(String)
@@ -80,9 +89,9 @@ public class AnimalController {
     public ResponseEntity<List<Animal>>getAnimalsByEspecie(@RequestParam String especie){
         List<Animal>animals;
         if("Exòtic".equals(especie)){
-            animals=animalService.getAnimalsExcluirGosGat();
+            animals=animalService.getAnimalsExcluirGosGatNoAdoptats();
         }else{
-            animals=animalService.getAnimalsByEspecie(especie);
+            animals=animalService.getAnimalsByEspecieNoAdoptats(especie);
         }
         return ResponseEntity.ok(animals);
     }

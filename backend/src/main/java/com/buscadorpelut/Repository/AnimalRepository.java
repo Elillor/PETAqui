@@ -51,4 +51,37 @@ public interface AnimalRepository extends JpaRepository<Animal,Long>{
      * @see Animal#setEspecie(String)
      */
     List<Animal> findByEspecieNotIn(List<String>especies);
+
+    /**
+     * Mètode per mostrar tots els animals de les espècies Gat o Gos i que **no estan adoptats**.
+     * 
+     * @param especie el nom exacte de l'espècie a cercar (ex: "Gos", "Gat").
+     * @return una llista d'animals no adoptats de l'espècie seleccionada.
+     *         Pot estar buida si no n'hi ha cap disponible.
+     */
+    List<Animal> findByEspecieAndEsAdoptatFalse(String especie);
+
+    /**
+     * Mètode per mostrar tots els animals amb les espècies que **no estan incloses** en la llista donada
+     * i que **no estan adoptats**.
+     * 
+     * <p>Aquest mètode s'utilitza principalment per obtenir animals "exòtics"
+     * (és a dir, tot excepte "Gos" i "Gat") que estiguin disponibles per a adopció.
+     * 
+     * @param especies una llista de noms d'espècies a excloure (ex: Arrays.asList("Gos", "Gat")).
+     * @return una llista d'animals no adoptats d'espècies diferents a les indicades.
+     *         Pot estar buida si no hi ha animals disponibles fora d'aquestes espècies.
+     */
+    List<Animal> findByEspecieNotInAndEsAdoptatFalse(List<String>especies);
+
+    /**
+     * Mètode que retorna tots els animals del sistema que **no estan adoptats**.
+     * 
+     * <p>Aquest mètode s'utilitza per obtenir la llista completa d'animals disponibles
+     * per a adopció, independentment de l'espècie, edat o sexe.
+     * 
+     * @return una llista d'animals no adoptats.
+     *         Pot estar buida si tots els animals ja han estat adoptats.
+     */
+    List<Animal> findByEsAdoptatFalse();
 }

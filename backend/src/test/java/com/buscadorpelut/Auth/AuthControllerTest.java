@@ -47,6 +47,7 @@ public class AuthControllerTest {
     /**
      * MockBean para simular el servicio de usuario.
      */
+    @SuppressWarnings("removal")
     @MockBean
     private UsuarioService usuarioService;
 

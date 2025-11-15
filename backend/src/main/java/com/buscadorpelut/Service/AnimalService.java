@@ -39,6 +39,30 @@ public class AnimalService {
     return animalRepository.findAll();
   }
 
+  /**
+    * Recupera una llista completa de tots els animals registrats al sistema que no estan adoptats.
+    *  
+    * @return una llista d'objectes {@link Animal} que estan en situació d'adopció.
+    *         Pot estar buida si no hi ha cap animal a la base de dades.
+    *
+    * @see AnimalRepository#findByEsAdoptatFalse()     
+   */
+  public List<Animal>getAllAnimalsNoAdoptats(){
+    return animalRepository.findByEsAdoptatFalse();
+  }
+
+  /**
+     * Mostra els detalls d'un animal pel seu identificador únic numèric.
+     * 
+     * <p>Si l'ID proporcionat és {@code null}, es retorna un {@link Optional#empty()} 
+     * per evitar excepcions.
+     * 
+     * @param id l'identificador únic de l'animal a cercar.
+     * @return un {@link Optional} que conté l'animal si es troba, o buit si no existeix 
+     *         o si l'ID és {@code null}.
+     * 
+     * @see AnimalRepository#findById(Object)
+     */
   public Optional<Animal>getAnimalsById(Long id){
     if (id == null) {
         return Optional.empty();
@@ -74,5 +98,39 @@ public class AnimalService {
      */
   public List<Animal>getAnimalsExcluirGosGat(){
     return animalRepository.findByEspecieNotIn(Arrays.asList("Gos","Gat"));
+  }
+
+  /**
+ * Retorna tots els animals d'una espècie específica que **encara no han estat adoptats**.
+ * 
+ * <p>Aquest mètode s'utilitza quan es vol filtrar la llista d'animals disponibles
+ * per adopció segons la seva espècie (per exemple, només "Gos" o només "Gat").
+ * 
+ * @param especie el nom de l'espècie a cercar (ha de coincidir exactament amb el valor
+ *                emmagatzemat a la base de dades, p. ex. "Gos", "Gat").
+ * @return una llista d'animals {@link Animal} que pertanyen a l'espècie indicada
+ *         i que tenen {@code esAdoptat = false}.
+ *         La llista pot estar buida si no hi ha animals d'aquella espècie disponibles.
+ * 
+ * @see AnimalRepository#findByEspecieAndEsAdoptatFalse(String)
+ */
+  public List<Animal>getAnimalsByEspecieNoAdoptats(String especie){
+    return animalRepository.findByEspecieAndEsAdoptatFalse(especie);
+  }
+
+  /**
+ * Retorna tots els animals que no pertanyen a les espècies "Gos" ni "Gat" i que estan en situació d'adopció.
+ * 
+ * <p>Aquest mètode implementa la categoria "Exòtic",
+ * incloent espècies com conills, aus, cobaias, rèptils, etc., sempre que estiguin
+ * disponibles per a adopció ({@code esAdoptat = false}).
+ * 
+ * @return una llista d'animals d'espècies diferents a "Gos" i "Gat" i que estan en situació d'adopció.
+ *         La llista pot estar buida si no hi ha animals "exòtics" disponibles.
+ * 
+ * @see AnimalRepository#findByEspecieNotInAndEsAdoptatFalse(List)
+ */
+  public List<Animal>getAnimalsExcluirGosGatNoAdoptats(){
+    return animalRepository.findByEspecieNotInAndEsAdoptatFalse(Arrays.asList("Gos","Gat"));
   }
 }

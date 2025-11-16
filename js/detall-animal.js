@@ -13,6 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ----------------------------------------------------
+    // 4. Inicialización
+    // ----------------------------------------------------
+    const animalId = getAnimalIdFromUrl();
+    
+   
+
+    // ----------------------------------------------------
     // 2. Función para obtener los detalles del Backend (Nuevo)
     // ----------------------------------------------------
     async function fetchAnimalDetails(animalId) {
@@ -47,76 +54,68 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // ----------------------------------------------------
-    // 3. Funciones de Renderizado (Con cambios ligeros)
+    // 3. Función para renderizar los detalles en el HTML (MODIFICADA)
     // ----------------------------------------------------
 
-    const renderError = (message) => {
-        const container = document.getElementById('animal-detail-content');
-        container.innerHTML = `<div class="col-12 text-center"><p class="alert alert-danger">${message}</p></div>`;
-        document.getElementById('animal-name-breadcrumb').textContent = 'Error';
-        document.title = 'Error - PETAqui';
-    };
+    //Metode per obtenir la url de la imatge
+    //Genera la URL de la imatge
+    function getAnimalUrlImatge(animal) {
+        if (!animal.fotoPerfil) {
+            return "/img/placeholder-default.jpg";
+        }
+        const carpeta = animal.especie
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    return `/img/Animals/${carpeta}/${animal.fotoPerfil}`;
+    }
+
+   
 
     const renderAnimalDetails = (animal) => {
-        // --- Metadatos y Títulos ---
-        document.title = `${animal.name} - Detall Animal - PETAqui`;
-        document.getElementById('animal-name-breadcrumb').textContent = animal.name;
-        document.getElementById('animal-name').textContent = animal.name;
-        
-        // --- Imagen y CTA ---
-        document.getElementById('animal-image').src = animal.img || 'img/placeholder-default.jpg';
-        document.getElementById('animal-image').alt = `Imatge de ${animal.name}`;
-        
-        // Generar enlace de contacto con la protectora (si el backend lo proporciona)
-        const protectoraEmail = animal.protectoraEmail || 'adopcions@petaqui.cat';
-        document.getElementById('adoption-cta').href = `mailto:${protectoraEmail}?subject=Interessat%20en%20l'adopció%20de%20${animal.name}`;
+        // Asignar el nombre para el título de la página
+        document.title = `Adopta ${animal.nomAn || 'Animal'} - PETAqui`;
 
-        // --- Protectora y Descripción ---
-        const protectoraLink = document.getElementById('protectora-name');
-        protectoraLink.textContent = animal.protectora || 'Protectora Desconeguda';
-        protectoraLink.href = animal.protectoraWeb || '#'; 
-        document.getElementById('animal-description').textContent = animal.description || 'Sense descripció.';
-        document.getElementById('animal-status').textContent = animal.status || 'Estat Desconegut';
-        
-        // Asignar color al status 
-        const statusBadge = document.getElementById('animal-status');
-        // (La lógica de las clases CSS debe estar en tu CSS o aquí)
-        statusBadge.classList.remove('bg-info', 'bg-warning', 'bg-success');
-        if (animal.status && animal.status.toLowerCase().includes('adopció')) {
-            statusBadge.classList.add('bg-success');
-        } else if (animal.status && animal.status.toLowerCase().includes('pendent')) {
-            statusBadge.classList.add('bg-warning');
+        //Obtenim l'edat en format text
+        const edat = animal.edat;
+
+        let edatText;
+
+        if(edat.anys === 0) {
+            edatText = `${edat.mesos} mesos`;
+        } else if (edat.mesos === 0) {
+            edatText = `${edat.anys} anys`;
         } else {
-            statusBadge.classList.add('bg-info');
+            edatText = `${edat.anys} anys i ${edat.mesos} mesos`;
         }
-
+        
+        const imatgeUrl = getAnimalUrlImatge(animal)
 
         // --- Detalls Ràpids ---
-        document.getElementById('detail-species').textContent = animal.species || '-';
-        document.getElementById('detail-age').textContent = animal.age || '-';
-        document.getElementById('detail-gender').textContent = animal.gender || '-';
-        document.getElementById('detail-size').textContent = animal.size || '-';
-        document.getElementById('detail-location').textContent = animal.location || '-';
+        document.getElementById('animal-image').src = imatgeUrl || 'img/placeholder-default.jpg';
+        document.getElementById('animal-image').alt = `Imatge de ${animal.nomAn|| 'l\'animal'}`;
         
-        // --- Caràcter i Convivència ---
-        document.getElementById('detail-kids').textContent = animal.kids || '-';
-        document.getElementById('detail-dogs').textContent = animal.dogs || '-';
-        document.getElementById('detail-cats').textContent = animal.cats || '-';
-        document.getElementById('detail-energy').textContent = animal.energy || '-';
+        document.getElementById('detail-name').textContent = animal.nomAn || 'Animal Desconegut';
+        document.getElementById('detail-species').textContent = animal.especie || 'N/A';
+        
+        // Detalls ràpids requerits pel mockup
+        document.getElementById('detail-age').textContent = `Edat: ${edatText || 'N/A'}`;
+        document.getElementById('detail-gender').textContent = `Sexe: ${animal.sexe || 'N/A'}`;
 
-        // --- Informació Mèdica ---
-        document.getElementById('detail-health').textContent = animal.health || '-';
-        document.getElementById('detail-vax').textContent = animal.vax || '-';
-        document.getElementById('detail-sterilized').textContent = animal.sterilized || '-';
-        document.getElementById('detail-chip').textContent = animal.chip || '-';
+        // --- Descripció ---
+        document.getElementById('detail-description').textContent = animal.descripcio || 'Aquest animal encara no té una descripció completa, però està esperant la seva nova llar.';
+        
+        // --- Dades de la Protectora (Simulades o afegides) ---
+        // NOTA: Si aquestes dades vénen de l'API de l'animal, caldria afegir-les a la crida.
+        // Aquí les deixo amb valors de placeholder fins que es connectin.
+        document.getElementById('detail-shelter-name').textContent = animal.shelterName || 'Protectora PETAqui';
+        document.getElementById('detail-shelter-address').textContent = animal.shelterAddress || 'Contactar per més detalls.';
+        document.getElementById('adoption-cta').href = `mailto:${animal.shelterEmail || 'contacte@petaqui.cat'}`;
     };
 
-
-    // ----------------------------------------------------
-    // 4. Inicialización
-    // ----------------------------------------------------
-    const animalId = getAnimalIdFromUrl();
-    
-    // Iniciar la carga de los detalles
+     // Iniciar la carga de los detalles
     fetchAnimalDetails(animalId);
+
+    
+    
 });

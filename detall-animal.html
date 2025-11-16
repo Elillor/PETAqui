@@ -92,143 +92,99 @@
       </div>
     </header>
 
-    <main class="flex-grow-1 py-5">
+    <main class="flex-shrink-0 py-5">
       <div class="container">
-        <nav aria-label="breadcrumb" class="mb-4">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="cerca-animal.html">Adopció</a>
-            </li>
-            <li
-              class="breadcrumb-item active"
-              aria-current="page"
-              id="animal-name-breadcrumb"
-            >
-              [Nom de l'Animal]
-            </li>
-          </ol>
-        </nav>
+        <a
+          href="cerca-animal.html"
+          class="btn btn-secondary mb-4 d-inline-flex align-items-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-arrow-left me-2"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+            />
+          </svg>
+          Tornar a Cerca Animal
+        </a>
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="animal-card-custom h-100">
+              <img
+                id="animal-image"
+                src="img/placeholder-default.jpg"
+                class="card-img-top"
+                alt="Imatge de l'animal"
+              />
 
-        <div class="row g-4" id="animal-detail-content">
-          <div class="col-lg-5">
-            <div class="card shadow-sm animal-card-custom p-0">
-              <div class="card-body p-0">
-                <img
-                  src="img/placeholder-dog-big.jpg"
-                  class="img-fluid rounded-top"
-                  alt="Imatge de [Nom de l'Animal]"
-                  id="animal-image"
-                />
+              <div class="p-4">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <div>
+                    <h1 class="display-5 fw-bold mb-0" id="detail-name">
+                      Nom de l'Animal
+                    </h1>
+                    <span
+                      class="badge bg-secondary species-tag-custom"
+                      id="detail-species"
+                      >Espècie</span
+                    >
+                  </div>
+                  <div class="text-end">
+                    <p class="lead fw-bold mb-0 text-dark" id="detail-age">
+                      Edat: N/A
+                    </p>
+                    <p class="lead fw-bold mb-0 text-dark" id="detail-gender">
+                      Sexe: N/A
+                    </p>
+                  </div>
+                </div>
+
+                <hr />
+
+                <h2 class="h5 fw-bold text-acento mt-4 mb-3">Descripció:</h2>
+                <p class="text-muted" id="detail-description"></p>
               </div>
-            </div>
-
-            <div class="mt-4">
-              <h5 class="text-acento">Detalls Ràpids</h5>
-              <ul class="list-group list-group-flush" id="quick-details-list">
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  **Espècie:**
-                  <span id="detail-species" class="badge bg-secondary"
-                    >Gos</span
-                  >
-                </li>
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  **Edat:** <span id="detail-age">2 anys</span>
-                </li>
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  **Sexe:** <span id="detail-gender">Mascle</span>
-                </li>
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  **Mida:** <span id="detail-size">Gran</span>
-                </li>
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  **Localització:** <span id="detail-location">Barcelona</span>
-                </li>
-              </ul>
             </div>
           </div>
 
-          <div class="col-lg-7">
-            <div class="d-flex align-items-center mb-3">
-              <h1 class="display-5 text-oscuro mb-0" id="animal-name">
-                [Nom de l'Animal]
-              </h1>
-              <span class="badge rounded-pill bg-info ms-3" id="animal-status">
-                En Adopció
-              </span>
-            </div>
-            <p class="lead text-muted mb-4">
-              De:
-              <a href="#" class="text-acento" id="protectora-name"
-                >[Nom Protectora]</a
+          <div class="col-lg-5">
+            <div class="card p-4 h-100 shadow-sm">
+              <h2 class="h5 fw-bold text-acento mb-3">
+                Dades de la Protectora
+              </h2>
+
+              <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item px-0 border-0">
+                  Nom Protectora:
+                  <span id="detail-shelter-name"></span>
+                </li>
+                <li class="list-group-item px-0 border-0">
+                  Adreça:
+                  <span id="detail-shelter-address"></span>
+                </li>
+              </ul>
+
+              <h2 class="h5 fw-bold text-acento mb-3">
+                Interessat en l'adopció?
+              </h2>
+              <a
+                href="mailto:contacte@protectora.cat"
+                class="btn btn-lg w-100 mt-2"
+                id="adoption-cta"
               >
-            </p>
-
-            <a
-              href="#"
-              class="btn btn-primary btn-lg cta-btn mb-4 w-100"
-              id="adoption-cta"
-            >
-              Inicia el Procés d'Adopció &rarr;
-            </a>
-
-            <h3 class="text-acento mt-4">La seva Història</h3>
-            <p id="animal-description" class="text-muted">
-              Descripció de l'animal.
-            </p>
-
-            <div class="mt-5">
-              <h3 class="text-acento border-bottom pb-2">
-                Caràcter i Convivència
-              </h3>
-              <ul class="list-group list-group-flush" id="character-list">
-                <li class="list-group-item">
-                  **Compatibilitat amb nens:**
-                  <span id="detail-kids">Sí, molt bé.</span>
-                </li>
-                <li class="list-group-item">
-                  **Compatibilitat amb altres gossos:**
-                  <span id="detail-dogs">Sí, sense problemes.</span>
-                </li>
-                <li class="list-group-item">
-                  **Compatibilitat amb gats:**
-                  <span id="detail-cats">Requereix presentació lenta.</span>
-                </li>
-                <li class="list-group-item">
-                  **Nivell d'Energia:**
-                  <span id="detail-energy"
-                    >Alt (necessita exercici diari).</span
-                  >
-                </li>
-              </ul>
-            </div>
-
-            <div class="mt-5">
-              <h3 class="text-acento border-bottom pb-2">Informació Mèdica</h3>
-              <ul class="list-group list-group-flush" id="medical-list">
-                <li class="list-group-item">
-                  **Estat de Salut:**
-                  <span id="detail-health">Excel·lent.</span>
-                </li>
-                <li class="list-group-item">
-                  **Vacunes al dia:** <span id="detail-vax">Sí.</span>
-                </li>
-                <li class="list-group-item">
-                  **Esterilitzat/da:** <span id="detail-sterilized">Sí.</span>
-                </li>
-                <li class="list-group-item">
-                  **Xip identificador:** <span id="detail-chip">Sí.</span>
-                </li>
-              </ul>
+                Contactar amb la Protectora
+              </a>
+              <p class="mt-2 small text-center text-muted">
+                Un cop enviada la sol·licitud, es posaran en contacte amb vostè.
+              </p>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----------------------------------------------------
   // 1. Cargar y Mostrar Datos del Usuario
   // ----------------------------------------------------
+
   const profileCard = document.querySelector(".profile-card");
   if (!profileCard) {
     console.log(
@@ -81,31 +82,33 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----------------------------------------------------
   // 3. Simulación de Guardado de Perfil
   // ----------------------------------------------------
-  /*function simulateSaveProfile() {
-        // 1. Capturar los nuevos valores
-        const newUserData = {
-            username: document.getElementById('display-username').textContent, // El username no es editable aquí
-            name: document.getElementById('display-name').value,
-            surname1: document.getElementById('display-surname1').value,
-            surname2: document.getElementById('display-surname2').value,
-            email: document.getElementById('display-email').value,
-            // NOTA: La contraseña se maneja aparte en un entorno real. Aquí la mantenemos igual o capturamos nuevo valor si fue cambiado.
-            password: document.getElementById('display-password').value 
-        };
-        
-        // 2. Guardar los nuevos datos en localStorage (Simulación)
-        localStorage.setItem('currentUser', JSON.stringify(newUserData));
-        
-        // 3. Actualizar el Handle (por si acaso el username se pudiera editar en el futuro, aunque aquí no lo hemos hecho)
-        document.getElementById('display-handle').textContent = `@${newUserData.username}`;
+  function simulateSaveProfile() {
+    // 1. Capturar los nuevos valores
+    const newUserData = {
+      username: document.getElementById("display-username").textContent, // El username no es editable aquí
+      name: document.getElementById("display-name").value,
+      surname1: document.getElementById("display-surname1").value,
+      surname2: document.getElementById("display-surname2").value,
+      email: document.getElementById("display-email").value,
+      // NOTA: La contraseña se maneja aparte en un entorno real. Aquí la mantenemos igual o capturamos nuevo valor si fue cambiado.
+      password: document.getElementById("display-password").value,
+    };
 
-        // 4. Feedback al usuario
-        alert('Perfil actualitzat correctament!');
-        
-        // El header se actualizará automáticamente si se cambia el username (si no se refresca la página)
-        // Pero para asegurar que el dropdown del header se actualice si se cambia el nombre:
-        // window.location.reload(); // Descomentar si es necesario un refresh completo.
-    }*/
+    // 2. Guardar los nuevos datos en localStorage (Simulación)
+    localStorage.setItem("currentUser", JSON.stringify(newUserData));
+
+    // 3. Actualizar el Handle (por si acaso el username se pudiera editar en el futuro, aunque aquí no lo hemos hecho)
+    document.getElementById(
+      "display-handle"
+    ).textContent = `@${newUserData.username}`;
+
+    // 4. Feedback al usuario
+    alert("Perfil actualitzat correctament!");
+
+    // El header se actualizará automáticamente si se cambia el username (si no se refresca la página)
+    // Pero para asegurar que el dropdown del header se actualice si se cambia el nombre:
+    // window.location.reload(); // Descomentar si es necesario un refresh completo.
+  }
 
   // ----------------------------------------------------
   // 4. Lógica para Mostrar/Ocultar Contraseña

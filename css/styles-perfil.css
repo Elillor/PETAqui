@@ -17,6 +17,10 @@
     color: var(--color-texto-oscuro);
 }
 
+.form-label {
+    font-weight: bold !important;
+}
+
 .profile-handle {
     font-size: 1.1rem;
     color: #666;
@@ -31,6 +35,13 @@
     color: var(--color-texto-oscuro);
     padding-left: 0;
     padding-right: 0;
+}
+
+/*Input con borde alrededor de los campos */
+.inputBorder input {
+    border: 2px solid #ccc !important;
+    border-radius: 6px;
+    padding: 8px;
 }
 
 /* Estilo para los campos cuando se activan para edición (clase añadida por JS) */

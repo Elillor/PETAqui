@@ -1,2 +1,6 @@
-com\buscadorpelut\Auth\AuthControllerTest.class
+com\buscadorpelut\Model\TestManipulacioBDbuscadorPelutAnimal.class
+com\buscadorpelut\ConnectionBD\TestConnectionBDbuscadorPelut.class
 com\buscadorpelut\BuscadorpelutApplicationTests.class
+com\buscadorpelut\Model\TestManipulacioBDbuscadorPelutUsuario.class
+com\buscadorpelut\Auth\AuthControllerTest.class
+com\buscadorpelut\Controller\AnimalControllerTest.class

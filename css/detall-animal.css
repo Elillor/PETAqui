@@ -13,6 +13,7 @@
     overflow: hidden; /* Asegura que la imagen respete el radio superior */
 }
 
+
 /* Imagen Principal del Animal */
 #animal-image {
     width: 100%;
@@ -42,7 +43,7 @@
 
 /* 3. Estilos de Listas de Detalles */
 /* Aseguramos que las listas de detalles (rápidos, carácter, médico) sean limpias */
-#quick-details-list, #character-list, #medical-list {
+#quick-details-list, #character-list {
     background-color: transparent;
     border-radius: 8px;
     overflow: hidden;
@@ -58,12 +59,25 @@
     border-bottom: none;
 }
 
+/* 4. Estilos para Encabezados y Nombres */
+#detail-name{
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--color-texto-oscuro) !important;
+    padding-bottom: 7px;
+}
 /* Destacar el nombre del animal y los encabezados */
-#animal-name {
+#detail-name, .section-header {
     font-family: var(--font-heading); /* Si está definida en styles-index.css */
-    font-weight: 700;
+    font-weight: 700;    
 }
 
-.text-acento {
-    color: var(--color-primario-cta) !important; /* Amarillo Oro */
+.text-acento {/* */
+   color: #B78408 !important;
+   text-shadow: 0 0 1px rgba(0,0,0,0.15);
+   font-weight: 700;
+   font-size: 1.1rem;
+   margin-top: 12px;
+   margin-bottom: 8px;
+
 }

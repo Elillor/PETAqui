@@ -114,7 +114,7 @@ public class Animal implements Serializable{
         this.especie = especie;
         this.esAdoptat = esAdoptat;
         this.fotoPerfil = fotoPerfil;
-        //this.protectora = protectora;
+        /**this.protectora = protectora;*/
     }
 
 /**Getters i setters*/
@@ -174,7 +174,7 @@ public class Animal implements Serializable{
         return this.numXip;
     }
 
-    public void seNumXip(String numXip) {
+    public void setNumXip(String numXip) {
         this.numXip = numXip;
     }
 

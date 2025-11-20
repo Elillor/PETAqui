@@ -89,6 +89,37 @@ public class UsuarioService {
         return usuarioRepository.findById(codiUs)
                 .map(this::convertirADTO);
     }
+    /**
+     * Actualiza el perfil de un usuario existente.
+     * 
+     * @param codiUs ID del usuario a actualizar.
+     * @param usuarioDTO Datos actualizados del usuario.
+     * @return El {@link UsuarioDTO} actualizado.
+     * @throws RuntimeException si el usuario no existe o si el email ya está en uso.
+     * 
+     */
+    public UsuarioDTO updatePerfilUsuario(Long codiUs, UsuarioDTO usuarioDTO) {
+
+        Usuario usuario = usuarioRepository.findById(codiUs)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + codiUs));
+        
+        if(usuarioDTO.getEmailUs() != null && !usuarioDTO.getEmailUs().equalsIgnoreCase(usuario.getemailUs())) {
+            if(usuarioRepository.findByEmailUs(usuarioDTO.getEmailUs()).isPresent()) {
+                throw new RuntimeException("El email ya está en uso: " + usuarioDTO.getEmailUs());
+            }
+            usuario.setemailUs(usuarioDTO.getEmailUs());
+        }
+        usuario.setnomUs(usuarioDTO.getNomUs());
+        usuario.setcognom1(usuarioDTO.getCognom1());
+        usuario.setcognom2(usuarioDTO.getCognom2());
+
+        if(usuarioDTO.getClauPas() != null && !usuarioDTO.getClauPas().isEmpty()) {
+            usuario.setclauPas(passwordEncoder.encode(usuarioDTO.getClauPas()));
+        }
+
+        Usuario usuarioActualizado = usuarioRepository.save(usuario);
+        return convertirADTO(usuarioActualizado);
+    }
 
     /**
      * Convierte una entidad {@link Usuario} a su representación DTO.

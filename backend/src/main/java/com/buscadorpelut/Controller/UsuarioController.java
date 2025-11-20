@@ -3,6 +3,7 @@ package com.buscadorpelut.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,8 @@ import com.buscadorpelut.Service.UsuarioService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 /**
@@ -56,6 +59,24 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> getUsuarioById(@PathVariable Long id) {
         return usuarioService.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build()); 
+    }
+   
+    /**
+     * Actualiza el perfil de un usuario existente.
+     * 
+     * @param codiUs ID del usuario a actualizar.
+     * @param usuarioDTO Datos actualizados del usuario.
+     * @return El {@link UsuarioDTO} actualizado o un error si no se pudo actualizar.
+     */
+    @PutMapping("/{codiUs}")
+    public ResponseEntity<?> updateUsuario(@PathVariable Long codiUs, @RequestBody UsuarioDTO usuarioDTO) {
+        try {
+            UsuarioDTO usuarioGuardado = usuarioService.updatePerfilUsuario(codiUs, usuarioDTO);
+            return ResponseEntity.ok(usuarioGuardado);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
+ 

@@ -62,6 +62,7 @@ public class AuthController {
 
             if(usuario != null){
                 Map<String,String> response = new HashMap<>();
+                response.put("codiUs", String.valueOf(usuario.getCodiUs()));
                 response.put("nomUs", usuario.getnomUs());
                 response.put("cognom1",usuario.getcognom1());
                 response.put("cognom2",usuario.getcognom2());

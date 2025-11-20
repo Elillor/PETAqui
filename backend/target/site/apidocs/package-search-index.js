@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.buscadorpelut"},{"l":"com.buscadorpelut.Auth"},{"l":"com.buscadorpelut.Config"},{"l":"com.buscadorpelut.Controller"},{"l":"com.buscadorpelut.DTO"},{"l":"com.buscadorpelut.Model"},{"l":"com.buscadorpelut.Repository"},{"l":"com.buscadorpelut.Service"}];updateSearchResults();

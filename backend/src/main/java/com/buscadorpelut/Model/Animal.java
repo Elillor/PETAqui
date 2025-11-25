@@ -13,7 +13,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -78,10 +80,10 @@ public class Animal implements Serializable{
      * De moment ho comento perquè no farem la taula de les protectores, ho deixo llest.
      */
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "codiProt", referencedColumnName = "codiProt")
     private Protectora protectora;
-    *
+
     /**Constructors*/
 
     /**
@@ -202,17 +204,19 @@ public class Animal implements Serializable{
      * Protectora on està l'animal allotjat
      * Clau foranea
      * 
-     * public Protectora getProtectora (){
-     * return this.protectora;
-     * }
-     * 
-     * public void setProtectora (Protectora protectora){
-     * this.protectora = protectora;
-     * }
      */
+    
+    public Protectora getProtectora (){
+    return this.protectora;
+    }
+
+    public void setProtectora (Protectora protectora){
+    this.protectora = protectora;
+    }
+
 
 /*
- * Mètode per obtenir l'edat a partir de la data de naixement* 
+ * Mètode per obtenir l'edat a partir de la data de naixement*
  * Afegim una annotació per enviar en format json un map amb anys, mesos i dies
  */
 @JsonProperty("edat")
@@ -227,7 +231,7 @@ public class Animal implements Serializable{
     int mesos= periode.getMonths();
     int dies= periode.getDays();
 
-    return Map.of("anys",anys,"mesos",mesos, "dies",dies); 
+    return Map.of("anys",anys,"mesos",mesos, "dies",dies);
 }
 }
 

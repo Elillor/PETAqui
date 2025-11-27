@@ -13,7 +13,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -78,10 +80,10 @@ public class Animal implements Serializable{
      * De moment ho comento perquè no farem la taula de les protectores, ho deixo llest.
      */
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "codiProt", referencedColumnName = "codiProt")
     private Protectora protectora;
-    *
+
     /**Constructors*/
 
     /**
@@ -104,7 +106,7 @@ public class Animal implements Serializable{
      * @param fotoPerfil URL on es troba l'imatge de perfil
      * @param protectora Entitat d'una protectora on es troba l'animal. 
      */
-    public Animal(Long numId, String nomAn, String sexe, Date dataNeix, String descripcio,String numXip, String especie, boolean esAdoptat, String fotoPerfil /*, Protectora protectora*/) {
+    public Animal(Long numId, String nomAn, String sexe, Date dataNeix, String descripcio,String numXip, String especie, boolean esAdoptat, String fotoPerfil , Protectora protectora) {
         this.numId = numId;
         this.nomAn = nomAn;
         this.sexe = sexe;
@@ -114,7 +116,7 @@ public class Animal implements Serializable{
         this.especie = especie;
         this.esAdoptat = esAdoptat;
         this.fotoPerfil = fotoPerfil;
-        /**this.protectora = protectora;*/
+        this.protectora = protectora;
     }
 
 /**Getters i setters*/
@@ -202,33 +204,43 @@ public class Animal implements Serializable{
      * Protectora on està l'animal allotjat
      * Clau foranea
      * 
-     * public Protectora getProtectora (){
-     * return this.protectora;
-     * }
-     * 
-     * public void setProtectora (Protectora protectora){
-     * this.protectora = protectora;
-     * }
      */
-
-/*
- * Mètode per obtenir l'edat a partir de la data de naixement* 
- * Afegim una annotació per enviar en format json un map amb anys, mesos i dies
- */
-@JsonProperty("edat")
-    public Map<String, Integer> getEdat(){
-    if(this.dataNeix == null){
-        return Map.of("anys",0,"mesos",0, "dies",0);
+    
+    public Protectora getProtectora (){
+    return this.protectora;
     }
 
-    Period periode= Period.between(this.dataNeix.toLocalDate(), LocalDate.now());
+    public void setProtectora (Protectora protectora){
+    this.protectora = protectora;
+    }
 
-    int anys= periode.getYears();
-    int mesos= periode.getMonths();
-    int dies= periode.getDays();
 
-    return Map.of("anys",anys,"mesos",mesos, "dies",dies); 
-}
+    /*
+    * Mètode per obtenir l'edat a partir de la data de naixement*
+    * Afegim una annotació per enviar en format json un map amb anys, mesos i dies
+    */
+    @JsonProperty("edat")
+        public Map<String, Integer> getEdat(){
+        if(this.dataNeix == null){
+            return Map.of("anys",0,"mesos",0, "dies",0);
+        }
+
+        Period periode= Period.between(this.dataNeix.toLocalDate(), LocalDate.now());
+
+        int anys= periode.getYears();
+        int mesos= periode.getMonths();
+        int dies= periode.getDays();
+
+        return Map.of("anys",anys,"mesos",mesos, "dies",dies);
+    }
+
+    @JsonProperty("localitatProtectora")
+        public String getLocalitatProtectora() {
+            if (this.protectora != null && this.protectora.getLocalitat() != null) {
+            return this.protectora.getLocalitat();
+        }
+        return "Desconeguda";
+    }
 }
 
 

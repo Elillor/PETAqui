@@ -50,6 +50,11 @@ public class AnimalController {
         return ResponseEntity.ok(animals);
     }
 
+    @GetMapping("/adoptats")
+    public ResponseEntity<List<Animal>>getAllAnimalsAdoptats(){
+        List<Animal> animals = animalService.getAllAnimalsAdoptats();
+        return ResponseEntity.ok(animals);
+    }
     /**
      * Retorna els detalls d'un animal identificat pel seu ID numèric.
      * 
@@ -61,7 +66,7 @@ public class AnimalController {
      */
     @GetMapping("{numId}")
     public ResponseEntity<Animal>getAnimalsByNumId(@PathVariable Long numId){
-        return animalService.getAnimalsById(numId)
+        return animalService.getAnimalByIdWithProtectora(numId)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
     }
@@ -95,4 +100,25 @@ public class AnimalController {
         }
         return ResponseEntity.ok(animals);
     }
+
+    @GetMapping(params = {"especie", "localitzacio"})
+    public ResponseEntity<List<Animal>>getAnimalsByEspecieAndLocalitzacio(
+        @RequestParam String especie,
+        @RequestParam String localitzacio){
+        List<Animal>animals;
+        if("Exòtic".equals(especie)){
+            animals=animalService.getAnimalsExcluirGosGatNoAdoptatsByLocalitzacio(localitzacio);
+        }else{
+            animals=animalService.getAnimalsByEspecieNoAdoptatsByLocalitzacio(especie, localitzacio);
+        }
+        return ResponseEntity.ok(animals);
+    }
+
+    @GetMapping(params = "localitzacio")
+    public ResponseEntity<List<Animal>>getAnimalsByLocalitzacio(
+        @RequestParam String localitzacio){   
+        return ResponseEntity.ok(animalService.getAnimalsNoAdoptatsByLocalitzacio(localitzacio));
+    }
+
+
 }

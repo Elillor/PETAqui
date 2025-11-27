@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchForm = document.querySelector("form");
   const resultsTitle = document.querySelector("h4");
   const selectEspecie = searchForm.querySelector("select");
+  const localitzacioInput = document.getElementById("localitzacio-input");
   const paginationNav = document.querySelector(
     'nav[aria-label="Paginació de resultats"]'
   );
@@ -50,7 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const sexe = animal.sexe;
-    
+    const ciutat = animal.localitatProtectora || "Desconeguda";
+
     return `
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card animal-card-custom h-100">
@@ -66,8 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
                             }</span>
                             <small class="text-muted">${edatText}</small>
                         </div>
-                        <p class="card-text small mb-2">
-                            📍 ${edatText} | ${sexe}
+                        <p class="card-text small mb-2 d-flex justify-content-between">
+                           <span>📍 ${ciutat}</span>  
+                           <span>${sexe}</span>
                         </p>
                         <a href="detall-animal.html?id=${
                           animal.numId
@@ -149,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
    * @param {URLSearchParams} [params=new URLSearchParams()] - Parámetros de filtro para la URL.
    */
   //async function fetchAnimals(params = new URLSearchParams()) {
-  async function fetchAnimals(especie = null) {
+  async function fetchAnimals(especie = null, localitzacio = null) {
     try {
       animalResultsContainer.innerHTML =
         '<div class="col-12 text-center"><p class="text-acento">Carregant animals...</p></div>';
@@ -157,9 +160,20 @@ document.addEventListener("DOMContentLoaded", () => {
       // Construye la URL completa con los parámetros (ej: /api/animals?species=Gos)
 
       let url = API_URL;
+      const params = new URLSearchParams();
+
       if (especie && especie !== "Totes") {
-        url += `?especie=${encodeURIComponent(especie)}`;
+        params.append("especie", especie);
       }
+
+      if (localitzacio && localitzacio.trim() !== "") {
+        params.append("localitzacio", localitzacio.trim());
+      }
+
+      if(params.toString()) {
+        url += `?${params.toString()}`;
+      }
+
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -192,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 3.1 Submissió del Formulari de Filtre
   searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    fetchAnimals(selectEspecie.value);
+    fetchAnimals(selectEspecie.value, localitzacioInput.value);
   });
 
   // 3.2 Clics de Paginació

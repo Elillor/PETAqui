@@ -1,8 +1,11 @@
 package com.buscadorpelut.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.buscadorpelut.Model.Animal;
@@ -84,4 +87,32 @@ public interface AnimalRepository extends JpaRepository<Animal,Long>{
      *         Pot estar buida si tots els animals ja han estat adoptats.
      */
     List<Animal> findByEsAdoptatFalse();
+
+    /**
+     * Mètode que retorna tots els animals del sistema que **estan adoptats**.
+     * 
+     * <p>Aquest mètode s'utilitza per obtenir la llista completa d'animals que ja han estat adoptats.
+     * 
+     * @return una llista d'animals adoptats.
+     *         Pot estar buida si cap animal ha estat adoptat encara.
+     */
+    List<Animal> findByEsAdoptatTrue();
+
+    @Query("SELECT a FROM Animal a LEFT JOIN FETCH a.protectora p WHERE a.esAdoptat = false AND p.provincia = :provincia")
+    List<Animal> findNonAdoptedAnimalsByProtectoraProvincia(@Param("provincia") String provincia);
+    
+    @Query("SELECT a FROM Animal a LEFT JOIN FETCH a.protectora p WHERE a.esAdoptat = false AND p.codiPostal = :codiPostal")
+    List<Animal> findNonAdoptedAnimalsByProtectoraCodiPostal(@Param("codiPostal") String codiPostal);
+
+    @Query("SELECT a FROM Animal a LEFT JOIN FETCH a.protectora p WHERE a.esAdoptat = false AND (p.provincia = :localitzacio OR p.codiPostal = :localitzacio)")
+    List<Animal> findNonAdoptedAnimalsByProtectoraLocalitzacio(@Param("localitzacio") String localitzacio);
+
+    @Query("SELECT a FROM Animal a LEFT JOIN FETCH a.protectora p WHERE a.esAdoptat = false AND a.especie = :especie  AND (p.provincia = :localitzacio OR p.codiPostal = :localitzacio)")
+    List<Animal> findNonAdoptedAnimalsByEspecieAndLocalitzacio(@Param("especie") String especie, @Param("localitzacio") String localitzacio);
+
+    @Query("SELECT a FROM Animal a LEFT JOIN FETCH a.protectora p WHERE a.esAdoptat = false AND a.especie NOT IN ('Gos','Gat')  AND (p.provincia = :localitzacio OR p.codiPostal = :localitzacio)")
+    List<Animal> findNonAdoptedExoticAnimalsByLocalitzacio(@Param("localitzacio") String localitzacio);
+
+    @Query("SELECT a FROM Animal a LEFT JOIN FETCH a.protectora WHERE a.numId = :numId")
+    Optional<Animal> findByIdWithProtectora(@Param("numId") Long numId);
 }

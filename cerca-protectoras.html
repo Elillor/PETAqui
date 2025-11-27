@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cerca Protectoras - PETAqui</title>
+
+    <meta
+      name="description"
+      content="Troba el llistat de protectores i refugis d'animals més propers a la teva zona."
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      /* ATRIBUTOS INTEGRITY ELIMINADOS */
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Halant:wght@400;600&family=Quicksand:wght@700&family=Sarala&display=swap"
+      rel="stylesheet"
+    />
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        /* ATRIBUTOS INTEGRITY Y CROSSORIGIN ELIMINADOS */
+    />
+
+    <link rel="stylesheet" href="css/styles-index.css" />
+    <link rel="stylesheet" href="css/cerca-protectoras.css" />
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <header class="main-header navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <img src="img/logoP.png" alt="Logo PETAqui" class="logo-img" />
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Inici</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cerca-animal.html">Cerca Animal</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="cerca-protectoras.html"
+                >Cerca Protectoras</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="noticies.html">Notícies</a>
+            </li>
+            <li class="nav-item" id="login-or-profile-btn">
+              </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-grow-1">
+      <section class="container py-5">
+        <h1 class="text-center mb-5 text-general border-bottom border-accent pb-2" style="max-width: 450px; margin: 0 auto 3rem;">
+            Busca Protectora
+        </h1>
+
+        <div class="row mb-5">
+          <div class="col-12 col-lg-8 offset-lg-2 text-center text-muted">
+            <p style="font-family: var(--font-body); color: #555555 !important;">
+              Utilitza el camp de cerca per filtrar les protectores per **nom o ciutat**, fes servir el botó **Prop meu** per buscar per proximitat, o tria directament l'organització.
+            </p>
+          </div>
+        </div>
+
+        <div class="row mb-5">
+          <div class="col-12 col-lg-8 offset-lg-2">
+            <form class="d-flex mb-4" role="search" id="search-form-text">
+              <input
+                class="form-control form-control-lg me-2"
+                type="search"
+                placeholder="Cerca per nom de protectora o ciutat..." aria-label="Cerca protectora per text"
+                id="text-search-input"
+              />
+              <button class="btn btn-primary btn-lg me-2" type="submit"> Buscar
+              </button>
+              <button class="btn btn-secondary btn-lg" type="button" id="proximity-search-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt-fill me-1" viewBox="0 0 16 16">
+                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                </svg>
+                Prop meu
+              </button>
+              </form>
+
+            <div class="mb-5">
+                <select class="form-select form-select-lg" aria-label="Selector de Protectora" id="protectora-select">
+                    <option value="">Selecciona directament una protectora</option> </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-lg-8 offset-lg-2">
+                <div id="map-container" class="map-placeholder">
+                    </div>
+            </div>
+        </div>
+        
+        <hr class="mb-5" />
+
+        <div class="row">
+            <div class="col-12 col-lg-8 offset-lg-2 text-center">
+                <h2 class="text-center mb-5 text-general">Dades Protectora</h2>
+                <div id="protectora-data-container" class="text-start">
+                    <p class="h5 mb-3 text-muted" id="selected-protectora-name">Tria una protectora per veure'n els detalls.</p>
+                    <p id="protectora-address">Direcció Protectora: </p>
+                    <p id="protectora-email">Email Protectora: </p>
+                    <p id="protectora-phone">Telèfon Protectora: </p>
+                    <p id="protectora-web">Web Protectora Opcional: </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pb-5"></div>
+      </section>
+    </main>
+
+    <footer class="main-footer text-white text-center py-3 mt-auto">
+      <div class="container">
+        <p class="mb-0">
+          PETAqui &copy; 2026. Tots els drets reservats.
+          <span class="d-inline-block mx-2 text-claro">|</span>
+          <a href="politica-privacitat.html" class="text-acento"
+            >Protecció de Dades</a
+          >
+          <span class="d-inline-block mx-2 text-claro">|</span>
+          <a href="politica-cookies.html" class="text-acento"
+            >Política de Cookies</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      /* ATRIBUTOS INTEGRITY Y CROSSORIGIN ELIMINADOS */
+    ></script>
+    <script src="js/auth.js"></script>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        /* ATRIBUTOS INTEGRITY Y CROSSORIGIN ELIMINADOS */
+    ></script>
+
+    <script>
+    // Comprobación de seguridad al cargar la página
+    if (!localStorage.getItem('currentUser')) {
+        alert('Necessites iniciar sessió per accedir a la cerca protectoras.');
+        // Redirige a la página de login si no hay sesión
+        window.location.href = 'login.html'; 
+    }
+</script>
+    
+    <script src="js/cerca-protectoras.js"></script>
+  </body>
+</html>

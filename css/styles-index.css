@@ -201,7 +201,7 @@ footer.bg-contrast,
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 .card-img-custom {
-  height: 200px;
+  height: 275px;
   object-fit: cover;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;

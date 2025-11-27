@@ -53,7 +53,8 @@ public class AnimalControllerTest {
         null,
         "Gos",
         false,
-        "data.jpg"
+        "data.jpg",
+        null
         );
 
         animal2 = new Animal(
@@ -65,7 +66,8 @@ public class AnimalControllerTest {
             null,
             "Gat",
             false, 
-            "pelut.jpg"
+            "pelut.jpg",
+            null
         );
         
     }

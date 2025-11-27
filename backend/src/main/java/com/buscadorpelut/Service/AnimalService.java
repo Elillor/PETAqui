@@ -50,6 +50,17 @@ public class AnimalService {
   public List<Animal>getAllAnimalsNoAdoptats(){
     return animalRepository.findByEsAdoptatFalse();
   }
+  /**
+   * Recupera una llista completa de tots els animals registrats al sistema que estan adoptats.
+   * 
+   * @return una llista d'objectes {@link Animal} que ja han estat adoptats.
+   *        Pot estar buida si no hi ha cap animal adoptat a la base de dades.
+   * 
+   * @see AnimalRepository#findByEsAdoptatTrue()
+   */
+  public List<Animal>getAllAnimalsAdoptats(){
+    return animalRepository.findByEsAdoptatTrue();
+  }
 
   /**
      * Mostra els detalls d'un animal pel seu identificador únic numèric.
@@ -132,5 +143,32 @@ public class AnimalService {
  */
   public List<Animal>getAnimalsExcluirGosGatNoAdoptats(){
     return animalRepository.findByEspecieNotInAndEsAdoptatFalse(Arrays.asList("Gos","Gat"));
+  }
+
+  public List<Animal>getAnimalsNoAdoptatsByProvincia(String provincia){
+    return animalRepository.findNonAdoptedAnimalsByProtectoraProvincia(provincia);
+  }
+
+  public List<Animal>getAnimalsNoAdoptatsByCodiPostal(String codiPostal){
+    return animalRepository.findNonAdoptedAnimalsByProtectoraCodiPostal(codiPostal);
+  }
+
+  public List<Animal>getAnimalsNoAdoptatsByLocalitzacio(String localitzacio){
+    return animalRepository.findNonAdoptedAnimalsByProtectoraLocalitzacio(localitzacio);
+  }
+
+  public List<Animal>getAnimalsByEspecieNoAdoptatsByLocalitzacio(String especie, String localitzacio){
+    return animalRepository.findNonAdoptedAnimalsByEspecieAndLocalitzacio(especie, localitzacio);
+  }
+
+  public List<Animal>getAnimalsExcluirGosGatNoAdoptatsByLocalitzacio(String localitzacio){
+    return animalRepository.findNonAdoptedExoticAnimalsByLocalitzacio(localitzacio);
+  }
+
+  public Optional<Animal>getAnimalByIdWithProtectora(Long numId){
+    if (numId == null) {
+        return Optional.empty();
+    }
+    return animalRepository.findByIdWithProtectora(numId);
   }
 }

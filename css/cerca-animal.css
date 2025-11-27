@@ -17,7 +17,7 @@
 
 /* Sobrescribe la altura de la imagen en la tarjeta para mantener la uniformidad visual. */
 .card-img-custom {
-    height: 200px; 
+    height: 250px; 
     object-fit: cover; 
 }
 

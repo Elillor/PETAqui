@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (isCurrentSelectedInFilteredList) {
              // Intentem restaurar la selecció
              protectoraSelect.value = currentSelectedId;
-             const selectedProtectora = MOCK_PROTECTORAS.find(p => p.id == currentSelectedId);
+             const selectedProtectora = protectorasList.find(p => p.codiProt == currentSelectedId);
              renderProtectoraDetails(selectedProtectora);
         }
     }
@@ -271,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("El teu navegador no suporta la Geolocalització per a la cerca per proximitat.");
             return;
         }
+        protectoraSelect.innerHTML = '<option value="">Obtenint la teva ubicació...</option>';
         try {
             //console.log("Intentant obtenir ubicació de l'usuari...");
             const position = await new Promise((resolve, reject) => {
@@ -286,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Carrega totes les protectores i filtra per distància
             const response = await fetch(API_URL);
             if (!response.ok) {
-                throw new Error(`Error al carregar les protectores: ${response.statusText}`);
+                throw new Error(`Error al carregar les protectores`);
             };
             const allProtectoras = await response.json();
 
@@ -311,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const optionsHtml = '<option value="">Selecciona directament una protectora</option>' +
                     nearbyProtectoras.map(protectora => {
                         const location = protectora.provincia || 'Ubicació desconeguda';
-                        `<option value="${protectora.codiProt}">${protectora.nomProt} (${location}) - ${protectora.distance.toFixed(1)} km</option>`;
+                        return `<option value="${protectora.codiProt}">${protectora.nomProt} (${location}) - ${protectora.distance.toFixed(1)} km</option>`;
                     }).join('');
                 protectoraSelect.innerHTML = optionsHtml;
             }

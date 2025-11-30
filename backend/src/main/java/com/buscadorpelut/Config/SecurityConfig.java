@@ -49,7 +49,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("login.html","index.html","perfil.html","cerca-animal.html","noticies.html","detall-animal.html").permitAll()
+                .requestMatchers("login.html","index.html","perfil.html","cerca-animal.html","noticies.html","detall-animal.html","cerca-protectoras.html").permitAll()
                 .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/img/gos/**","/css/**","/js/**","/img/**","/favicon.ico").permitAll()
                 .anyRequest().authenticated()

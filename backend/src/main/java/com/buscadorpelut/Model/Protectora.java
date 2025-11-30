@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "protectora")
 public class Protectora implements Serializable{
-    // Atributs i mètodes de la classe Protectora
+    /** Atributs i mètodes de la classe Protectora*/
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -62,7 +62,7 @@ public class Protectora implements Serializable{
 
     /**Constructors*/
     public Protectora() {
-        // Constructor per defecte
+        /** Constructor per defecte*/ 
     }
 
     /**Constructor amb paràmetres
@@ -93,7 +93,7 @@ public class Protectora implements Serializable{
 
     /**Getters i Setters*/
 
-    //Codi protectora
+    /**Codi protectora*/
     public long getCodiProt() {
         return codiProt;
     }
@@ -102,7 +102,7 @@ public class Protectora implements Serializable{
         this.codiProt = codiProt;
     }
 
-    //Nom protectora
+    /**Nom protectora*/ 
     public String getNomProt() {
         return nomProt;
     }
@@ -111,7 +111,7 @@ public class Protectora implements Serializable{
         this.nomProt = nomProt;
     }
 
-    //Adreça
+    /**Adreça*/ 
     public String getAdresa() {
         return adresa;
     }
@@ -120,7 +120,7 @@ public class Protectora implements Serializable{
         this.adresa = adresa;
     }
 
-    //Codi postal
+    /**Codi postal*/ 
     public String getCodiPostal() {
         return codiPostal;
     }
@@ -129,7 +129,7 @@ public class Protectora implements Serializable{
         this.codiPostal = codiPostal;
     }
 
-    //Localitat
+    /**Localitat*/ 
     public String getLocalitat() {
         return localitat;
     }
@@ -138,7 +138,7 @@ public class Protectora implements Serializable{
         this.localitat = localitat;
     }
 
-    //Provincia
+    /**Provincia*/ 
     public String getProvincia() {
         return provincia;
     }
@@ -147,7 +147,7 @@ public class Protectora implements Serializable{
         this.provincia = provincia;
     }
 
-    //URL
+    /**URL*/ 
     public String getUrl() {
         return url;
     }
@@ -156,7 +156,7 @@ public class Protectora implements Serializable{
         this.url = url;    
     }
 
-    //Longitud
+    /**Longitud*/ 
     public double getLongitud() {
         return longitud;
     }
@@ -165,7 +165,7 @@ public class Protectora implements Serializable{
         this.longitud = longitud;
     }
 
-    //Latitud
+    /**Latitud*/ 
     public double getLatitud() {
         return latitud;
     }
@@ -174,7 +174,7 @@ public class Protectora implements Serializable{
         this.latitud = latitud;
     }
 
-    //Telèfon
+    /**Telèfon*/ 
     public String getTlfProt() {
         return tlfProt;
     }
@@ -183,7 +183,7 @@ public class Protectora implements Serializable{
         this.tlfProt = tlfProt;
     }
 
-    //Email
+    /**Email*/ 
     public String getEmailProt() {
         return emailProt;
     }

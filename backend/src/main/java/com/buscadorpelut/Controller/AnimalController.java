@@ -50,6 +50,13 @@ public class AnimalController {
         return ResponseEntity.ok(animals);
     }
 
+    /**
+     * Mètode per retornar tots els animals registrats al sistema que ja han estat adoptats.
+     * 
+     * @return {@link ResponseEntity} amb una llista d'animals {@link Animal} adoptats i codi HTTP 200 (OK).
+     * 
+     * @see AnimalService#getAllAnimalsAdoptats()
+     */
     @GetMapping("/adoptats")
     public ResponseEntity<List<Animal>>getAllAnimalsAdoptats(){
         List<Animal> animals = animalService.getAllAnimalsAdoptats();
@@ -101,6 +108,15 @@ public class AnimalController {
         return ResponseEntity.ok(animals);
     }
 
+    /**
+     * Mètode per retornar una llista d'animals filtrats per espècie i localització, excloent els ja adoptats.
+     * 
+     * @param especie el nom de l'espècie a filtrar (ex: "Gos", "Gat", "Exòtic").
+     * @param localitzacio la localització geogràfica per filtrar els animals (ex: ciutat o codi postal).
+     * @return {@link ResponseEntity} amb una llista d'animals {@link Animal} en situació d'adopció i codi HTTP 200 (OK).
+     *         Pot retornar una llista buida si no hi ha animals que compleixin els criteris.
+     * @see AnimalService#getAnimalsByEspecieAndLocalitzacio(String, String)
+     */
     @GetMapping(params = {"especie", "localitzacio"})
     public ResponseEntity<List<Animal>>getAnimalsByEspecieAndLocalitzacio(
         @RequestParam String especie,
@@ -114,6 +130,14 @@ public class AnimalController {
         return ResponseEntity.ok(animals);
     }
 
+    /**
+     * Mètode per retornar una llista d'animals filtrats per localització i que no estan adoptats.
+     * 
+     * @param localitzacio la localització geogràfica per filtrar els animals (ex: ciutat o codi postal).
+     * @return {@link ResponseEntity} amb una llista d'animals {@link Animal} en situació d'adopció i codi HTTP 200 (OK).
+     *         Pot retornar una llista buida si no hi ha animals en aquella localització.
+     * @see AnimalService#getAnimalsNoAdoptatsByLocalitzacio(String)
+     */
     @GetMapping(params = "localitzacio")
     public ResponseEntity<List<Animal>>getAnimalsByLocalitzacio(
         @RequestParam String localitzacio){   

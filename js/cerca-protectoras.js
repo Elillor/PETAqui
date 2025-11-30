@@ -7,11 +7,14 @@ const MAX_DISTANCE_KM = 50; // Límit de distància per filtrar (50km)
 let userLocation = null;
 // FI NOVES VARIABLES
 
+// URL base del backend (a través del proxy d'Apache)
+const API_URL = '/api/protectores'; // ← sense http://localhost:8080 gràcies al ProxyPass
+
 document.addEventListener('DOMContentLoaded', () => {
     // ===============================================
     // 1. MOCK DATA (COORDINADES USANT DECIMAL POINT)
     // ===============================================
-    const MOCK_PROTECTORAS = [
+    /*const MOCK_PROTECTORAS = [
         // Latitud i Longitud (exemple de Barcelona, Lleida, etc.)
         { id: 1, name: "L'Arca de Noè", location: 'Barcelona', address: 'Carrer Fictici, 1, 08001 Barcelona', email: 'arca@email.cat', phone: '931 111 111', web: 'https://arca.cat', lat: 41.3851, lng: 2.1734 },
         { id: 2, name: 'APAP - Associació Protectora de Lleida', location: 'Lleida', address: 'Plaça Rural, 5, 25000 Lleida', email: 'apap@email.cat', phone: '973 222 222', web: '', lat: 41.6167, lng: 0.6215 },
@@ -20,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 5, name: 'Exòtics BCN', location: 'Barcelona', address: 'Carrer Exòtic, 3, 08005 Barcelona', email: 'exotics@email.cat', phone: '931 555 555', web: 'https://exoticsbcn.com', lat: 41.4005, lng: 2.1901 },
         { id: 6, name: 'Gatets Felices', location: 'Tarragona', address: 'Carrer Feliç, 15, 43003 Tarragona', email: 'gatets@email.cat', phone: '600 666 666', web: '', lat: 41.1105, lng: 1.2505 },
         { id: 7, name: 'Tots els amics', location: 'Lleida', address: 'Plaça Amiga, 7, 25002 Lleida', email: 'amics@email.cat', phone: '973 777 777', web: '', lat: 41.6160, lng: 0.6120 },
-    ];
+    ];*/
 
     // ===============================================
     // 2. ELEMENTOS DEL DOM
@@ -110,13 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let isCurrentSelectedInFilteredList = false;
 
         protectorasList.forEach(protectora => {
-            if (protectora.id == currentSelectedId) {
+            if (protectora.codiProt == currentSelectedId) {
                 isCurrentSelectedInFilteredList = true;
             }
             // Si la protectora té distància (cerca per proximitat), l'afegim al text
-            const distanceText = protectora.distance ? ` - ${protectora.distance.toFixed(1)} km` : ''; 
-            
-            optionsHtml += `<option value="${protectora.id}">${protectora.name} (${protectora.location})${distanceText}</option>`;
+            //const distanceText = protectora.distance ? ` - ${protectora.distance.toFixed(1)} km` : ''; 
+            const location = protectora.provincia || 'Ubicació desconeguda';
+            optionsHtml += `<option value="${protectora.codiProt}">${protectora.nomProt} (${location})</option>`;
         });
 
         protectoraSelect.innerHTML = optionsHtml;
@@ -132,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
              renderProtectoraDetails(selectedProtectora);
         }
     }
-
     /**
      * Mostra els detalls de la protectora seleccionada i actualitza el mapa.
      */
@@ -151,50 +153,88 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 1. Actualitzar el títol
-        selectedProtectoraName.textContent = protectora.name; 
+        selectedProtectoraName.textContent = protectora.nomProt; 
         
         // 2. Remplenar els camps
-        protectoraAddress.innerHTML = `Direcció Protectora: <strong>${protectora.address}</strong>`;
-        protectoraEmail.innerHTML = `Email Protectora: <strong>${protectora.email}</strong>`;
-        protectoraPhone.innerHTML = `Telèfon Protectora: <strong>${protectora.phone}</strong>`;
+        protectoraAddress.innerHTML = `Direcció Protectora: <strong>${protectora.adresa}</strong>`;
+        protectoraEmail.innerHTML = `Email Protectora: <strong>${protectora.emailProt}</strong>`;
+        protectoraPhone.innerHTML = `Telèfon Protectora: <strong>${protectora.tlfProt}</strong>`;
         
-        if (protectora.web) {
-             protectoraWeb.innerHTML = `Web Protectora Opcional: <a href="${protectora.web}" target="_blank"><strong>${protectora.web.replace(/^https?:\/\//, '')}</strong></a>`;
+        if (protectora.url) {
+             protectoraWeb.innerHTML = `Web Protectora Opcional: <a href="${protectora.url}" target="_blank"><strong>${protectora.url.replace(/^https?:\/\//, '')}</strong></a>`;
         } else {
              protectoraWeb.innerHTML = 'Web Protectora Opcional: <em>No disponible</em>';
         }
         
         // 3. Actualitzar el mapa
-        if (protectora.lat && protectora.lng) {
-            updateMap(protectora.lat, protectora.lng, protectora.name);
+        if (protectora.latitud && protectora.longitud) {
+            updateMap(protectora.latitud, protectora.longitud, protectora.nomProt);
         }
     }
 
+    // Carrega totes les protectores
+    async function fetchAllProtectoras() {
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) {
+                throw new Error(`Error al carregar les protectores: ${response.statusText}`);
+            };
+            const data = await response.json();
+            populateProtectoraSelect(data);
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Hi ha hagut un error carregant les protectores. Si us plau, intenta-ho més tard.");
+        }
+    }
     // ===============================================
     // 5. LÓGICA DE FILTRADO (TEXTUAL I PROXIMITAT)
     // ===============================================
 
-    function applyTextFilter(searchText) {
-        let currentList = MOCK_PROTECTORAS;
+    async function applyTextFilter(searchText) {
+        //let currentList = MOCK_PROTECTORAS;
 
-        if (searchText) {
-            const lowerCaseFilter = searchText.toLowerCase();
+        if (!searchText.trim()) {
+            fetchAllProtectoras();
+            return;
+            //const lowerCaseFilter = searchText.toLowerCase();
             
             // Filtrar per nom o localització (ciutat)
-            currentList = MOCK_PROTECTORAS.filter(p => 
-                p.name.toLowerCase().includes(lowerCaseFilter) || 
-                p.location.toLowerCase().includes(lowerCaseFilter)
-            );
-        } else {
+            //currentList = MOCK_PROTECTORAS.filter(p => 
+                //p.name.toLowerCase().includes(lowerCaseFilter) || 
+                //p.location.toLowerCase().includes(lowerCaseFilter)
+            //);
+        //} else {
              // Si el text de cerca està buit després de fer clic a "Buscar",
              // carreguem una llista buida per complir amb el requisit.
-             currentList = [];
+             //currentList = [];
         }
-        
+        try {
+            // 1. Cerca per nom
+            const reponseNom = await fetch(`${API_URL}?nomProt=${encodeURIComponent(searchText)}`);
+            if (reponseNom.ok) {
+                const dataNom = await reponseNom.json();
+                //Convertim a array si es un sol objecte
+                const protectoras = Array.isArray(dataNom) ? dataNom : [dataNom];
+                populateProtectoraSelect(protectoras);
+                return;
+            }
+
+            // 2. Cerca per provincia
+            const reponseProvincia = await fetch(`${API_URL}?provincia=${encodeURIComponent(searchText)}`);
+            if (reponseProvincia.ok) {
+                const dataProvincia = await reponseProvincia.json();
+                populateProtectoraSelect(dataProvincia);
+                return;
+            }
         // Actualitzar el select amb la llista filtrada.
-        populateProtectoraSelect(currentList);
+            populateProtectoraSelect([]);
         // Netejar la ubicació de l'usuari si es fa una cerca de text
-        userLocation = null; 
+        //userLocation = null; 
+        } catch (error) {
+            console.error("Error en la cerca textual:", error);
+            alert("Hi ha hagut un error realitzant la cerca. Si us plau, intenta-ho més tard.");
+            populateProtectoraSelect([]); // Buidem la llista en cas d'error
+        }
     }
 
     /**
@@ -218,19 +258,69 @@ document.addEventListener('DOMContentLoaded', () => {
         return R * c; 
     }
 
-    function filterByProximity() {
+    async function filterByProximity() {
         // Si la ubicació ja està guardada, filtrem directament
-        if (userLocation) {
-            performProximityFilter(userLocation);
-            return;
-        }
+        //if (userLocation) {
+            //performProximityFilter(userLocation);
+            //return;
+        //}
 
         // Si no està guardada, intentem obtenir-la
-        if (navigator.geolocation) {
-            console.log("Intentant obtenir ubicació de l'usuari...");
-            
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
+        if (!navigator.geolocation) {
+            //console.log("Intentant obtenir ubicació de l'usuari...");
+            alert("El teu navegador no suporta la Geolocalització per a la cerca per proximitat.");
+            return;
+        }
+        try {
+            //console.log("Intentant obtenir ubicació de l'usuari...");
+            const position = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition( resolve, reject, { 
+                    enableHighAccuracy: true, 
+                    timeout: 5000 
+                });
+            });
+            userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            // Carrega totes les protectores i filtra per distància
+            const response = await fetch(API_URL);
+            if (!response.ok) {
+                throw new Error(`Error al carregar les protectores: ${response.statusText}`);
+            };
+            const allProtectoras = await response.json();
+
+            const nearbyProtectoras = allProtectoras
+                .map(p => ({
+                    ...p,
+                    distance: getDistanceFromLatLonInKm(
+                        userLocation.lat, 
+                        userLocation.lng, 
+                        p.latitud,
+                         p.longitud
+                    )
+                }))
+                .filter(p => p.distance <= MAX_DISTANCE_KM)
+                .sort((a, b) => a.distance - b.distance); // Ordenar per distància (més a prop primer)
+
+            if (nearbyProtectoras.length === 0) {
+                alert(`No s'han trobat protectores a menys de ${MAX_DISTANCE_KM}km de la teva ubicació.`);
+                populateProtectoraSelect([]); // Buidem la llista
+            } else {
+                // Afegim la distància al nom per al select
+                const optionsHtml = '<option value="">Selecciona directament una protectora</option>' +
+                    nearbyProtectoras.map(protectora => {
+                        const location = protectora.provincia || 'Ubicació desconeguda';
+                        `<option value="${protectora.codiProt}">${protectora.nomProt} (${location}) - ${protectora.distance.toFixed(1)} km</option>`;
+                    }).join('');
+                protectoraSelect.innerHTML = optionsHtml;
+            }
+        } catch (error) {
+            console.error("Error obtenint ubicació o carregant protectores:", error);
+            alert("No es pot obtenir la teva ubicació");
+        }
+    }
+                /*(position) => {
                     userLocation = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
@@ -273,7 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Netejar la cerca de text
         textSearchInput.value = '';
-    }
+    }*/
 
 
     // ===============================================
@@ -284,8 +374,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchFormText) {
         searchFormText.addEventListener('submit', (e) => {
             e.preventDefault(); 
-            const searchText = textSearchInput.value.trim();
-            applyTextFilter(searchText); 
+            //const searchText = textSearchInput.value.trim();
+            applyTextFilter(textSearchInput.value); 
         });
     }
 
@@ -295,8 +385,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const selectedId = parseInt(e.target.value);
             
             if (selectedId) {
-                const selectedProtectora = MOCK_PROTECTORAS.find(p => p.id === selectedId);
-                renderProtectoraDetails(selectedProtectora);
+                //const selectedProtectora = MOCK_PROTECTORAS.find(p => p.id === selectedId);
+                fetch(`${API_URL}/${selectedId}`)
+                    .then(response => response.json())
+                    .then(renderProtectoraDetails)
+                    .catch(error => console.error("Error:", error));
             } else {
                 renderProtectoraDetails(null); 
             }
@@ -312,4 +405,5 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // D. Càrrega Inicial del Mapa i Llistat
     initMap(); 
+    fetchAllProtectoras();
 });

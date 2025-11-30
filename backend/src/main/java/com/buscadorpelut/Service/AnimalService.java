@@ -145,26 +145,86 @@ public class AnimalService {
     return animalRepository.findByEspecieNotInAndEsAdoptatFalse(Arrays.asList("Gos","Gat"));
   }
 
+  /**
+   * Retorna tots els animals que no estan adoptats i que pertanyen a protectores
+   * ubicades en una província específica.
+   * 
+   * @param provincia la província on es troben les protectores.
+   * @return una llista d'animals no adoptats de protectores en la província indicada.
+   *         Pot estar buida si no hi ha animals disponibles en aquesta ubicació.
+   * @see AnimalRepository#findNonAdoptedAnimalsByProtectoraProvincia(String)
+   */
   public List<Animal>getAnimalsNoAdoptatsByProvincia(String provincia){
     return animalRepository.findNonAdoptedAnimalsByProtectoraProvincia(provincia);
   }
 
+  /**
+   * Retorna tots els animals que no estan adoptats i que pertanyen a protectores
+   * ubicades en un codi postal específic.
+   * 
+   * @param codiPostal el codi postal on es troben les protectores.
+   * @return una llista d'animals no adoptats de protectores en el codi postal indicat.
+   *         Pot estar buida si no hi ha animals disponibles en aquesta ubicació.
+   * @see AnimalRepository#findNonAdoptedAnimalsByProtectoraCodiPostal(String)
+   */
   public List<Animal>getAnimalsNoAdoptatsByCodiPostal(String codiPostal){
     return animalRepository.findNonAdoptedAnimalsByProtectoraCodiPostal(codiPostal);
   }
 
+  /**
+   * Retorna tots els animals que no estan adoptats i que pertanyen a protectores
+   * ubicades en una localització específica (adresa, ciutat, etc.).
+   * 
+   * @param localitzacio la localització on es troben les protectores.
+   * @return una llista d'animals no adoptats de protectores en la localització indicada.
+   *         Pot estar buida si no hi ha animals disponibles en aquesta ubicació.
+   * @see AnimalRepository#findNonAdoptedAnimalsByProtectoraLocalitzacio(String)
+   */
   public List<Animal>getAnimalsNoAdoptatsByLocalitzacio(String localitzacio){
     return animalRepository.findNonAdoptedAnimalsByProtectoraLocalitzacio(localitzacio);
   }
 
+  /**
+   * Retorna tots els animals d'una espècie específica que no estan adoptats i que pertanyen a protectores
+   * ubicades en una localització específica (adresa, ciutat, etc.).
+   * 
+   * @param especie el nom de l'espècie a cercar (ha de coincidir exactament amb el valor
+   *                emmagatzemat a la base de dades, p. ex. "Gos", "Gat").
+   * @param localitzacio la localització on es troben les protectores.
+   * @return una llista d'animals no adoptats de l'espècie seleccionada en la localització indicada.
+   *         Pot estar buida si no hi ha animals disponibles que compleixin aquests criteris.
+   * @see AnimalRepository#findNonAdoptedAnimalsByEspecieAndLocalitzacio(String, String)
+   */
   public List<Animal>getAnimalsByEspecieNoAdoptatsByLocalitzacio(String especie, String localitzacio){
     return animalRepository.findNonAdoptedAnimalsByEspecieAndLocalitzacio(especie, localitzacio);
   }
 
+  /**
+   * Retorna tots els animals que no pertanyen a les espècies "Gos" ni "Gat" i que no estan adoptats,
+   * i que pertanyen a protectores ubicades en una localització específica (adresa, ciutat, etc.).
+   * 
+   * @param localitzacio la localització on es troben les protectores.
+   * @return una llista d'animals d'espècies diferents a "Gos" i "Gat" i que estan en situació d'adopció
+   *         en la localització indicada. Pot estar buida si no hi ha animals disponibles que compleixin aquests criteris.
+   * @see AnimalRepository#findNonAdoptedExoticAnimalsByLocalitzacio(String)
+   */
   public List<Animal>getAnimalsExcluirGosGatNoAdoptatsByLocalitzacio(String localitzacio){
     return animalRepository.findNonAdoptedExoticAnimalsByLocalitzacio(localitzacio);
   }
 
+  /**
+   * Mostra els detalls d'un animal pel seu identificador únic numèric,
+   * incloent la informació de la protectora associada.
+   * 
+   * <p>Si l'ID proporcionat és {@code null}, es retorna un {@link Optional#empty()} 
+   * per evitar excepcions.
+   * 
+   * @param numId l'identificador únic de l'animal a cercar.
+   * @return un {@link Optional} que conté l'animal amb la seva protectora si es troba,
+   *         o buit si no existeix o si l'ID és {@code null}.
+   * 
+   * @see AnimalRepository#findByIdWithProtectora(Long)
+   */
   public Optional<Animal>getAnimalByIdWithProtectora(Long numId){
     if (numId == null) {
         return Optional.empty();

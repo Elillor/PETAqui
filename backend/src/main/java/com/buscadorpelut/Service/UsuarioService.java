@@ -79,7 +79,7 @@ public class UsuarioService {
     /**
      * Busca un usuario por su ID y lo convierte a DTO.
      * 
-     * @param id Identificador del usuario.
+     * @param codiUs Identificador del usuario.
      * @return {@link Optional} con el {@link UsuarioDTO} si existe, vacío en caso contrario.
      */
     public Optional<UsuarioDTO> findById(Long codiUs) {

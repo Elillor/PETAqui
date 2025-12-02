@@ -1,0 +1,47 @@
+/* ========================================= */
+/* PETAqui - styles-cerca.css (Cerca Animal / Cerca Protectoras) */
+/* ========================================= */
+
+/* 1. Estilos de Barra de Búsqueda y Contenedores */
+
+/* Limita el ancho del contenido principal */
+.container {
+    max-width: 1200px; 
+}
+
+/* 2. Estilos Específicos del Mockup y Adaptación de Estilos */
+
+/* Placeholder para el mapa: NECESITA una altura definida */
+.map-placeholder {
+    height: 400px;
+    background-color: #f0f0f0; /* Fondo si el mapa no carga */
+    border: 1px solid #ddd;
+    overflow: hidden;
+    border-radius: 8px; 
+}
+
+/* Estilos para las líneas de datos de la protectora (simulando el diseño del mockup) */
+#protectora-data-container p {
+    font-size: 1.1rem;
+    padding: 0.75rem 0; /* Espacio vertical */
+    margin-bottom: 0;
+    border-bottom: 1px solid #eee; /* Línea separadora sutil */
+    color: var(--color-texto-oscuro); 
+    font-family: var(--font-body);
+}
+
+/* NUEVO ESTILO: Aplicar estilo de texto de acento al nombre de la protectora */
+#selected-protectora-name {
+    font-size: 1.6rem !important; /* Más grande que el h5 por defecto para destacar */
+    font-weight: 700; /* Negrita */
+    font-family: var(--font-body); 
+    color: var(--color-texto-oscuro) !important; /* Mantenemos color de texto oscuro */
+}
+
+
+/* MODIFICACIÓN: Dar más énfasis a los valores (strong) con el color de acento/CTA */
+#protectora-data-container strong, 
+#protectora-data-container a strong {
+    font-weight: 700; /* Más negrita que el 600 original */
+    color: var(--color-primario-cta); /* Usar el color de acento de la CTA para los valores */
+}

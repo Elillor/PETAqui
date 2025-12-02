@@ -1,18 +1,22 @@
+// AÑADIDO: Función global para verificar el estado de la sesión (usada por index.js)
+window.isUserLoggedIn = function() {
+    return localStorage.getItem('currentUser') !== null;
+};
+
 document.addEventListener("DOMContentLoaded", () => {
-  // Contenedor donde se insertará el botón/dropdown de login/perfil
+  
   const loginOrProfileBtnContainer = document.getElementById(
     "login-or-profile-btn"
   );
 
   // ===============================================
-  // Lógica de Pestañas (Tabs) - AÑADIDA AQUÍ
+  // Lógica de Pestañas (Se mantiene)
   // ===============================================
   const loginBtn = document.getElementById("loginBtn");
   const registerBtn = document.getElementById("registerBtn");
   const loginForm = document.getElementById("loginForm");
   const registerForm = document.getElementById("registerForm");
 
-  // 1. Función para mostrar el formulario de Login
   function showLoginForm() {
     if (loginBtn && registerBtn && loginForm && registerForm) {
       loginBtn.classList.add("active");
@@ -22,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 2. Función para mostrar el formulario de Registro
   function showRegisterForm() {
     if (loginBtn && registerBtn && loginForm && registerForm) {
       registerBtn.classList.add("active");
@@ -32,46 +35,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 3. Asignar los eventos (solo si estamos en login.html y existen los botones)
   if (loginBtn && registerBtn) {
     loginBtn.addEventListener("click", showLoginForm);
     registerBtn.addEventListener("click", showRegisterForm);
   }
 
   // ===============================================
-  // Lógica de Sesión
+  // Lógica de Sesión y Perfil (Se mantiene)
   // ===============================================
 
-  // Función de Logout (Salir) - Cierra sesión y redirige a la página de inicio (index.html)
   window.simulateLogout = function () {
     localStorage.removeItem("currentUser");
     localStorage.removeItem("dadesPerfil");
     window.location.href = "index.html";
   };
 
-  // Función para Cambiar Usuario - Cierra sesión y redirige a la página de Login (login.html)
   window.simulateChangeUser = function () {
     localStorage.removeItem("currentUser");
     localStorage.removeItem("dadesPerfil");
     window.location.href = "login.html";
   };
 
-  // Función de simulación de Login (para usar en login.html)
-  // NOTA: Esta función no se usa directamente para el login HTTP, pero se mantiene si se usa en otro lugar.
-  /*window.simulateLogin = function(username, name, surname1, surname2, email, password) {
-        const userData = { username, name, surname1, surname2, email, password };
-        localStorage.setItem('currentUser', JSON.stringify(userData));
-        window.location.href = 'perfil.html'; 
-    };*/
-
-  // Función para actualizar el botón en el header
   function updateHeaderLoginButton() {
     const currentUser = localStorage.getItem("currentUser");
 
     if (currentUser) {
-      // USUARIO LOGEADO: Mostrar un Dropdown (funciona con CLIC nativo de Bootstrap)
+      // USUARIO LOGEADO: Mostrar un Dropdown
       const userData = JSON.parse(currentUser);
-      // Si el backend proporciona un 'username' se usa, si no, se puede usar el 'name'
       const displayName =
         userData.nomUs || userData.emailUs?.split("@")[0] || "Usuari";
 
@@ -95,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             `;
     } else {
-      // USUARIO NO LOGEADO: mostrar "Login / Registre"
+      // USUARIO NO LOGEADO: mostrar "Login"
       loginOrProfileBtnContainer.innerHTML = `
                 <a href="login.html" class="btn btn-primary ms-lg-3 cta-login">Login</a>
             `;
@@ -103,40 +93,44 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ===============================================
-    // Lógica para Botón de "Veure Tots els Animals" en index.html
-    // ===============================================
-    const viewAllAnimalsBtn = document.getElementById('viewAllAnimalsBtn');
-    const isLoggedIn = localStorage.getItem('currentUser') !== null; // Comprueba si existe la sesión de usuario
-    
-    if (viewAllAnimalsBtn) {
-        if (isLoggedIn) {
-            // Si está logeado, el botón va a la página de búsqueda
-            viewAllAnimalsBtn.href = 'cerca-animal.html'; 
-        } else {
-            // Si NO está logeado, gestionamos el click
-            viewAllAnimalsBtn.href = '#'; // Quitar la URL directa
-            viewAllAnimalsBtn.addEventListener('click', (event) => {
-                event.preventDefault(); // Evita la navegación por defecto
-                alert('Has d\'iniciar sessió per cercar animals.');
-            });
+  // Lógica para Botón de "Veure Tots els Animals" (ACTUALIZADO CON CORRECCIÓN)
+  // ===============================================
+  
+  function handleProtectedAccess(event) {
+      event.preventDefault(); 
+      alert('Necessites iniciar sessió per accedir veure tots els animals.'); 
+  }
 
-            // Opcional: Deshabilitar visualmente el botón
-            viewAllAnimalsBtn.classList.add('disabled');
-            viewAllAnimalsBtn.style.opacity = '0.7'; 
-        }
-    }
+  function setupViewAllAnimalsButton() {
+      const viewAllAnimalsBtn = document.getElementById('viewAllAnimalsBtn');
+      const isLoggedIn = window.isUserLoggedIn(); 
+      
+      if (!viewAllAnimalsBtn) return;
+
+      viewAllAnimalsBtn.removeEventListener('click', handleProtectedAccess);
+
+      if (isLoggedIn) {
+          viewAllAnimalsBtn.href = 'cerca-animal.html'; 
+          viewAllAnimalsBtn.classList.remove('disabled');
+          viewAllAnimalsBtn.style.opacity = '1';
+      } else {
+          viewAllAnimalsBtn.href = '#'; 
+          // Solución: Quitamos la clase 'disabled' para que el evento click funcione
+          viewAllAnimalsBtn.classList.remove('disabled'); 
+          viewAllAnimalsBtn.style.opacity = '0.7'; 
+
+          viewAllAnimalsBtn.addEventListener('click', handleProtectedAccess);
+      }
+  }
 
   // ===============================================
-  // Función de Protección de Páginas
+  // Lógica de Protección de Páginas (Se mantiene)
   // ===============================================
   function requireLogin(redirectUrl = "login.html") {
-    // Intentamos cargar los datos del perfil (que es la fuente de verdad)
     const currentUserJSON = localStorage.getItem("dadesPerfil");
 
     if (!currentUserJSON) {
-      // No hay sesión, mostramos alerta y redirigimos
       if (window.location.pathname.endsWith("perfil.html")) {
-        // No alertamos en perfil.html ya que perfil.js ya lo hace al cargar
         window.location.href = redirectUrl;
       } else if (
         window.location.pathname.endsWith("cerca-animal.html") ||
@@ -145,7 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Has d'iniciar sessió per accedir a la cerca d'animals.");
         window.location.href = redirectUrl;
       } else {
-        // Para cualquier otra página que pueda requerir protección
         window.location.href = redirectUrl;
       }
       return false;
@@ -155,6 +148,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Ejecutar al cargar la página
   updateHeaderLoginButton();
+  setupViewAllAnimalsButton(); 
 
-  window.addEventListener("storage", updateHeaderLoginButton);
+  window.addEventListener("storage", () => {
+    updateHeaderLoginButton();
+    setupViewAllAnimalsButton();
+  });
 });

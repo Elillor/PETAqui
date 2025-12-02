@@ -5,65 +5,119 @@
 
 /* 1. Estilos para la Tarjeta Principal de la Imagen */
 .animal-card-custom {
-    /* Basado en el estilo de las tarjetas de cerca-animal.css para coherencia */
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    background-color: var(--color-fondo-claro);
-    overflow: hidden; /* Asegura que la imagen respete el radio superior */
+  /* Basado en el estilo de las tarjetas de cerca-animal.css para coherencia */
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: var(--color-fondo-claro);
+  overflow: hidden; /* Asegura que la imagen respete el radio superior */
 }
 
 /* Imagen Principal del Animal */
 #animal-image {
-    width: 100%;
-    /* Altura fija o mínima para evitar saltos de layout */
-    min-height: 350px; 
-    object-fit: cover;
-    display: block;
+  width: 100%;
+  /* Altura fija o mínima para evitar saltos de layout */
+  min-height: 350px;
+  object-fit: cover;
+  display: block;
 }
 
 /* 2. Estilos para el Botón de Adopción (CTA) */
 /* El botón de la página de detalles es grande y destacado */
 #adoption-cta {
-    /* Usa las variables definidas en styles-index.css */
-    background-color: var(--color-primario-cta) !important; 
-    border-color: var(--color-primario-cta) !important;
-    color: var(--color-texto-oscuro) !important;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  /* Usa las variables definidas en styles-index.css */
+  background-color: var(--color-primario-cta) !important;
+  border-color: var(--color-primario-cta) !important;
+  color: var(--color-texto-oscuro) !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 #adoption-cta:hover {
-    background-color: var(--color-secundario-btn) !important;
-    border-color: var(--color-secundario-btn) !important;
-    opacity: 0.95;
+  background-color: var(--color-secundario-btn) !important;
+  border-color: var(--color-secundario-btn) !important;
+  opacity: 0.95;
 }
 
 /* 3. Estilos de Listas de Detalles */
 /* Aseguramos que las listas de detalles (rápidos, carácter, médico) sean limpias */
-#quick-details-list, #character-list, #medical-list {
-    background-color: transparent;
-    border-radius: 8px;
-    overflow: hidden;
+#quick-details-list,
+#character-list {
+  background-color: transparent;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .list-group-item {
-    padding: 10px 0;
-    border-color: #eee;
-    font-size: 1.05rem;
+  padding: 10px 0;
+  border-color: #eee;
+  font-size: 1.05rem;
 }
 
 .list-group-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
+/* 4. Estilos para Encabezados y Nombres */
+#detail-name {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: var(--color-texto-oscuro) !important;
+  padding-bottom: 7px;
+}
 /* Destacar el nombre del animal y los encabezados */
-#animal-name {
-    font-family: var(--font-heading); /* Si está definida en styles-index.css */
-    font-weight: 700;
+#detail-name,
+.section-header {
+  font-family: var(--font-heading); /* Si está definida en styles-index.css */
+  font-weight: 700;
 }
 
 .text-acento {
-    color: var(--color-primario-cta) !important; /* Amarillo Oro */
+  /* */
+  color: #b78408 !important;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+/* 5. Estils per a l'Estat d'Adopció */
+.status-indicator {
+  display: inline-flex; /* Per alinear el cercle i el text */
+  align-items: center;
+  font-weight: 700;
+  padding: 3px 8px; /* Padding lleuger */
+  border-radius: 5px;
+  font-size: 0.95rem; /* Una mica més petit que l'encapçalament */
+}
+
+.status-indicator::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+  display: inline-block;
+}
+
+/* Color per a "Adoptat" (No disponible, per tant vermell) */
+.status-adopted {
+  color: #dc3545; /* text-danger de Bootstrap */
+  background-color: #f8d7da; /* fons de text-danger */
+}
+
+.status-adopted::before {
+  background-color: #dc3545;
+}
+
+/* Color per a "No Adoptat" (Disponible, per tant verd) */
+.status-available {
+  color: #198754; /* text-success de Bootstrap */
+  background-color: #d1e7dd; /* fons de text-success */
+}
+
+.status-available::before {
+  background-color: #198754;
 }

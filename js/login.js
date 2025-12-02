@@ -30,6 +30,7 @@ if (loginForm) {
         localStorage.setItem(
           "currentUser",
           JSON.stringify({
+            codiUs: userData.codiUs,
             nomUs: userData.nomUs,
             emailUs: userData.emailUs,
             rolUs: userData.rolUs,
@@ -38,12 +39,7 @@ if (loginForm) {
 
         localStorage.setItem(
           "dadesPerfil",
-          JSON.stringify({
-            nomUs: userData.nomUs,
-            cognom1: userData.cognom1,
-            cognom2: userData.cognom2,
-            emailUs: userData.emailUs,
-          })
+          JSON.stringify(userData)
         );
         alert("Login exitós!");
 

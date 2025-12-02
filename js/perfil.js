@@ -82,29 +82,74 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----------------------------------------------------
   // 3. Simulación de Guardado de Perfil
   // ----------------------------------------------------
-  function simulateSaveProfile() {
+  async function simulateSaveProfile() {
+    const currentUserData = JSON.parse(currentUserJSON);
+    const codiUs = parseInt(currentUserData.codiUs);
+
+    if (!codiUs) {
+    alert("Error: Falta l'identificador de l'usuari.");
+    return;
+  }
     // 1. Capturar los nuevos valores
     const newUserData = {
-      username: document.getElementById("display-username").textContent, // El username no es editable aquí
-      name: document.getElementById("display-name").value,
-      surname1: document.getElementById("display-surname1").value,
-      surname2: document.getElementById("display-surname2").value,
-      email: document.getElementById("display-email").value,
+      //username: document.getElementById("display-username").textContent, // El username no es editable aquí
+      nomUs: document.getElementById("display-name").value.trim(),
+      cognom1: document.getElementById("display-surname1").value.trim(),
+      cognom2: document.getElementById("display-surname2").value.trim(),
+      emailUs: document.getElementById("display-email").value.trim(),
       // NOTA: La contraseña se maneja aparte en un entorno real. Aquí la mantenemos igual o capturamos nuevo valor si fue cambiado.
-      password: document.getElementById("display-password").value,
+      
     };
 
-    // 2. Guardar los nuevos datos en localStorage (Simulación)
-    localStorage.setItem("currentUser", JSON.stringify(newUserData));
+    const passwordInput = document.getElementById("display-password");
+    if (passwordInput && passwordInput.value !== "********") {
+      newUserData.clauPas = passwordInput.value;
+    }
 
-    // 3. Actualizar el Handle (por si acaso el username se pudiera editar en el futuro, aunque aquí no lo hemos hecho)
-    document.getElementById(
-      "display-handle"
-    ).textContent = `@${newUserData.username}`;
+    try {
+      const response = await fetch(`http://localhost:8080/api/usuarios/${codiUs}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUserData),
+      });
+      if (response.ok) {
+        const updatedUser = await response.json();
+
+        localStorage.setItem("dadesPerfil", JSON.stringify({
+          codiUs: updatedUser.codiUs,
+          nomUs: updatedUser.nomUs,
+          cognom1: updatedUser.cognom1,
+          cognom2: updatedUser.cognom2,
+          emailUs: updatedUser.emailUs,
+        }));
+    // 2. Guardar los nuevos datos en localStorage (Simulación)
+        localStorage.setItem("currentUser", JSON.stringify({
+          codiUs: updatedUser.codiUs,
+          nomUs: updatedUser.nomUs,
+          emailUs: updatedUser.emailUs,
+          rolUs: updatedUser.rolUs, // Mantenemos el rol existente
+        }));
+
+    // 3. Actualizar  el username y el Handle (por si acaso el username se pudiera editar en el futuro, aunque aquí no lo hemos hecho)
+        document.getElementById("display-username").textContent = updatedUser.nomUs;
+        document.getElementById(
+        "display-handle"
+        ).textContent = `@${updatedUser.emailUs.split("@")[0] || `usuari`}`;
 
     // 4. Feedback al usuario
-    alert("Perfil actualitzat correctament!");
-
+        alert("Perfil actualitzat correctament!");
+        window.location.href = "index.html"; // Redirigir a la página principal después de guardar
+      } else {
+        const errorData = await response.text();
+        alert("Error actualitzant el perfil.");
+        console.error("Error details:", errorData);
+      }
+    } catch (error) {
+      alert("Error de connexió. Intenta-ho novament més tard.");
+      console.error("Fetch error:", error);
+    }
     // El header se actualizará automáticamente si se cambia el username (si no se refresca la página)
     // Pero para asegurar que el dropdown del header se actualice si se cambia el nombre:
     // window.location.reload(); // Descomentar si es necesario un refresh completo.

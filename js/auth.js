@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const userData = JSON.parse(currentUser);
       const displayName =
         userData.nomUs || userData.emailUs?.split("@")[0] || "Usuari";
-
+      
       loginOrProfileBtnContainer.innerHTML = `
                 <div class="dropdown">
                     <button class="btn btn-primary cta-login dropdown-toggle" type="button" 
@@ -78,12 +78,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <li><a class="dropdown-item" href="perfil.html">El meu Perfil</a></li>
+                        <li><a id="admin" class="dropdown-item d-none" href="admin.html">Administració</a></li>
                         <li><a class="dropdown-item" href="#" onclick="simulateChangeUser()">Canviar Usuari</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#" onclick="simulateLogout()">Tancar Sessió</a></li>
                     </ul>
                 </div>
             `;
+        if(userData.rolUs === "ADMIN"){
+            document.getElementById("admin").classList.remove("d-none");
+        }
     } else {
       // USUARIO NO LOGEADO: mostrar "Login"
       loginOrProfileBtnContainer.innerHTML = `

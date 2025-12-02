@@ -232,7 +232,14 @@
     // Ejecutar la comprobación de login al cargar la página
     requireLogin(); 
 </script>
-
+<script>
+    // Comprobación de seguridad al cargar la página
+    if (!localStorage.getItem('currentUser')) {
+        alert('Necessites iniciar sessió per accedir a la cerca d\'animals.');
+        // Redirige a la página de login si no hay sesión
+        window.location.href = 'login.html'; 
+    }
+</script>
     <script src="js/cerca-animal.js"></script>
   </body>
 </html>

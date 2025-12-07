@@ -39,7 +39,7 @@ public class Animal implements Serializable{
     @Nonnull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "numId")
-    private long numId;
+    private Long numId;
 
     
     @Nonnull
@@ -80,8 +80,8 @@ public class Animal implements Serializable{
      * De moment ho comento perquè no farem la taula de les protectores, ho deixo llest.
      */
 
-    @ManyToOne
-    @JoinColumn(name = "codiProt", referencedColumnName = "codiProt")
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "codiProt", referencedColumnName = "codiProt", nullable = true)
     private Protectora protectora;
 
     /**Constructors*/
@@ -106,7 +106,7 @@ public class Animal implements Serializable{
      * @param fotoPerfil URL on es troba l'imatge de perfil
      * @param protectora Entitat d'una protectora on es troba l'animal. 
      */
-    public Animal(Long numId, String nomAn, String sexe, Date dataNeix, String descripcio,String numXip, String especie, boolean esAdoptat, String fotoPerfil , Protectora protectora) {
+    public Animal(Long numId, String nomAn, String sexe, Date dataNeix, String descripcio,String numXip, String especie, boolean esAdoptat, String fotoPerfil, Protectora protectora) {
         this.numId = numId;
         this.nomAn = nomAn;
         this.sexe = sexe;
@@ -115,7 +115,7 @@ public class Animal implements Serializable{
         this.numXip = numXip;
         this.especie = especie;
         this.esAdoptat = esAdoptat;
-        this.fotoPerfil = fotoPerfil;
+        this.fotoPerfil = fotoPerfil;    
         this.protectora = protectora;
     }
 
@@ -126,6 +126,9 @@ public class Animal implements Serializable{
         return this.numId;
     }
 
+    public void setNumId(Long numId) {
+        this.numId = numId;
+    }
     /**Nom animal*/
     public String getNomAn() {
         return this.nomAn;
@@ -200,6 +203,7 @@ public class Animal implements Serializable{
         this.fotoPerfil = fotoPerfil;
     }
 
+    
     /*
      * Protectora on està l'animal allotjat
      * Clau foranea
@@ -241,6 +245,8 @@ public class Animal implements Serializable{
         }
         return "Desconeguda";
     }
+
+    
 }
 
 

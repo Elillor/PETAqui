@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.buscadorpelut.Model.Protectora;
+
 import com.buscadorpelut.Repository.ProtectoraRepository;
 
 /**
@@ -34,6 +36,17 @@ public class ProtectoraService {
      */
     public List<Protectora>getAllProtectores(){
         return protectoraRepository.findAll();
+    }
+
+    /**
+     * Retorna una protectora por su identificador para la consola de administracion.
+     * 
+     * @param codiProt identificador de la protectora
+     * @return un objeto {@link Optional} que contiene la protectora si existe,
+     * o vacio si no existe.
+     */
+    public Optional<Protectora>findById(Long codiProt){
+        return protectoraRepository.findById(codiProt);
     }
 
     /**
@@ -136,6 +149,33 @@ public class ProtectoraService {
         return protectoraRepository.findByEmailProt(emailProt);
     }
 
-    
+    /**
+     * Guarda una protectora en el sistema..
+     * 
+     * <p>Si la protectora ya tiene un {@code codiProt} válido y existe en la base de datos,
+    * se actualizan los datos. Si no tiene {@code codiProt} o es nuevo,
+    * se crea una protectora nueva con su identificador autogenerado.
+     * 
+     * <p>Este mètode gestiona automáticamente todos los campos de la protectora,
+     * incluida la localización geográfica (longitud i latitud).
+     * 
+     * @param protectora entidad {@link Protectora} con los datos a guardar.
+     * @return {@link Protectora} guardada, incluido el identificador autogenerado si es nueva.
+     */
+    public Protectora save(Protectora protectora){
+        return protectoraRepository.save(protectora);
+    }
+
+    /**
+     * Elimina una protectora del sistema por su identificador.
+     * 
+     * <p>No lanza ninguna excepción si la protectora no existe (comportamiento per defecto
+     * de {@link JpaRepository#deleteById}).
+     * 
+     * @param codiProt identificador de la protectora a eliminar.
+     */
+    public void deleteById(Long codiProt){
+        protectoraRepository.deleteById(codiProt);
+    }
 
 }

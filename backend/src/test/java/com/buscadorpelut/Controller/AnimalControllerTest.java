@@ -68,6 +68,7 @@ public class AnimalControllerTest {
             false, 
             "pelut.jpg",
             null
+        
         );
         
     }
@@ -133,7 +134,7 @@ public class AnimalControllerTest {
 
     @Test
     void getAnimalsByNumId()throws Exception{
-        when(animalService.getAnimalsById(1L)).thenReturn(Optional.of(animal1));
+        when(animalService.findById(1L)).thenReturn(Optional.of(animal1));
 
         mockMvc.perform(get("/api/animals/1")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -141,18 +142,18 @@ public class AnimalControllerTest {
                 .andExpect(jsonPath("$.nomAn").value("Dark"))
                 .andExpect(jsonPath("$.especie").value("Gos"));
 
-        verify(animalService, times(1)).getAnimalsById(1L);
+        verify(animalService, times(1)).findById(1L);
     }
 
     @Test
     void getAnimalsById_NoExistent()throws Exception{
-        when(animalService.getAnimalsById(70L)).thenReturn(Optional.empty());
+        when(animalService.findById(70L)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/api/animals/70")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
 
-        verify(animalService, times(1)).getAnimalsById(70L);
+        verify(animalService, times(1)).findById(70L);
     }
 
 

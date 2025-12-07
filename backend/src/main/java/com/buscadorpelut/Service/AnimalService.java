@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.buscadorpelut.Model.Animal;
+import com.buscadorpelut.Model.Protectora;
 import com.buscadorpelut.Repository.AnimalRepository;
 
 /**
@@ -74,11 +76,8 @@ public class AnimalService {
      * 
      * @see AnimalRepository#findById(Object)
      */
-  public Optional<Animal>getAnimalsById(Long id){
-    if (id == null) {
-        return Optional.empty();
-    }
-    return animalRepository.findById(id);
+  public Optional<Animal>findById(Long numId){
+      return animalRepository.findById(numId);
   }
 
   /**
@@ -230,5 +229,34 @@ public class AnimalService {
         return Optional.empty();
     }
     return animalRepository.findByIdWithProtectora(numId);
+  }
+
+  /**
+   * Guarda un animal en el sistema.
+   * 
+   * <p>Si el animal ya tiene un {@code numId} válido y existe en la base de datos,
+   * se actualizan los datos. Si no tiene {@code numId} o es nuevo,
+   * se crea un animal nuevo con su identificador autogenerado.
+   * 
+   * <p>Este métode gestiona automáticamente la relación con la protectora
+   * si se incluye el objeto {@link Protectora} completo dentro del animal.
+   * 
+   * @param animal entidad {@link Animal} con los datos a guardar.
+   * @return {@link Animal} guardado, añadiendo el identificador autogenerado si es nuevo.
+   */
+  public Animal save(Animal animal){
+      return animalRepository.save(animal);
+  }
+
+  /**
+   * Elimina un animal del sistema por su identificador.
+   * 
+   * <p>No lanza ninguna excepción si el animal no existe (comportamiento por defecto
+   * de {@link JpaRepository#deleteById}).
+   * 
+   * @param numId identificador del animal a eliminar.
+   */
+  public void deleteById(Long numId){
+      animalRepository.deleteById(numId);
   }
 }

@@ -27,7 +27,7 @@ public class Protectora implements Serializable{
     @NonNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codiProt")
-    private long codiProt; /**Identificador únic autogenerat de la protectora.*/
+    private Long codiProt; /**Identificador únic autogenerat de la protectora.*/
 
     @NonNull
     @Column(name = "nomProt")   
@@ -60,13 +60,16 @@ public class Protectora implements Serializable{
     @Column(name = "emailProt")
     private String emailProt; /**Email de la protectora.*/
 
+    
+
     /**Constructors*/
     public Protectora() {
         /** Constructor per defecte*/ 
     }
 
-    /**Constructor amb paràmetres
-     * @param nomProt Identificador de la protectora
+    /**Constructor amb 
+     * @param codiProt Identificador de la protectora
+     * @param nomProt nom de la protectora
      * @param adresa Adreça de la protectora
      * @param codiPostal Codi postal de la protectora
      * @param localitat Localitat de la protectora
@@ -77,8 +80,9 @@ public class Protectora implements Serializable{
      * @param tlfProt Telèfon de la protectora
      * @param emailProt Email de la protectora
     */
-    public Protectora(String nomProt, String adresa, String codiPostal, String localitat, String provincia,
+    public Protectora(Long codiProt,String nomProt, String adresa, String codiPostal, String localitat, String provincia,
             String url, double longitud, double latitud, String tlfProt, String emailProt) {
+        this.codiProt = codiProt;
         this.nomProt = nomProt;
         this.adresa = adresa;
         this.codiPostal = codiPostal;
@@ -94,11 +98,11 @@ public class Protectora implements Serializable{
     /**Getters i Setters*/
 
     /**Codi protectora*/
-    public long getCodiProt() {
+    public Long getCodiProt() {
         return codiProt;
     }
 
-    public void setCodiProt(long codiProt) {
+    public void setCodiProt(Long codiProt) {
         this.codiProt = codiProt;
     }
 

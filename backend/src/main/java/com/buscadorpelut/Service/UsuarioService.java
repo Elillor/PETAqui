@@ -5,12 +5,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.buscadorpelut.DTO.UsuarioDTO;
+import com.buscadorpelut.Model.Rol;
 import com.buscadorpelut.Model.Usuario;
 import com.buscadorpelut.Repository.UsuarioRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 /**
  * Servicio que encapsula la lógica de negocio relacionada con los usuarios.
@@ -137,6 +141,86 @@ public class UsuarioService {
         dto.setClauPas(usuario.getclauPas());
         dto.setRolUs(usuario.getrol().name());
         return dto;
+    }
+
+    /**
+     * Convierte un objeto DTO de usuario a una entidad JPA.
+     * 
+     * <p>Este método se utiliza principalmente en operaciones de creación
+     * o actualitzación para transformar los datos recibidos desde el frontend
+     * (via API REST) a la entidad persistente.
+     * 
+     * <p>La contraseña se encripta automáticamente con BCrypt si se proporciona.
+     * El rol se convierte de string a enum {@link Rol}.
+     * 
+     * @param dto objeto de transferencia de datos con los datos del usuario.
+     * @return entidad {@link Usuario} preparada para persistencia.
+     */
+    private Usuario convertirAEntitat(UsuarioDTO dto) {
+        Usuario usuario = new Usuario();
+        if (dto.getCodiUs() != null && dto.getCodiUs() != 0) {
+            usuario.setCodiUs(dto.getCodiUs());
+        }
+        usuario.setnomUs(dto.getNomUs());
+        usuario.setcognom1(dto.getCognom1());
+        usuario.setcognom2(dto.getCognom2());
+        usuario.setemailUs(dto.getEmailUs());
+        if (dto.getClauPas() != null && !dto.getClauPas().isEmpty()) {
+            usuario.setclauPas(passwordEncoder.encode(dto.getClauPas()));
+        }
+        if (dto.getRolUs() != null) {
+            usuario.setrol(Rol.valueOf(dto.getRolUs()));
+        }
+        return usuario;
+    }
+
+    /**
+     * Guarda o actualiza un usuario al sistema.
+     * 
+     * <p>Si se especifica un {@code codiUs} válido, se actualiza el usuario existente.
+     * Si no se especifica {@code codiUs} (o es null), se crea un usuario nuevo.
+     * 
+     * <p>La contraseña solo se actualiza si se proporciona un valor no vacio.
+     * Esto permite cambiar otros campos sin tener que volver a enviar la contraseña.
+     * 
+     * @param dto datos del usuario a guardar (puede contener el identificador para actualizaciones).
+     * @return {@link UsuarioDTO} con los datos guardados, añadiendo el identificador autogenerado si es nuevo.
+     * @throws EntityNotFoundException si se intenta actualizar un usuario inexistente.
+     */
+    public UsuarioDTO save(UsuarioDTO dto) {
+        Usuario entity;
+        if (dto.getCodiUs() != null) {
+            entity = usuarioRepository.findById(dto.getCodiUs())
+                .orElseThrow(() -> new EntityNotFoundException("Usuari no trobat"));
+        } else {
+            entity = new Usuario();
+        }
+        // Actualitza només els camps que vols canviar
+        entity.setnomUs(dto.getNomUs());
+        entity.setcognom1(dto.getCognom1());
+        entity.setcognom2(dto.getCognom2());
+        entity.setemailUs(dto.getEmailUs());
+        entity.setrol(Rol.valueOf(dto.getRolUs()));
+        
+        // Només actualitza la contrasenya si s'ha enviat
+        if (dto.getClauPas() != null && !dto.getClauPas().isEmpty()) {
+            entity.setclauPas(passwordEncoder.encode(dto.getClauPas()));
+        }
+        
+        Usuario saved = usuarioRepository.save(entity);
+        return convertirADTO(saved);
+    }
+
+    /**
+     * Elimina un usuario del sistema por su identificador.
+     * 
+     * <p>No lanza ninguna excepción si el usuario no existe (comportamiento por defecto
+     * de {@link JpaRepository#deleteById}).
+     * 
+     * @param codiUs identificador de el usuario a eliminar.
+     */
+    public void deleteBycodiUs(Long codiUs){
+        usuarioRepository.deleteById(codiUs);
     }
 
 }

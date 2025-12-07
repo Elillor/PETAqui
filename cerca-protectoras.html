@@ -9,7 +9,6 @@
       name="description"
       content="Troba el llistat de protectores i refugis d'animals més propers a la teva zona."
     />
-    <!--ATRIBUTOS INTEGRITY ELIMINADOS-->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -21,7 +20,6 @@
       href="https://fonts.googleapis.com/css2?family=Halant:wght@400;600&family=Quicksand:wght@700&family=Sarala&display=swap"
       rel="stylesheet"
     />
-    <!--ATRIBUTOS INTEGRITY Y CROSSORIGIN ELIMINADOS-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
 
@@ -85,7 +83,7 @@
         <div class="row mb-5">
           <div class="col-12 col-lg-8 offset-lg-2 text-center text-muted">
             <p style="font-family: var(--font-body); color: #555555 !important;">
-              Utilitza el camp de cerca per filtrar les protectores per **nom o ciutat**, fes servir el botó **Prop meu** per buscar per proximitat, o tria directament l'organització.
+              Utilitza el camp de cerca per filtrar les protectores per "nom o província", fes servir el botó "Prop meu" per buscar per proximitat.
             </p>
           </div>
         </div>
@@ -96,7 +94,7 @@
               <input
                 class="form-control form-control-lg me-2"
                 type="search"
-                placeholder="Cerca per nom de protectora o ciutat..." aria-label="Cerca protectora per text"
+                placeholder="Cerca per nom de protectora o provincia..." aria-label="Cerca protectora per text"
                 id="text-search-input"
               />
               <button class="btn btn-primary btn-lg me-2" type="submit"> Buscar
@@ -109,11 +107,11 @@
               </button>
               </form>
 
-            <div class="mb-5">
+            <div id="protectora-select-container" class="mb-5 d-none">
                 <select class="form-select form-select-lg" aria-label="Selector de Protectora" id="protectora-select">
-                    <option value="">Selecciona directament una protectora</option> </select>
+                    <option value="">Selecciona una protectora</option> </select>
             </div>
-          </div>
+            </div>
         </div>
 
         <div class="row mb-5">
@@ -129,11 +127,11 @@
             <div class="col-12 col-lg-8 offset-lg-2 text-center">
                 <h2 class="text-center mb-5 text-general">Dades Protectora</h2>
                 <div id="protectora-data-container" class="text-start">
-                    <p class="h5 mb-3 text-muted" id="selected-protectora-name">Tria una protectora per veure'n els detalls.</p>
-                    <p id="protectora-address">Direcció Protectora: </p>
-                    <p id="protectora-email">Email Protectora: </p>
-                    <p id="protectora-phone">Telèfon Protectora: </p>
-                    <p id="protectora-web">Web Protectora Opcional: </p>
+                    <p class="h5 mb-3 text-muted" id="selected-protectora-name"></p>
+                    <p id="protectora-address">Direcció: </p>
+                    <p id="protectora-email">Email: </p>
+                    <p id="protectora-phone">Telèfon: </p>
+                    <p id="protectora-web">Web: </p>
                 </div>
             </div>
         </div>
@@ -157,23 +155,12 @@
         </p>
       </div>
     </footer>
-    <!--ATRIBUTOS INTEGRITY Y CROSSORIGIN ELIMINADOS-->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
     <script src="js/auth.js"></script>
-    <!--ATRIBUTOS INTEGRITY Y CROSSORIGIN ELIMINADOS-->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     ></script>
-
-    <!--<script>
-    // Comprobación de seguridad al cargar la página
-    if (!localStorage.getItem('currentUser')) {
-        alert('Necessites iniciar sessió per accedir a la cerca protectoras.');
-        // Redirige a la página de login si no hay sesión
-        window.location.href = 'login.html';
-    }
-</script>-->
     
     <script src="js/cerca-protectoras.js"></script>
   </body>

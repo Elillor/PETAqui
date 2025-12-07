@@ -30,8 +30,18 @@
     font-family: var(--font-body);
 }
 
+/* NUEVO ESTILO: Aplicar estilo de texto de acento al nombre de la protectora */
+#selected-protectora-name {
+    font-size: 1.6rem !important; /* Más grande que el h5 por defecto para destacar */
+    font-weight: 700; /* Negrita */
+    font-family: var(--font-body); 
+    color: var(--color-texto-oscuro) !important; /* Mantenemos color de texto oscuro */
+}
+
+
+/* MODIFICACIÓN: Dar más énfasis a los valores (strong) con el color de acento/CTA */
 #protectora-data-container strong, 
 #protectora-data-container a strong {
-    font-weight: 600;
-    color: #555555;
+    font-weight: 700; /* Más negrita que el 600 original */
+    color: var(--color-primario-cta); /* Usar el color de acento de la CTA para los valores */
 }

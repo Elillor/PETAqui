@@ -38,7 +38,7 @@ public class ProtectoraControllerTest {
     @BeforeEach
     void setUp(){
         protectora1 = new Protectora(
-            
+            1L,
             "A.A.A. amics",
             "carrer Fontanella",
             "08031",
@@ -52,6 +52,7 @@ public class ProtectoraControllerTest {
         );
 
         protectora2 = new Protectora(
+            2L,
             "A.P.A. Rodamón",
             "Pujada Morena s/n ",
             "17200",

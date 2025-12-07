@@ -1,0 +1,71 @@
+/* ========================================= */
+/* PETAqui - styles-admin.css */
+/* Estilos específicos para la página de Administración */
+/* ========================================= */
+
+/* Sidebar administración */
+.admin-sidebar {
+  width: 200px;
+  height: 100vh;
+  background-color: var(--color-fondo-estructural, #343a40);
+  padding: 1rem;
+  flex-shrink: 0;
+}
+
+.admin-sidebar a {
+  color: var(--color-texto-claro, #fff);
+  padding: 0.75rem;
+  display: block;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: var(--font-body, sans-serif);
+  transition: background-color 0.3s ease;
+}
+
+.admin-sidebar a:hover {
+  background-color: #495057;
+}
+
+.admin-sidebar .sidebar-title {
+  color: var(--color-texto-claro, #fff);
+  margin-bottom: 1.5rem;
+  font-family: var(--font-heading, "Quicksand", sans-serif);
+  font-weight: 600;
+}
+
+/* Contenido principal */
+.admin-content {
+  padding: 2rem;
+  flex-grow: 1;
+  background-color: var(--color-fondo-claro, #f9f9f9);
+}
+
+/* Botones dentro de tablas */
+.admin-table .btn-sm {
+  margin-right: 0.25rem;
+}
+
+/* Layout flex para adaptarse a la estructura del proyecto */
+.admin-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Responsive: ocultar sidebar en móviles pequeños */
+@media (max-width: 576px) {
+  .admin-wrapper {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .admin-sidebar a {
+    white-space: nowrap;
+  }
+}

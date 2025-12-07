@@ -143,6 +143,6 @@ public class AnimalController {
         @RequestParam String localitzacio){   
         return ResponseEntity.ok(animalService.getAnimalsNoAdoptatsByLocalitzacio(localitzacio));
     }
-
+    
 
 }

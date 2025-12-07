@@ -102,6 +102,9 @@ public class Usuario implements Serializable {
     public Long getCodiUs() {
         return this.codiUs;
     }
+    public void setCodiUs(Long codiUs){
+        this.codiUs = codiUs;
+    }
 
     //Nom usuari
     public String getnomUs() {

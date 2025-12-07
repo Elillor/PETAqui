@@ -34,9 +34,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const protectoraEmail = document.getElementById('protectora-email');
     const protectoraPhone = document.getElementById('protectora-phone');
     const protectoraWeb = document.getElementById('protectora-web');
-    const textSearchInput = document.getElementById('text-search-input');
+    // ELEMENT AFGEIT DE LA PETICIÓ PRÈVIA PER AMAGAR EL SELECT
+    const protectoraSelectContainer = document.getElementById('protectora-select-container');
     const searchFormText = document.getElementById('search-form-text');
     const proximitySearchBtn = document.getElementById('proximity-search-btn');
+    const textSearchInput = document.getElementById('text-search-input');
+
+    // Amaga el select de protectores quan l'usuari clica al camp de cerca
+    if (textSearchInput) {
+        textSearchInput.addEventListener('focus', () => {
+            // Amaga el contenidor del select
+            protectoraSelectContainer.classList.add('d-none');
+            // Opcional: amaga també les dades de la protectora seleccionada
+            renderProtectoraDetails(null);
+            // Opcional: desselecciona el <select>
+            if (protectoraSelect) {
+                protectoraSelect.value = "";
+            }
+        });
+    }
     
     // Configuració del mapa
     const DEFAULT_CENTER = [41.60, 1.80]; // Centre de Catalunya (Lat/Lng)
@@ -73,8 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Inicialitza el marcador, però sense posició visible inicialment
         marker = L.marker(DEFAULT_CENTER, { opacity: 0 }).addTo(map);
 
-        // MODIFICACIÓ CLAU: Després d'inicialitzar el mapa, carreguem una llista VUITA
-        // Les protectores només es mostraran després d'una cerca.
+        // Amb el canvi, això ara OCULTARÀ el contenidor al principi.
         populateProtectoraSelect([]); 
     }
     
@@ -104,8 +119,18 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {Array} protectorasList - Llista de protectores (filtrada o completa) a renderitzar.
      */
     function populateProtectoraSelect(protectorasList = []) { // Default a llista buida
-        if (!protectoraSelect) return;
+        // Afegim el check per al nou contenidor i el select.
+        if (!protectoraSelect || !protectoraSelectContainer) return;
         
+        // 1. CONTROL DE VISIBILITAT (PETICIÓ ANTERIOR)
+        if (protectorasList.length > 0) {
+            // Mostrar si hi ha resultats
+            protectoraSelectContainer.classList.remove('d-none');
+        } else {
+            // Ocultar si la llista és buida (càrrega inicial o cerca sense resultats)
+            protectoraSelectContainer.classList.add('d-none');
+        }
+
         // Guardem el valor seleccionat actualment per intentar mantenir-lo
         const currentSelectedId = protectoraSelect.value;
         // El placeholder del select s'ha modificat a l'HTML
@@ -117,9 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 isCurrentSelectedInFilteredList = true;
             }
             // Si la protectora té distància (cerca per proximitat), l'afegim al text
-            //const distanceText = protectora.distance ? ` - ${protectora.distance.toFixed(1)} km` : ''; 
+            const distanceText = protectora.distance ? ` - ${protectora.distance.toFixed(1)} km` : ''; 
             const location = protectora.provincia || 'Ubicació desconeguda';
-            optionsHtml += `<option value="${protectora.codiProt}">${protectora.nomProt} (${location})</option>`;
+            optionsHtml += `<option value="${protectora.codiProt}">${protectora.nomProt} (${location})${distanceText}</option>`;
         });
 
         protectoraSelect.innerHTML = optionsHtml;
@@ -131,6 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (isCurrentSelectedInFilteredList) {
              // Intentem restaurar la selecció
              protectoraSelect.value = currentSelectedId;
+             // Nota: En lloc de buscar MOCK_PROTECTORAS, hauríem de fer un fetch per a obtenir detalls.
+             // Per simplicitat, assumim que el detall està en la llista filtrada.
              const selectedProtectora = protectorasList.find(p => p.codiProt == currentSelectedId);
              renderProtectoraDetails(selectedProtectora);
         }
@@ -140,11 +167,11 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function renderProtectoraDetails(protectora) {
         if (!protectora) {
-            selectedProtectoraName.textContent = "Tria una protectora per veure'n els detalls.";
-            protectoraAddress.innerHTML = 'Direcció Protectora: ';
-            protectoraEmail.innerHTML = 'Email Protectora: ';
-            protectoraPhone.innerHTML = 'Telèfon Protectora: ';
-            protectoraWeb.innerHTML = 'Web Protectora Opcional: ';
+            selectedProtectoraName.textContent = "";
+            protectoraAddress.innerHTML = 'Direcció: ';
+            protectoraEmail.innerHTML = 'Email: ';
+            protectoraPhone.innerHTML = 'Telèfon: ';
+            protectoraWeb.innerHTML = 'Web: ';
             
             // Amagar el marcador i centrar el mapa al default
             if (marker) marker.setOpacity(0);
@@ -156,14 +183,14 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedProtectoraName.textContent = protectora.nomProt; 
         
         // 2. Remplenar els camps
-        protectoraAddress.innerHTML = `Direcció Protectora: <strong>${protectora.adresa}</strong>`;
-        protectoraEmail.innerHTML = `Email Protectora: <strong>${protectora.emailProt}</strong>`;
-        protectoraPhone.innerHTML = `Telèfon Protectora: <strong>${protectora.tlfProt}</strong>`;
+        protectoraAddress.innerHTML = `Direcció: <strong>${protectora.adresa}</strong>`;
+        protectoraEmail.innerHTML = `Email: <strong>${protectora.emailProt}</strong>`;
+        protectoraPhone.innerHTML = `Telèfon: <strong>${protectora.tlfProt}</strong>`;
         
         if (protectora.url) {
-             protectoraWeb.innerHTML = `Web Protectora Opcional: <a href="${protectora.url}" target="_blank"><strong>${protectora.url.replace(/^https?:\/\//, '')}</strong></a>`;
+             protectoraWeb.innerHTML = `Web: <a href="${protectora.url}" target="_blank"><strong>${protectora.url.replace(/^https?:\/\//, '')}</strong></a>`;
         } else {
-             protectoraWeb.innerHTML = 'Web Protectora Opcional: <em>No disponible</em>';
+             protectoraWeb.innerHTML = 'Web: <em>No disponible</em>';
         }
         
         // 3. Actualitzar el mapa
@@ -184,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Error:", error);
             alert("Hi ha hagut un error carregant les protectores. Si us plau, intenta-ho més tard.");
+            populateProtectoraSelect([]); // Ocultar el desplegable en cas d'error
         }
     }
     // ===============================================
@@ -191,45 +219,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===============================================
 
     async function applyTextFilter(searchText) {
-        //let currentList = MOCK_PROTECTORAS;
-
         if (!searchText.trim()) {
+            // Si el camp de cerca està buit, tornem a carregar totes (o buidem).
+            // Segons el codi anterior, si s'està utilitzant l'API, cal carregar-les totes.
             fetchAllProtectoras();
             return;
-            //const lowerCaseFilter = searchText.toLowerCase();
-            
-            // Filtrar per nom o localització (ciutat)
-            //currentList = MOCK_PROTECTORAS.filter(p => 
-                //p.name.toLowerCase().includes(lowerCaseFilter) || 
-                //p.location.toLowerCase().includes(lowerCaseFilter)
-            //);
-        //} else {
-             // Si el text de cerca està buit després de fer clic a "Buscar",
-             // carreguem una llista buida per complir amb el requisit.
-             //currentList = [];
         }
+
         try {
+            let foundResults = [];
+            
             // 1. Cerca per nom
             const reponseNom = await fetch(`${API_URL}?nomProt=${encodeURIComponent(searchText)}`);
             if (reponseNom.ok) {
                 const dataNom = await reponseNom.json();
                 //Convertim a array si es un sol objecte
                 const protectoras = Array.isArray(dataNom) ? dataNom : [dataNom];
-                populateProtectoraSelect(protectoras);
-                return;
+                foundResults = [...foundResults, ...protectoras];
             }
 
             // 2. Cerca per provincia
             const reponseProvincia = await fetch(`${API_URL}?provincia=${encodeURIComponent(searchText)}`);
             if (reponseProvincia.ok) {
                 const dataProvincia = await reponseProvincia.json();
-                populateProtectoraSelect(dataProvincia);
-                return;
+                foundResults = [...foundResults, ...dataProvincia];
             }
-        // Actualitzar el select amb la llista filtrada.
-            populateProtectoraSelect([]);
-        // Netejar la ubicació de l'usuari si es fa una cerca de text
-        //userLocation = null; 
+            
+            // 3. Si no s'ha trobat cap resultat en cap de les cerques (FET REQUERIMENT)
+            if (foundResults.length > 0) {
+                populateProtectoraSelect(foundResults);
+            } else {
+                alert("Aquesta localitat no està disponible.");
+                populateProtectoraSelect([]); // Oculta el select
+            }
+
         } catch (error) {
             console.error("Error en la cerca textual:", error);
             alert("Hi ha hagut un error realitzant la cerca. Si us plau, intenta-ho més tard.");
@@ -259,31 +282,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function filterByProximity() {
-        // Si la ubicació ja està guardada, filtrem directament
-        //if (userLocation) {
-            //performProximityFilter(userLocation);
-            //return;
-        //}
-
-        // Si no està guardada, intentem obtenir-la
         if (!navigator.geolocation) {
-            //console.log("Intentant obtenir ubicació de l'usuari...");
             alert("El teu navegador no suporta la Geolocalització per a la cerca per proximitat.");
             return;
         }
-        protectoraSelect.innerHTML = '<option value="">Obtenint la teva ubicació...</option>';
+        
+        // Mantenim el missatge d'espera al select
+        if (protectoraSelect) {
+            protectoraSelect.innerHTML = '<option value="">Obtenint la teva ubicació...</option>';
+        }
+
         try {
-            //console.log("Intentant obtenir ubicació de l'usuari...");
             const position = await new Promise((resolve, reject) => {
                 navigator.geolocation.getCurrentPosition( resolve, reject, { 
                     enableHighAccuracy: true, 
                     timeout: 5000 
                 });
             });
+            
             userLocation = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+            
             // Carrega totes les protectores i filtra per distància
             const response = await fetch(API_URL);
             if (!response.ok) {
@@ -306,65 +327,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (nearbyProtectoras.length === 0) {
                 alert(`No s'han trobat protectores a menys de ${MAX_DISTANCE_KM}km de la teva ubicació.`);
-                populateProtectoraSelect([]); // Buidem la llista
+                populateProtectoraSelect([]); // Buidem la llista i ocultem
             } else {
-                // Afegim la distància al nom per al select
+                // Notificar i carregar el select
+                alert(`Trobades ${nearbyProtectoras.length} protectores a menys de ${MAX_DISTANCE_KM}km. Llistat actualitzat i ordenat per proximitat.`);
+                
+                // Construïm l'HTML del select amb les distàncies
                 const optionsHtml = '<option value="">Selecciona directament una protectora</option>' +
                     nearbyProtectoras.map(protectora => {
                         const location = protectora.provincia || 'Ubicació desconeguda';
                         return `<option value="${protectora.codiProt}">${protectora.nomProt} (${location}) - ${protectora.distance.toFixed(1)} km</option>`;
                     }).join('');
-                protectoraSelect.innerHTML = optionsHtml;
+                
+                if (protectoraSelect) {
+                    populateProtectoraSelect(nearbyProtectoras);
+                }
             }
         } catch (error) {
             console.error("Error obtenint ubicació o carregant protectores:", error);
-            alert("No es pot obtenir la teva ubicació");
+            alert("No es pot obtenir la teva ubicació. Assegura't de donar permís al navegador.");
+            populateProtectoraSelect([]); // Buidem la llista i ocultem
         }
     }
-                /*(position) => {
-                    userLocation = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-                    performProximityFilter(userLocation);
-                },
-                (error) => {
-                    console.warn("Error obtenint ubicació:", error.message);
-                    alert("No es pot obtenir la teva ubicació. Assegura't de donar permís al navegador.");
-                    populateProtectoraSelect([]); // Si falla, buidem la llista
-                },
-                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-            );
-        } else {
-            alert("El teu navegador no suporta la Geolocalització per a la cerca per proximitat.");
-            populateProtectoraSelect([]); // Si no hi ha suport, buidem la llista
-        }
-    }
-
-    function performProximityFilter(location) {
-        const { lat, lng } = location;
-        
-        // Calcular distàncies
-        const nearbyProtectoras = MOCK_PROTECTORAS
-            .map(p => ({
-                ...p,
-                distance: getDistanceFromLatLonInKm(lat, lng, p.lat, p.lng)
-            }))
-            .filter(p => p.distance <= MAX_DISTANCE_KM)
-            .sort((a, b) => a.distance - b.distance); // Ordenar per distància (més a prop primer)
-
-        // Notificar l'usuari
-        if (nearbyProtectoras.length === 0) {
-            alert(`No s'han trobat protectores a menys de ${MAX_DISTANCE_KM}km de la teva ubicació.`);
-            populateProtectoraSelect([]); // Buidem la llista
-        } else {
-            alert(`Trobades ${nearbyProtectoras.length} protectores a menys de ${MAX_DISTANCE_KM}km. Llistat actualitzat i ordenat per proximitat.`);
-            populateProtectoraSelect(nearbyProtectoras);
-        }
-        
-        // Netejar la cerca de text
-        textSearchInput.value = '';
-    }*/
 
 
     // ===============================================
@@ -375,7 +359,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchFormText) {
         searchFormText.addEventListener('submit', (e) => {
             e.preventDefault(); 
-            //const searchText = textSearchInput.value.trim();
             applyTextFilter(textSearchInput.value); 
         });
     }
@@ -386,11 +369,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const selectedId = parseInt(e.target.value);
             
             if (selectedId) {
-                //const selectedProtectora = MOCK_PROTECTORAS.find(p => p.id === selectedId);
                 fetch(`${API_URL}/${selectedId}`)
                     .then(response => response.json())
                     .then(renderProtectoraDetails)
                     .catch(error => console.error("Error:", error));
+                
+                // BUIDA el camp de cerca
+                //textSearchInput.value="";
             } else {
                 renderProtectoraDetails(null); 
             }
@@ -400,11 +385,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // C. Control del botó de cerca per proximitat (NOU)
     if (proximitySearchBtn) {
         proximitySearchBtn.addEventListener('click', () => {
+            textSearchInput.value="";
             filterByProximity(); 
         });
     }
     
     // D. Càrrega Inicial del Mapa i Llistat
     initMap(); 
-    fetchAllProtectoras();
+    // fetchAllProtectoras() ha de carregar les protectores en la càrrega inicial,
+    // però populateProtectoraSelect (dins fetchAllProtectoras) les ocultarà.
+    
 });

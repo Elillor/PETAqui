@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.buscadorpelut.Repository.AnimalRepository;
+import com.buscadorpelut.Repository.ProtectoraRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -30,9 +31,19 @@ public class TestManipulacioBDbuscadorPelutAnimal {
     @Autowired
     AnimalRepository animalRepository;
 
+    @Autowired
+    ProtectoraRepository protectoraRepository;
+
     @Test
     void testCreateAndReadAnimal() { //Test per comprovar l'operació de creació i de lectura de registre d'un animal a la BD
+        //0- Preparació dada protectora (clau forana)
+        Protectora protectoraTest = new Protectora();
+        protectoraTest.setNomProt("Protectora Test");
+        protectoraTest.setLatitud(99999999);
+        protectoraTest.setLongitud(99999999);
 
+        protectoraRepository.save(protectoraTest); //guardem la protectora per evitar errors de clau forana
+        
         //1- Crear - creem un usuari i el guardem
         Animal animalTest = new Animal();
         animalTest.setNomAn("Brownie");
@@ -43,7 +54,7 @@ public class TestManipulacioBDbuscadorPelutAnimal {
         animalTest.setNumXip("null");
         animalTest.setEsAdoptat(false);
         animalTest.setFotoPerfil("Brownie.jpg");
-        //animalTest.setCodiProtectora(1234);
+        animalTest.setProtectora(protectoraTest);
 
         animalRepository.save(animalTest); //guardem l'animal
 
@@ -58,6 +69,13 @@ public class TestManipulacioBDbuscadorPelutAnimal {
 
     @Test
     void testUpdateAnimal(){// Test per provar el modificar una dada d'un registre
+        //0- Preparació dada protectora (clau forana)
+        Protectora protectoraTest = new Protectora();
+        protectoraTest.setNomProt("Protectora Test");
+        protectoraTest.setLatitud(99999999);
+        protectoraTest.setLongitud(99999999);
+
+        protectoraRepository.save(protectoraTest); //guardem la protectora per evitar errors de clau forana
 
         //1- Creem un animal dummy per fer les proves
         Animal animalTest = new Animal();
@@ -69,6 +87,7 @@ public class TestManipulacioBDbuscadorPelutAnimal {
         animalTest.setNumXip("null");
         animalTest.setEsAdoptat(false);
         animalTest.setFotoPerfil("Morena.jpg");
+        animalTest.setProtectora(protectoraTest);
 
         animalRepository.save(animalTest);//guardem el registre
 
@@ -94,6 +113,13 @@ public class TestManipulacioBDbuscadorPelutAnimal {
     @SuppressWarnings("null")
     @Test
     void testDeleteAnimal(){ // test per provar d'eliminar un registre
+        //0- Preparació dada protectora (clau forana)
+        Protectora protectoraTest = new Protectora();
+        protectoraTest.setNomProt("Protectora Test");
+        protectoraTest.setLatitud(99999999);
+        protectoraTest.setLongitud(99999999);
+
+        protectoraRepository.save(protectoraTest); //guardem la protectora per evitar errors de clau forana
 
         //1- Creem un usuari dummy per fer les proves
         Animal animalTest = new Animal();
@@ -105,6 +131,7 @@ public class TestManipulacioBDbuscadorPelutAnimal {
         animalTest.setNumXip("null");
         animalTest.setEsAdoptat(false);
         animalTest.setFotoPerfil("Hilda.jpg");
+        animalTest.setProtectora(protectoraTest);
 
         animalRepository.save(animalTest);//guardem el registre
         

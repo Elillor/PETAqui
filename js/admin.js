@@ -329,7 +329,7 @@ async function formulari(section, item) {
                   <input type="text" class="form-control" id="localitat" value="${item?.localitat || ''}" required style="max-width: 300px;">
               </div>
               <div class="mb-3 d-flex align-items-center" style="width: 100%; max-width: 500px;">
-                  <label for="provincia" class="form-label me-3" style="min-width: 120px;">Codi Provincia:</label>
+                  <label for="provincia" class="form-label me-3" style="min-width: 120px;">Provincia:</label>
                   <input type="text" class="form-control" id="provincia" value="${item?.provincia || ''}" required style="max-width: 300px;">
               </div>
               <div class="mb-3 d-flex align-items-center" style="width: 100%; max-width: 500px;">

@@ -1,6 +1,6 @@
 package com.buscadorpelut.Model;
 
-import java.util.List;
+
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.*;
 
-import com.buscadorpelut.Repository.ProtectoraRepository;
-import com.buscadorpelut.Repository.UsuarioRepository;
-
+import com.buscadorpelut.Repository.ProtectoraRepository; 
 import jakarta.transaction.Transactional;
 
 /*

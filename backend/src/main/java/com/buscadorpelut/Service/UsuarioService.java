@@ -188,7 +188,7 @@ public class UsuarioService {
      * @throws EntityNotFoundException si se intenta actualizar un usuario inexistente.
      */
     public UsuarioDTO save(UsuarioDTO dto) {
-        Usuario entity;
+        Usuario entity = convertirAEntitat(dto);
         if (dto.getCodiUs() != null) {
             entity = usuarioRepository.findById(dto.getCodiUs())
                 .orElseThrow(() -> new EntityNotFoundException("Usuari no trobat"));

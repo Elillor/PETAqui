@@ -33,12 +33,15 @@ public class AdminControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @SuppressWarnings("removal")
     @MockBean
     private UsuarioService usuarioService;
 
+    @SuppressWarnings("removal")
     @MockBean
     private AnimalService animalService;
 
+    @SuppressWarnings("removal")
     @MockBean
     private ProtectoraService protectoraService;
 

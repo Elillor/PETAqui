@@ -5,12 +5,19 @@
 
 /* Sidebar administración */
 .admin-sidebar {
-  width: 200px;
-  height: 100vh;
-  background-color: var(--color-fondo-estructural, #343a40);
+  width: 200px; 
+  height: auto;
+  background-color: var(--color-fondo-sub-header); /* Azul claro subheader*/
   padding: 1rem;
   flex-shrink: 0;
 }
+
+/* Estilo para el enlace de volver a la página principal */
+.admin-sidebar a#return{
+  color: var(--color-secundario-inici) !important; /* Amarillo Oro */
+  font: 600px;  
+}
+
 
 .admin-sidebar a {
   color: var(--color-texto-claro, #fff);
@@ -22,8 +29,14 @@
   transition: background-color 0.3s ease;
 }
 
+
 .admin-sidebar a:hover {
-  background-color: #495057;
+  background-color: var(--color-fondo-sub-header) !important; /* Azul más claro */
+  color: var(--color-primario-cta) !important; /* Amarillo Oro */
+}
+
+.admin-sidebar a:hover#return{
+  color: var(--color-texto-claro) !important; /* Color claro */
 }
 
 .admin-sidebar .sidebar-title {
@@ -51,7 +64,31 @@
   min-height: 100vh;
 }
 
-/* Responsive: ocultar sidebar en móviles pequeños */
+/*Color texto del título de la sección*/
+.admin-content h2 {
+  color: var(--color-texto-oscuro) !important; /* Texto oscuro*/ 
+  font-weight: 600;
+}
+
+/* Estilo tabla generada con los registros en admin */  
+.taula-generada {
+    padding: 10px;
+    overflow-x: auto; /* Habilitar desplazamiento horizontal */
+    width: 100%; /* Asegurar que ocupe todo el ancho del contenedor */
+  }
+
+.table-responsive {
+    width: 100%; /* Asegurar que la tabla ocupe todo el ancho */
+    border-collapse: collapse;
+  }
+
+  th,td{
+    padding: 8px 12px;
+    text-align: left;
+    border: 1px solid var(--color-fondo-sub-header); /* Azul menos oscuro */
+  }
+
+  /* Responsive: ocultar sidebar en móviles pequeños */
 @media (max-width: 576px) {
   .admin-wrapper {
     flex-direction: column;
@@ -63,9 +100,21 @@
     display: flex;
     flex-direction: row;
     overflow-x: auto;
+    align-items: center; 
+    white-space: nowrap;   
+  }
+
+  nav.admin-sidebar {
+    white-space: nowrap;
+    padding: 0.3rem 0.5rem !important; /* Menos padding para móviles */
+    font-size: 0.85rem ; /* Fuente más pequeña */    
   }
 
   .admin-sidebar a {
-    white-space: nowrap;
+    text-align: center;
+    flex: 0 0 auto; /* Evitar que los enlaces se reduzcan */
+    margin: 0 5px; /* Espaciado horizontal entre enlaces */
+    height: 100%; /* Altura completa del sidebar */
   }
+    
 }

@@ -9,6 +9,11 @@
     max-width: 1200px; 
 }
 
+/* Oculta elementos con la clase .ocult */
+.ocult {
+    display: none;
+}
+
 /* 2. Estilos Específicos del Mockup y Adaptación de Estilos */
 
 /* Placeholder para el mapa: NECESITA una altura definida */
@@ -21,6 +26,14 @@
 }
 
 /* Estilos para las líneas de datos de la protectora (simulando el diseño del mockup) */
+h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--color-texto-oscuro); 
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    margin-bottom: 1.5rem;
+}
+
 #protectora-data-container p {
     font-size: 1.1rem;
     padding: 0.75rem 0; /* Espacio vertical */
@@ -43,5 +56,21 @@
 #protectora-data-container strong, 
 #protectora-data-container a strong {
     font-weight: 700; /* Más negrita que el 600 original */
-    color: var(--color-primario-cta); /* Usar el color de acento de la CTA para los valores */
+    color: #996A1B !important; /* Usar el color de acento dorado de detall animal para los valores */
 }
+
+/*Ajust color nom de la protectora al pop-up del mapa*/
+.leaflet-popup-content {
+    color: #242424 !important;
+    font-weight: bold;
+}
+
+.leaflet-popup-content b{
+    color: #242424 !important;
+    font-weight: bold;
+}
+.leaflet-popup-close-button span{
+    color: #242424 !important;
+    font-weight: bold;
+}
+

@@ -1,17 +1,17 @@
 ﻿// js/admin.js
-// Archivo de administración del frontend para gestionar usuarios, animales y protectoras.
-// Proporciona funciones para listar secciones, crear/editar/eliminar elementos y construir formularios dinámicos.
+// Arxiu d'administració del frontend per gestionar usuaris, animals i protectores.
+// Proporciona funcions per llistar seccions, crear/editar/eliminar elements i construir formularis dinàmics.
 
-// URL base de la API de administración
+// URL base de la API d'administració.
 const API_URL = "http://localhost:8080/api/admin";
 
-// Carga la sección solicitada ('usuaris', 'animals', 'protectores') y renderiza HTML en el contenedor #admin-content
-// Comprueba además que exista un usuario administrador en localStorage antes de permitir acceso.
+// Carrega la secció sol·licitada ('usuaris', 'animals', 'protectors') i renderitza HTML al contenidor #admin-content.
+// Comprova a més que hi hagi un usuari administrador a localStorage abans de permetre accés.
 async function loadSection(section) {
   const content = document.getElementById("admin-content");
   if (!content) return;
 
-  // Verificar sesión de administrador guardada en localStorage
+  // Verificar sessió d'administrador desada a localStorage.
   const currentAdminJSON = localStorage.getItem("currentUser");
   if (!currentAdminJSON) {
     alert("Tens que iniciar sessió com a administrador.");
@@ -25,11 +25,11 @@ async function loadSection(section) {
     return;
   }
 
-  // Indicador de carga mientras se obtiene la información
+  //Indicador de càrrega mentre s'obté la informació.
   content.innerHTML = '<div class="spinner-border"></div> Cargando...';
 
   try {
-    // Petición GET a la API para la sección solicitada
+    // Petició GET a l'API per a la secció sol·licitada.
     const response = await fetch(`${API_URL}/${section}`, {
       headers: {
         "Content-Type": "application/json",
@@ -37,14 +37,14 @@ async function loadSection(section) {
     });
     console.log(response);
     if (!response.ok) {
-      // Si la respuesta no es OK, intentar leer texto con mensaje de error
+      // Si la resposta no és OK, intentar llegir text amb missatge d'error.
       const error = await response.text();
       throw new Error(error || "Error al cargar");
     }
 
     const data = await response.json();
 
-    // Renderizado de la tabla para la sección 'usuaris' (usuarios)
+    // Renderitzat de la taula per a la secció 'usuaris' (usuaris).
     if (section === "usuaris") {
       console.log("Usuaris:", data);
       let html = `<h2>Gestió de ${section}</h2>`;
@@ -54,7 +54,7 @@ async function loadSection(section) {
                 <th scope="col">cognom1</th><th scope="col">cognom2</th><th scope="col">clauPas</th><th scope="col">emailUs</th>
                 <th scope="col">rolUs</th><th scope="col">Acciones</th></tr></thead>`;
 
-      // Cada usuario genera una fila con botones de editar/eliminar
+      // Cada usuari genera una fila amb botons d'editar/eliminar.
       data.forEach((user) => {
         html += `<tr>`;
         html += `<td scope="row">${user.codiUs}</td>`;
@@ -66,13 +66,13 @@ async function loadSection(section) {
       });
 
       html += "</tbody></table></div>";
-      // Botón para añadir un nuevo usuario (usa la función addUsuari)
+      // Botó per afegir un nou usuari (usa la funció addUsuari).
       html += `<button class="btn btn-primary" onclick="addUsuari()">+ Añadir ${section.slice(0, -1)}</button>`;
 
       content.innerHTML = html;
     }
 
-    // Renderizado para 'animals' (animales)
+    // Renderitzat per a 'animals' (animals).
     if (section === "animals") {
       console.log("animals:", data);
       let html = `<h2>Gestion de ${section}</h2>`;
@@ -82,7 +82,7 @@ async function loadSection(section) {
                 <th scope="col">dataNeix</th><th scope="col">sexe</th><th scope="col">especie</th><th scope="col">numXip</th>
                 <th scope="col">adoptat</th><th scope="col">descripció</th><th scope="col">fotoPerfil</th><th scope="col">codiProt</th><th scope="col">Accion</th></tr></thead>`;
 
-      // Para cada animal, construir fila. Nota: el campo esAdoptat se convierte a texto legible
+      // Per a cada animal, construir fila. Nota: el camp esAdoptat es converteix a text llegible.
       data.forEach((animal) => {
         html += `<tr>`;
         if (animal.esAdoptat === false) {
@@ -104,7 +104,7 @@ async function loadSection(section) {
       content.innerHTML = html;
     }
 
-    // Renderizado para 'protectores' (protectora / refugios)
+    // Renderitzat per a 'protectores' (protectores)
     if (section === "protectores") {
       console.log("protectores:", data);
       let html = `<h2>Gestion de ${section}</h2>`;
@@ -114,7 +114,7 @@ async function loadSection(section) {
                 <th scope="col">adresa</th><th scope="col">codiPostal</th><th scope="col">localitat</th><th scope="col">provincia</th><th scope="col">url</th>
                 <th scope="col">longitud</th><th scope="col">latitud</th><th scope="col">tlfProt</th><th scope="col">emailProt</th><th scope="col">Acciones</th></tr></thead>`;
 
-      // Cada protectora genera fila con botones editar/eliminar
+      // Cada protectora genera fila amb botons editar/eliminar.
       data.forEach((protectora) => {
         html += `<tr>`;
         html += `<td scope="row">${protectora.codiProt}</td>`;
@@ -131,20 +131,20 @@ async function loadSection(section) {
       content.innerHTML = html;
     }
   } catch (err) {
-    // Mostrar alerta de error en la UI
+    // Mostra alerta d'error a la UI.
     content.innerHTML = `<div class="alert alert-danger">Error: ${err.message}</div>`;
   }
 };
 
-// >>>>>>>>>>>>>>>>>>>>>  FUNCIONES PARA LAS ACCIONES  >>>>>>>>>>>>>>>>>>
+// >>>>>>>>>>>>>>>>>>>>>  FUNCIONS PER LES ACCIONS  >>>>>>>>>>>>>>>>>>
 
-// <<<<<  PARA USUARIOS  >>>>>>>>
-// Abre el formulario para crear un usuario nuevo
+// <<<<< PER A USUARIS >>>>>>>>
+// Obre el formulari per crear un usuari nou.
 function addUsuari() {
   formulari('usuaris', null);
 };
 
-// Recupera un usuario por id y abre el formulario para edición
+// Recupera un usuari per id i obre el formulari per a edició.
 async function editUsuari(codiUs) {
   try{
     const response = await fetch(`${API_URL}/usuaris/${codiUs}`);
@@ -156,13 +156,13 @@ async function editUsuari(codiUs) {
   }
 };
 
-// <<<<<<   PARA ANIMALES  >>>>>>>>
-// Abrir formulario para añadir animal
+// <<<<<< PER A ANIMALS >>>>>>>>
+// Obrir formulari per afegir animal.
 function addAnimal() {
     formulari('animals', null);
 };
 
-// Obtener animal por id y abrir formulario de edición
+// Obtenir animal per id i obrir formulari d'edició
 async function editAnimal(numId) {
     try {
         const response = await fetch(`${API_URL}/animals/${numId}`);
@@ -174,13 +174,13 @@ async function editAnimal(numId) {
     }
 };
 
-// <<<<<< PARA PROTECTORAS >>>>>>>>
-// Abrir formulario para crear protectora
+// <<<<<< PER A PROTECTORES >>>>>>>>
+// Obrir formulari per crear protectora
 function addProtectora() {
     formulari('protectores', null);
 };
 
-// Obtener protectora por id y abrir formulario de edición
+// Obtenir protectora per id i obrir formulari d'edició
 async function editProtectora(codiProt) {
     try {
         const response = await fetch(`${API_URL}/protectores/${codiProt}`);
@@ -192,8 +192,8 @@ async function editProtectora(codiProt) {
     }
 };
 
-// <<<<<<<<  FUNCIÓN ELIMINAR (GENÉRICA PARA TODAS LAS SECCIONES)  >>>>>>>>>
-// Pide confirmación y hace DELETE al endpoint correspondiente. Recarga la sección si se elimina correctamente.
+// <<<<<<<< FUNCIÓ ELIMINAR (GENÈRICA PER A TOTES LES SECCIONS) >>>>>>>>>
+// Demana confirmació i fa DELETE a l'endpoint corresponent. Recarrega la secció si s'elimina correctament.
 async function deleteItem(section, id) {
   if (!confirm("¿Eliminar este elemento?")) return;
   try{
@@ -213,14 +213,14 @@ async function deleteItem(section, id) {
     }
 };
 
-// <<<<<<<<  FUNCIÓN QUE CREA LOS FORMULARIOS DINÁMICAMENTE >>>>>>>>>>>>>>
-// Construye el HTML del formulario dependiendo de la sección y del item (si se está editando).
-// Nota: devuelve el HTML y además añade el listener de submit que llama a submitFormulari.
+// <<<<<<<<< FUNCIÓ QUE CREA ELS FORMULARIS DINÀMICAMENT >>>>>>>>>>>>>>
+// Construeix l'HTML del formulari depenent de la secció i de l'item (si s'està editant).
+// Nota: retorna l'HTML ia més afegeix el listener de submit que crida submitFormulari.
 async function formulari(section, item) {
   const title = item ? `Editar ${section.slice(0, -1)}` : `Afegir ${section.slice(0, -1)}`;
   let Html = `<h3>${title}</h3><form id="admin-form">`;
 
-  // USUARIOS - campos y valores por defecto si item es null
+ // USUARIS - camps i valors per defecte si item és null
   if (section === 'usuaris') {
       Html += `
             <div class="d-flex flex-column align-items-center">
@@ -258,7 +258,7 @@ async function formulari(section, item) {
             </div>
             `;
   }
-  // ANIMALES - el select de protectora se construye mediante ProtectorasSelect (async)
+  // ANIMALS - el select de protectora es construeix mitjançant ProtectorasSelect (async)
   else if (section === 'animals') {
       Html += `
           <div class="d-flex flex-column align-items-center">
@@ -307,7 +307,7 @@ async function formulari(section, item) {
           </div>
           `;
   }
-  // PROTECTORAS - campos del formulario
+  // PROTECTORES - camps del formulari.
   else if (section === 'protectores') {
       Html += `
           <div class="d-flex flex-column align-items-center">
@@ -362,22 +362,22 @@ async function formulari(section, item) {
       <button type="button" class="btn btn-secondary ms-2" onclick="tancaFormulari('${section}')">Cancel·lar</button>
   </form>`;
 
-  // Insertar el formulario generado en el DOM
+  // Inserir el formulari generat al DOM
   document.getElementById('admin-content').innerHTML = Html;
 
-  // Añadir manejador para el submit del formulario
+  // Afegir manejador per al submit del formulari
   document.getElementById('admin-form').addEventListener('submit', (e) => {
       e.preventDefault();
       submitFormulari(section, item);
   });
 };
 
-// <<<<<< FUNCION QUE DEPENDE DE LA ACCIÓN (POST O PUT)  >>>>>>>>>>>>
-// Construye el objeto 'data' según la sección y decide si hace POST (crear) o PUT (editar)
-// Observaciones importantes:
-// - Para usuarios, si el campo de contraseña está vacío en edición, no se incluye en el payload.
-// - Para animales, se crea un objeto protectora con { codiProt } si se selecciona.
-// - La URL para PUT usa la id correspondiente (codiUs / numId / codiProt)
+// <<<<<< FUNCIÓ QUE DEPÈN DE L'ACCIÓ (POST O PUT) >>>>>>>>>>>>
+// Construeix l'objecte 'data' segons la secció i decideix si fa POST (crear) o PUT (editar)
+// Observacions importants:
+// - Per a usuaris, si el camp de contrasenya està buit en edició, no s'inclou al payload.
+// - Per a animals, es crea un objecte protectora amb { codiProt } si se selecciona.
+// - La URL per a PUT utilitza la id corresponent (codiUs / numId / codiProt)
 async function submitFormulari(section, item) {
   const isEdit = !!item;
   let data = {};
@@ -397,7 +397,7 @@ async function submitFormulari(section, item) {
         data.clauPas = clauPasInput?.value || '';
       }
   } else if (section === 'animals') {
-      // Para animales, obtener el valor del select de protectora y convertirlo en objeto si aplica
+      // Per a animals, obtenir el valor del select de protectora i convertir-lo en objecte si s'aplica
       const codiProtValue = document.getElementById('codiProt')?.value;
       let protectora = null;
       if (codiProtValue && codiProtValue !== "") {
@@ -431,7 +431,7 @@ async function submitFormulari(section, item) {
       };
   }
 
-  // Determinar URL y método: para editar (PUT) se usa la id que corresponda
+  // Determinar URL i mètode: per editar (PUT) s'usa la ID que correspongui.
   const url = isEdit 
       ? `${API_URL}/${section}/${data.codiUs || data.numId || data.codiProt}` 
       : `${API_URL}/${section}`;
@@ -458,14 +458,14 @@ async function submitFormulari(section, item) {
   }
 };
 
-// Cierra el formulario y recarga la lista de la sección indicada
+// Tanca el formulari i recarrega la llista de la secció indicada.
 function tancaFormulari(section) {
   loadSection(section); // Torna a la llista
 };
 
-// <<<<<< FUNCION AUXILIAR: OBTENER SELECT DE PROTECTORAS >>>>>>>>>>>>>>
-// Solicita la lista de protectoras y genera las opciones para el select.
-// Devuelve una cadena con etiquetas <option>. Si no hay protectora seleccionada, añade "Sense assignar".
+// <<<<<< FUNCIÓ AUXILIAR: OBTENIR SELECT DE PROTECTORES >>>>>>>>>>>>>>
+// Demana la llista de protectores i genera les opcions per al select.
+// Retorna una cadena amb etiquetes <option>. Si no hi ha protectora seleccionada, afegiu "Sense assignar".
 async function ProtectorasSelect(selected= null) {
   const res = await fetch(`${API_URL}/protectores`);
   const protectores = await res.json();
@@ -476,7 +476,7 @@ async function ProtectorasSelect(selected= null) {
   return options;
 };
 
-// Verificación inicial al cargar DOM: asegurar que el usuario actual es ADMIN antes de permitir acceso a la página
+// Verificació inicial en carregar DOM: assegurar que l'usuari actual és ADMIN abans de permetre accés a la pàgina.
 document.addEventListener("DOMContentLoaded", () => {
   const currentAdminJSON = localStorage.getItem("currentUser");
   if (!currentAdminJSON) {

@@ -1,0 +1,109 @@
+/* ========================================= */
+/* PETAqui - styles-admin.css */
+/* Estilos específicos para la página de Administración */
+/* ========================================= */
+
+/* Sidebar administración */
+.admin-sidebar {
+  width: 200px; 
+  height: auto;
+  background-color: var(--color-fondo-sub-header);
+  padding: 1rem;
+  flex-shrink: 0;
+}
+
+.admin-sidebar a#return {
+  color: var(--color-secundario-inici) !important;
+  font-weight: 600;
+}
+
+.admin-sidebar a {
+  color: var(--color-texto-claro, #fff);
+  padding: 0.75rem;
+  display: block;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: var(--font-body, sans-serif);
+  transition: background-color 0.3s ease;
+}
+
+.admin-sidebar a:hover {
+  background-color: var(--color-fondo-sub-header) !important;
+  color: var(--color-primario-cta) !important;
+}
+
+.admin-sidebar a:hover#return {
+  color: var(--color-texto-claro) !important;
+}
+
+.admin-sidebar .sidebar-title {
+  color: var(--color-texto-claro, #fff);
+  margin-bottom: 1.5rem;
+  font-family: var(--font-heading, "Quicksand", sans-serif);
+  font-weight: 600;
+}
+
+/* Contenido principal */
+.admin-content {
+  padding: 2rem;
+  flex-grow: 1;
+  background-color: var(--color-fondo-claro, #f9f9f9);
+}
+
+/* Scroll horizontal para tablas en móviles */
+.taula-admin-scroll {
+  overflow-x: auto;
+  display: block;
+  width: 100%;
+}
+
+.taula-admin-scroll table {
+  min-width: 600px; /* Fuerza scroll horizontal sin romper layout */
+}
+
+/* Botones dentro de tablas */
+.admin-table .btn-sm {
+  margin-right: 0.25rem;
+}
+
+/* Layout flex para adaptarse a la estructura del proyecto */
+.admin-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Color texto del título de la sección */
+.admin-content h2 {
+  color: var(--color-texto-oscuro) !important;
+  font-weight: 600;
+}
+
+/* Responsive: ocultar sidebar en móviles pequeños */
+@media (max-width: 576px) {
+  .admin-wrapper {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  nav.admin-sidebar {
+    white-space: nowrap;
+    padding: 0.3rem 0.5rem !important;
+    font-size: 0.85rem;
+  }
+
+  .admin-sidebar a {
+    text-align: center;
+    flex: 0 0 auto;
+    margin: 0 5px;
+    height: 100%;
+  }
+}

@@ -61,7 +61,7 @@
                 class="nav-link active"
                 aria-current="page"
                 href="cerca-protectoras.html"
-                >Cerca Protectoras</a
+                >Cerca Protectores</a
               >
             </li>
             <li class="nav-item">
@@ -83,7 +83,7 @@
         <div class="row mb-5">
           <div class="col-12 col-lg-8 offset-lg-2 text-center text-muted">
             <p style="font-family: var(--font-body); color: #555555 !important;">
-              Utilitza el camp de cerca per filtrar les protectores per "nom o província", fes servir el botó "Prop meu" per buscar per proximitat.
+              Utilitza el camp de cerca per filtrar les protectores per "província" o nom, fes servir el botó "Prop meu" per buscar per proximitat. El nom 
             </p>
           </div>
         </div>
@@ -94,7 +94,7 @@
               <input
                 class="form-control form-control-lg me-2"
                 type="search"
-                placeholder="Cerca per nom de protectora o ciutat..." aria-label="Cerca protectora per text"
+                placeholder="Cerca per provincia o nom..." aria-label="Cerca protectora per text"
                 id="text-search-input"
               />
               <button class="btn btn-primary btn-lg me-2" type="submit"> Buscar
@@ -106,12 +106,13 @@
                 Prop meu
               </button>
               </form>
-
-            <div id="protectora-select-container" class="mb-5 d-none">
-                <select class="form-select form-select-lg" aria-label="Selector de Protectora" id="protectora-select">
-                    <option value="">Selecciona una protectora</option> </select>
+            
+            <div id="protectora-select-container" class="mb-5">
+              <select class="form-select form-select-lg" aria-label="Selector de Protectora" id="protectora-select">
+                  <option value="">Selecciona una protectora</option> </select>
             </div>
-            </div>
+                       
+          </div>
         </div>
 
         <div class="row mb-5">
@@ -126,8 +127,8 @@
         <div class="row">
             <div class="col-12 col-lg-8 offset-lg-2 text-center">
                 <h2 class="text-center mb-5 text-general">Dades Protectora</h2>
-                <div id="protectora-data-container" class="text-start">
-                    <p class="h5 mb-3 text-muted" id="selected-protectora-name"></p>
+                <div id="protectora-data-container" class="text-center">
+                    <h3 class="h5 mb-3 text-muted" id="selected-protectora-name"></h3>
                     <p id="protectora-address">Direcció: </p>
                     <p id="protectora-email">Email: </p>
                     <p id="protectora-phone">Telèfon: </p>

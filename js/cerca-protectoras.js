@@ -36,9 +36,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const protectoraWeb = document.getElementById('protectora-web');
     // ELEMENT AFGEIT DE LA PETICIÓ PRÈVIA PER AMAGAR EL SELECT
     const protectoraSelectContainer = document.getElementById('protectora-select-container');
-    const textSearchInput = document.getElementById('text-search-input');
     const searchFormText = document.getElementById('search-form-text');
     const proximitySearchBtn = document.getElementById('proximity-search-btn');
+    const textSearchInput = document.getElementById('text-search-input');
+
+    // Amaga el select de protectores quan l'usuari clica al camp de cerca
+    if (textSearchInput) {
+        textSearchInput.addEventListener('focus', () => {
+            // Amaga el contenidor del select
+            protectoraSelectContainer.classList.add('d-none');
+            // Opcional: amaga també les dades de la protectora seleccionada
+            renderProtectoraDetails(null);
+            // Opcional: desselecciona el <select>
+            if (protectoraSelect) {
+                protectoraSelect.value = "";
+            }
+        });
+    }
     
     // Configuració del mapa
     const DEFAULT_CENTER = [41.60, 1.80]; // Centre de Catalunya (Lat/Lng)
@@ -169,14 +183,14 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedProtectoraName.textContent = protectora.nomProt; 
         
         // 2. Remplenar els camps
-        protectoraAddress.innerHTML = `Direcció Protectora: <strong>${protectora.adresa}</strong>`;
-        protectoraEmail.innerHTML = `Email Protectora: <strong>${protectora.emailProt}</strong>`;
-        protectoraPhone.innerHTML = `Telèfon Protectora: <strong>${protectora.tlfProt}</strong>`;
+        protectoraAddress.innerHTML = `Direcció: <strong>${protectora.adresa}</strong>`;
+        protectoraEmail.innerHTML = `Email: <strong>${protectora.emailProt}</strong>`;
+        protectoraPhone.innerHTML = `Telèfon: <strong>${protectora.tlfProt}</strong>`;
         
         if (protectora.url) {
-             protectoraWeb.innerHTML = `Web Protectora Opcional: <a href="${protectora.url}" target="_blank"><strong>${protectora.url.replace(/^https?:\/\//, '')}</strong></a>`;
+             protectoraWeb.innerHTML = `Web: <a href="${protectora.url}" target="_blank"><strong>${protectora.url.replace(/^https?:\/\//, '')}</strong></a>`;
         } else {
-             protectoraWeb.innerHTML = 'Web Protectora Opcional: <em>No disponible</em>';
+             protectoraWeb.innerHTML = 'Web: <em>No disponible</em>';
         }
         
         // 3. Actualitzar el mapa
@@ -213,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            let foundResults = false;
+            let foundResults = [];
             
             // 1. Cerca per nom
             const reponseNom = await fetch(`${API_URL}?nomProt=${encodeURIComponent(searchText)}`);
@@ -221,30 +235,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dataNom = await reponseNom.json();
                 //Convertim a array si es un sol objecte
                 const protectoras = Array.isArray(dataNom) ? dataNom : [dataNom];
-                
-                if (protectoras.length > 0) {
-                    populateProtectoraSelect(protectoras);
-                    foundResults = true;
-                    return;
-                }
+                foundResults = [...foundResults, ...protectoras];
             }
 
             // 2. Cerca per provincia
             const reponseProvincia = await fetch(`${API_URL}?provincia=${encodeURIComponent(searchText)}`);
             if (reponseProvincia.ok) {
                 const dataProvincia = await reponseProvincia.json();
-                
-                if (dataProvincia.length > 0) {
-                    populateProtectoraSelect(dataProvincia);
-                    foundResults = true;
-                    return;
-                }
+                foundResults = [...foundResults, ...dataProvincia];
             }
             
             // 3. Si no s'ha trobat cap resultat en cap de les cerques (FET REQUERIMENT)
-            if (!foundResults) {
+            if (foundResults.length > 0) {
+                populateProtectoraSelect(foundResults);
+            } else {
                 alert("Aquesta localitat no està disponible.");
-                populateProtectoraSelect([]); // Buidar el select i ocultar el contenidor
+                populateProtectoraSelect([]); // Oculta el select
             }
 
         } catch (error) {
@@ -334,9 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }).join('');
                 
                 if (protectoraSelect) {
-                    protectoraSelect.innerHTML = optionsHtml;
-                    // Mostrar el contenidor del select (ja que hi ha resultats)
-                    protectoraSelectContainer.classList.remove('d-none');
+                    populateProtectoraSelect(nearbyProtectoras);
                 }
             }
         } catch (error) {
@@ -369,6 +373,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(response => response.json())
                     .then(renderProtectoraDetails)
                     .catch(error => console.error("Error:", error));
+                
+                // BUIDA el camp de cerca
+                //textSearchInput.value="";
             } else {
                 renderProtectoraDetails(null); 
             }
@@ -378,6 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // C. Control del botó de cerca per proximitat (NOU)
     if (proximitySearchBtn) {
         proximitySearchBtn.addEventListener('click', () => {
+            textSearchInput.value="";
             filterByProximity(); 
         });
     }
@@ -386,5 +394,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initMap(); 
     // fetchAllProtectoras() ha de carregar les protectores en la càrrega inicial,
     // però populateProtectoraSelect (dins fetchAllProtectoras) les ocultarà.
-    fetchAllProtectoras();
+    
 });
